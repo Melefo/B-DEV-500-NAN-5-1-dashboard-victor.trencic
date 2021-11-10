@@ -30,9 +30,7 @@ module.exports = {
                 target: process.env.BACKEND
             }
         },
-        allowedHosts: [
-            '.azurewebsites.net'
-        ],
+        public: process.env.PUBLIC,
         port: 80
     }
 }
