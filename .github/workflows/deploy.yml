@@ -24,6 +24,6 @@ jobs:
 
       - uses: azure/webapps-deploy@v2
         with:
-          app-name: 'myapp'
+          app-name: 'doshboardbackend'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           images: 'doshboard.azurecr.io/doshboardbackend:${{ github.sha }}'
