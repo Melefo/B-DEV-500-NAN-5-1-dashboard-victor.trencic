@@ -17,6 +17,8 @@
 /*const certFilePath = path.join(baseFolder, `${certificateName}.pem`);
 const keyFilePath = path.join(baseFolder, `${certificateName}.key`);*/
 
+console.log(process.env)
+
 module.exports = {
     devServer: {
         /*https: {
@@ -28,6 +30,9 @@ module.exports = {
                 target: process.env.BACKEND
             }
         },
+        allowedHosts: [
+            '.azurewebsites.net'
+        ],
         port: 80
     }
 }

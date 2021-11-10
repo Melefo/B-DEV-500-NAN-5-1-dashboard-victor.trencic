@@ -22,8 +22,18 @@ jobs:
           docker build -f Doshboard.Backend/Dockerfile . -t doshboard.azurecr.io/doshboardbackend:${{ github.sha }}
           docker push doshboard.azurecr.io/doshboardbackend:${{ github.sha }}
 
+      - run: |
+          docker build -f Doshboard.Frontend/Dockerfile . -t doshboard.azurecr.io/doshboardfrontend:${{ github.sha }}
+          docker push doshboard.azurecr.io/doshboardfrontend:${{ github.sha }}
+
       - uses: azure/webapps-deploy@v2
         with:
           app-name: 'doshboardbackend'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           images: 'doshboard.azurecr.io/doshboardbackend:${{ github.sha }}'
+
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'doshboard'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: 'doshboard.azurecr.io/doshboardfrontend:${{ github.sha }}'
