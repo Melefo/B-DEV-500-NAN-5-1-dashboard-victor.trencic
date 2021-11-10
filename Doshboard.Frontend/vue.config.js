@@ -27,10 +27,10 @@ module.exports = {
         },*/
         proxy: {
             '^/weatherforecast': {
-                target: process.env.BACKEND
+                target: process.env.BACKEND_URL
             }
         },
-        public: process.env.PUBLIC,
+        public: process.env.PUBLIC_URL,
         port: 80
     }
 }
