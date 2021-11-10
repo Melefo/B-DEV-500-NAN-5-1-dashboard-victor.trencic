@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Dashboard.Backend/Dashboard.Backend.csproj", "Dashboard.Backend/"]
-RUN dotnet restore "Dashboard.Backend/Dashboard.Backend.csproj"
+COPY ["Doshboard.Backend/Doshboard.Backend.csproj", "Doshboard.Backend/"]
+RUN dotnet restore "Doshboard.Backend/Doshboard.Backend.csproj"
 COPY . .
-WORKDIR "/src/Dashboard.Backend"
-RUN dotnet build "Dashboard.Backend.csproj" -c Release -o /app/build
+WORKDIR "/src/Doshboard.Backend"
+RUN dotnet build "Doshboard.Backend.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Dashboard.Backend.csproj" -c Release -o /app/publish
+RUN dotnet publish "Doshboard.Backend.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Dashboard.Backend.dll"]
+ENTRYPOINT ["dotnet", "Doshboard.Backend.dll"]
