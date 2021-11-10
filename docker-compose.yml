@@ -5,4 +5,14 @@ services:
       context: .
       dockerfile: "Doshboard.Backend/Dockerfile"
     ports:
-      - "8000:80"
+      - "5001:80"
+  server:
+    build:
+      context: .
+      dockerfile: "Doshboard.Frontend/Dockerfile"
+    environment:
+      - BACKEND=http://backend:80/
+    ports:
+      - "8080:80"
+    depends_on:
+      - "backend"
