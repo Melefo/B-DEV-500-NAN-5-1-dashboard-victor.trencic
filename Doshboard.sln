@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31815.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "doshboard.frontend", "Doshboard.Frontend\doshboard.frontend.esproj", "{49D103B5-5509-4565-9ED7-A14D00431AE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard.Backend", "Dashboard.Backend\Dashboard.Backend.csproj", "{6BD205BB-3EDD-420F-84BB-467F7D511F33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dashboard.Backend", "Dashboard.Backend\Dashboard.Backend.csproj", "{6BD205BB-3EDD-420F-84BB-467F7D511F33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
