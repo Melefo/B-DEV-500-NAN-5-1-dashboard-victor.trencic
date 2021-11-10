@@ -1,18 +1,18 @@
 version: "3.9"
 services:
-  backend:
+  server:
     build:
       context: .
       dockerfile: "Doshboard.Backend/Dockerfile"
     ports:
-      - "5001:80"
-  server:
+      - "8080:80"
+  client:
     build:
       context: .
       dockerfile: "Doshboard.Frontend/Dockerfile"
     environment:
-      - BACKEND_URL=http://backend:80/
+      - BACKEND_URL=http://server:80/
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
-      - "backend"
+      - "server"
