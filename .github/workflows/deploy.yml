@@ -19,7 +19,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          docker build Doshboard.Backend -t doshboard.azurecr.io/doshboardbackend:${{ github.sha }}
+          docker build -f Doshboard.Backend/Dockerfile . -t doshboard.azurecr.io/doshboardbackend:${{ github.sha }}
           docker push doshboard.azurecr.io/doshboardbackend:${{ github.sha }}     
 
       - uses: azure/webapps-deploy@v2
