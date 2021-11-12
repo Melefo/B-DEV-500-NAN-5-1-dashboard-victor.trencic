@@ -1,8 +1,12 @@
 module.exports = {
     devServer: {
         proxy: {
-            '^/weatherforecast': {
-                target: process.env.BACKEND_URL
+            '^/api': {
+                target: process.env.BACKEND_URL || "http://localhost:8080/",
+                ws: true,
+                pathRewrite: {
+                    '^/api': ''
+                }
             }
         },
         public: process.env.PUBLIC_URL,
