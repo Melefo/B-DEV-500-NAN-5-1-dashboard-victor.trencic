@@ -1,4 +1,5 @@
+
 apiRules:
-  - exclude:
+- exclude:
     uidRegex: ^Doshboard\.Test$
     type: Namespace
