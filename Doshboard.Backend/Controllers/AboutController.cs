@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Doshboard.Backend.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller].json")]
     public class AboutController : ControllerBase
     {
         [HttpGet]
