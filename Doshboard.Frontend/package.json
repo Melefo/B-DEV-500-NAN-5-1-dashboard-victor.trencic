@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "jest": "^27.3.1",
     "jest-editor-support": "^30.0.2",
+    "kute.js": "^2.1.2",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0"
   },
