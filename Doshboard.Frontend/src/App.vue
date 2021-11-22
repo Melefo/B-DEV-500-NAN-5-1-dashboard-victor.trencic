@@ -1,31 +1,41 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> | <router-link to="/dashboard">Dashboard</router-link> | <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Background />
+    <Foreground>
+      <router-view />
+    </Foreground>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+    html, body {
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
+    }
 
-#nav {
-  padding: 30px;
-}
+    body {
+        background: #E7E7E7;
+    }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+    #app {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
 </style>
+
+<script lang="ts">
+import Vue from 'vue'
+import Background from '@/components/Background.vue'
+import Foreground from '@/components/Foreground.vue'
+
+export default Vue.extend({
+  components: {
+    Background, Foreground
+  }
+})
+</script>
