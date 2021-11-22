@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Doshboard.Backend.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 namespace Doshboard.Backend
@@ -27,6 +28,7 @@ namespace Doshboard.Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(new Mongo(Configuration));
+            services.AddScoped<UserService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

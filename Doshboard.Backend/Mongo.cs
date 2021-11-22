@@ -26,6 +26,14 @@ namespace Doshboard.Backend
             var cursor = _userCollection.Find(x => x.Username == username);
             return cursor.SingleOrDefault();
         }
+        public void CreateUser(User u)
+        {
+            _userCollection.InsertOneAsync(new User(u.Username, u.Email, u.FirstName, u.LastName, u.Password));
+        }
+        public void DeleteUser(User u)
+        {
+            _userCollection.DeleteOneAsync(x => x.Id == u.Id);
+        }
     }
 
 }
