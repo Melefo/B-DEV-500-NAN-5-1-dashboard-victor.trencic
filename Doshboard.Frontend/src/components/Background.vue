@@ -1,6 +1,6 @@
 <template>
     <div id="background">
-        <Blue />
+        <Blue :styles="{left: '-40%', top: '-35%'}" />
         <Green />
         <Pink />
         <Red />

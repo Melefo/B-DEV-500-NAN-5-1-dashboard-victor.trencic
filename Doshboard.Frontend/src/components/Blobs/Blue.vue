@@ -1,23 +1,21 @@
 <template>
-    <div id="blue">
-        <Goo intensity="strong">
-            <svg role="img" aria-label="Blue blob">
-                <defs>
-                    <linearGradient id="gradient">
-                        <stop offset="0%" stop-color="#2B7CB5" />
-                        <stop offset="100%" stop-color="#55C3E9" />
-                    </linearGradient>
-                </defs>
-                <g>
-                    <circle id="blob1" cx="50%" cy="50%" r="42" fill="url('#gradient')" />
-                    <circle id="blob2" cx="50%" cy="50%" r="26" fill="url('#gradient')" />
-                    <circle id="blob3" cx="50%" cy="50%" r="72" fill="#4FBCDF" />
-                    <circle id="blob4" cx="50%" cy="50%" r="62" fill="#369DBE"  />
-                    <circle id="blob5" cx="50%" cy="50%" r="54" fill="#5ACBF1" />
-                </g>
-            </svg>
-        </Goo>
-    </div>
+    <Goo intensity="strong" :styles="[styles, {position: 'relative'}]">
+        <svg role="img" aria-label="Blue blob">
+            <defs>
+                <linearGradient id="gradient">
+                    <stop offset="0%" stop-color="#2B7CB5" />
+                    <stop offset="100%" stop-color="#55C3E9" />
+                </linearGradient>
+            </defs>
+            <g>
+                <circle id="blob1" cx="50%" cy="50%" r="42" fill="url('#gradient')" />
+                <circle id="blob2" cx="50%" cy="50%" r="26" fill="url('#gradient')" />
+                <circle id="blob3" cx="50%" cy="50%" r="72" fill="#4FBCDF" />
+                <circle id="blob4" cx="50%" cy="50%" r="62" fill="#369DBE"  />
+                <circle id="blob5" cx="50%" cy="50%" r="54" fill="#5ACBF1" />
+            </g>
+        </svg>
+    </Goo>
 </template>
 
 <style scoped>
@@ -70,6 +68,7 @@ import Goo from '@/components/Goo.vue'
 export default Vue.extend({
     components: {
         Goo
-    }
+    },
+    props: ["styles"]
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-bind:style="styles">
       <svg v-bind:style="svgStyle">
         <defs>
           <filter color-interpolation-filters="sRGB" v-bind:id="id">
@@ -9,7 +9,7 @@
           </filter>
         </defs>
       </svg>
-      <div v-bind:class="className" v-bind:style="[styles, {filter: `url(#${id})`}]">
+      <div v-bind:class="className" v-bind:style="{filter: `url(#${id})`}">
         <slot></slot>
       </div>
     </div>
@@ -60,7 +60,7 @@ export default Vue.extend({
             a: a,
             svgStyle: {
                 pointerEvents: 'none',
-                position: 'absolute'
+                display: 'none'
             }
         }
     }
