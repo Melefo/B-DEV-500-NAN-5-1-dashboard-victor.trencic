@@ -2,6 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using System.Linq.Expressions;
 
 namespace Doshboard.Backend
 {
@@ -28,11 +29,16 @@ namespace Doshboard.Backend
         }
         public void CreateUser(User u)
         {
-            _userCollection.InsertOneAsync(new User(u.Username, u.Email, u.FirstName, u.LastName, u.Password));
+            _userCollection.InsertOne(new User(u.Username, u.Email, u.FirstName, u.LastName, u.Password));
         }
-        public void DeleteUser(User u)
+        public void DeleteUser(string id)
         {
-            _userCollection.DeleteOneAsync(x => x.Id == u.Id);
+            _userCollection.DeleteOne(x => x.Id == id);
+        }
+
+        public User GetFilteredUser(Expression<Func<User, bool>> filter)
+        {
+            return _userCollection.Find(filter).SingleOrDefault();
         }
     }
 
