@@ -1,9 +1,12 @@
 ﻿using Doshboard.Backend.Entities;
 using Doshboard.Backend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace Doshboard.Backend.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -26,16 +29,29 @@ namespace Doshboard.Backend.Controllers
             return _service.GetUserFromUsername(username);
         }
 
-        [HttpPost]
+        [AllowAnonymous]
+        [HttpPost("Register")]
         public void Create(User user)
         {
             _service.Create(user);
         }
-
+        
         [HttpDelete]
-        public void Delete(User user)
+        public void Delete(string id)
         {
-            _service.Delete(user);
+            _service.Delete(id);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public ActionResult Login([FromBody] User user)
+        {
+            (var token, user) = _service.Authenticate(user.Email, user.Username, user.Password);
+
+            if (token == null)
+                return Unauthorized();
+            return Ok(new { token, user });
         }
     }
+
 }

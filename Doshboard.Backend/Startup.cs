@@ -36,7 +36,30 @@ namespace Doshboard.Backend
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Doshboard", Version = "v1" });
+
+                var securitySchema = new OpenApiSecurityScheme
+                {
+                    Description = "Using the Authorization header with the Bearer scheme.",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
+
+                c.AddSecurityDefinition("Bearer", securitySchema);
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                  { securitySchema, new[] { "Bearer" } }
+                });
+
             });
+
             services.AddEndpointsApiExplorer();
             services.AddAuthentication(x =>
             {
@@ -49,7 +72,7 @@ namespace Doshboard.Backend
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("JwtKey").ToString())),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtKey"])),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
@@ -72,6 +95,8 @@ namespace Doshboard.Backend
             app.UseRouting();
 
             app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
