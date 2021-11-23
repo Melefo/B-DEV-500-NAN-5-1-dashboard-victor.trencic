@@ -1,8 +1,8 @@
 <template>
     <div id="background">
-        <Blue :styles="{left: '-40%', top: '-35%'}" />
-        <Green />
-        <Pink />
+        <Blue :styles="{top: '8%', left: '-37%'}" />
+        <Green :styles="{top: '40%'}" />
+        <Pink :styles="{right: '-37%', top:'10%'}" />
         <Red />
         <Orange />
         <Hologram />

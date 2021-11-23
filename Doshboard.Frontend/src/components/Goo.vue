@@ -9,7 +9,7 @@
           </filter>
         </defs>
       </svg>
-      <div v-bind:class="className" v-bind:style="{filter: `url(#${id})`}">
+      <div v-bind:class="className" v-bind:style="{filter: `url(#${id})`, position: 'absolute', height:'100%', width:'100%'}">
         <slot></slot>
       </div>
     </div>
@@ -24,9 +24,8 @@ svg * {
     transform-origin: 50% ;
 }
 
-svg {
-  height: 100vh;
-  width: 100vw;
+svg, g {
+  overflow: visible;
 }
 </style>
 
@@ -41,7 +40,7 @@ export default Vue.extend({
         },
         className: String,
         composite: Boolean,
-        styles: Object
+        styles: Array
     },
     data: function() {
         const blur = this.intensity === 'weak' ? 8 : this.intensity === 'strong' ? 18 : 12
