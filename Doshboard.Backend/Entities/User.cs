@@ -12,9 +12,10 @@ namespace Doshboard.Backend.Entities
         /// <summary>
         /// 
         /// </summary>
-        [JsonIgnore]
+        //[JsonIgnore]
         [BsonId]
-        public ObjectId Id { get; private init; } = ObjectId.GenerateNewId();
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; private init; } = ObjectId.GenerateNewId().ToString();
         /// <summary>
         /// 
         /// </summary>
