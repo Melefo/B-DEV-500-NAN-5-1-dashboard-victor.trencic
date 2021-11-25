@@ -2,6 +2,7 @@
   <div id="home">
       <Header/>
       <div id="content">
+        <a href="Dashboard">Dashboard</a>
         <RegisterFrame />
         <LoginFrame />
       </div>
