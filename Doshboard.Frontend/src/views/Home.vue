@@ -5,6 +5,7 @@
         <a href="Dashboard">Dashboard</a>
         <RegisterFrame />
         <LoginFrame />
+        <p>{{ users() }}</p>
       </div>
   </div>
 </template>
@@ -30,6 +31,29 @@ export default {
   name: 'Home',
   components: {
     RegisterFrame, LoginFrame, Header
+  },
+  data: function() {
+    const post = 'bonjour'
+    return {
+      post: post
+    }
+  },
+  created: function() {
+    this.fetchData();
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
+  computed: {
+    users() {
+      return JSON.stringify(this.$store.state.users.all);
+    }
+  },
+  methods: {
+    fetchData() {
+      this.$store.dispatch('users/getAll');
+      return;
+    }
   }
 }
 </script>
