@@ -1,49 +1,55 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Doshboard.Backend.Entities
+namespace Doshboard.Backend.Models
 {
     /// <summary>
-    /// User Model
+    /// Register form data
     /// </summary>
-    public class User
+    public class RegisterForm
     {
-        /// <summary>
-        /// Database User-Object Id
-        /// </summary>
-        //[JsonIgnore]
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; private init; } = ObjectId.GenerateNewId().ToString();
         /// <summary>
         /// User username
         /// </summary>
+        [MinLength(2)]
+        [MaxLength(256)]
+        [Required]
         public string Username { get; set; }
+
         /// <summary>
         /// User email
         /// </summary>
+        [EmailAddress]
+        [Required]
         public string Email { get; set; }
+
         /// <summary>
         /// User first name
         /// </summary>
+        [Required]
         public string FirstName { get; set; }
+
         /// <summary>
         /// User last name
-        /// </summary>
+        [Required]
         public string LastName { get; set; }
+
         /// <summary>
         /// User password
         /// </summary>
+        [MinLength(2)]
+        [MaxLength(256)]
+        [Required]
         public string Password { get; set; }
+
         /// <summary>
-        /// User constructor
+        /// RegisterForm constructor
         /// </summary>
         /// <param name="username">Username</param>
         /// <param name="email">Email</param>
         /// <param name="firstName">First name</param>
         /// <param name="lastName">Last name</param>
         /// <param name="password">Password</param>
-        public User(string username, string email, string firstName, string lastName, string password)
+        public RegisterForm(string username, string email, string firstName, string lastName, string password)
         {
             Username = username;
             Email = email;

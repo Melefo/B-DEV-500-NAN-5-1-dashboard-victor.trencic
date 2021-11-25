@@ -1,58 +1,90 @@
 ﻿using Doshboard.Backend.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 
 namespace Doshboard.Backend.Services
 {
+    /// <summary>
+    /// User realted service
+    /// </summary>
     public class UserService
     {
-        private Mongo _db;
-        private readonly string key;
-        public UserService(Mongo db, IConfiguration config)
+        /// <summary>
+        /// Database access
+        /// </summary>
+        private readonly MongoService _db;
+        /// <summary>
+        /// JWT key
+        /// </summary>
+        private readonly string _key;
+
+        public UserService(MongoService db, IConfiguration config)
         {
             _db = db;
-            key = config["JwtKey"];
+            _key = config["JwtKey"];
         }
 
+        /// <summary>
+        /// Get all users
+        /// </summary>
+        /// <returns>List of User</returns>
         public List<User> GetUsers() => _db.GetUsers();
 
-        public User GetUserFromUsername(string username) => _db.GetUserFromUsername(username);
+        /// <summary>
+        /// Get an User by its username
+        /// </summary>
+        /// <param name="username">User username</param>
+        /// <returns>User account</returns>
+        public User GetUserFromUsername(string username) => _db.GetUserByUsername(username);
 
+        /// <summary>
+        /// Create an User account
+        /// </summary>
+        /// <param name="user">User informations</param>
         public void Create(User user) => _db.CreateUser(user);
 
-        public void Delete(string id) => _db.DeleteUser(id);
+        /// <summary>
+        /// Deleta an User account
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns>If successfully deleted</returns>
+        public bool Delete(string id) => _db.DeleteUser(id);
 
-        public (string, User) Authenticate(string email, string username, string password)
+        /// <summary>
+        /// Authenticate User and give him a token
+        /// </summary>
+        /// <param name="username">User username or email</param>
+        /// <param name="password">User password</param>
+        /// <param name="user">User informations</param>
+        /// <returns>JWT</returns>
+        public string? Authenticate(string username, string password, out User user)
         {
-            var user = _db.GetFilteredUser(x => (x.Email == email || x.Username == username) && x.Password == password);
+            user = _db.GetUserByAuthentication(username, password);
 
             if (user == null)
-                return (null, null);
+                return null;
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+            JwtSecurityTokenHandler tokenHandler = new();
 
-            var tokenKey = Encoding.UTF8.GetBytes(key);
+            var tokenKey = Encoding.UTF8.GetBytes(_key);
 
-            var tokenDescriptor = new SecurityTokenDescriptor()
+            SecurityTokenDescriptor tokenDescriptor = new()
             {
-                Subject = new ClaimsIdentity(new Claim[]
+                Subject = new(new Claim[]
                 {
-                    new Claim(ClaimTypes.Email, email),
+                    new(ClaimTypes.Email, user.Email),
                 }),
 
                 Expires = DateTime.UtcNow.AddHours(1),
 
-                SigningCredentials = new SigningCredentials (
-                        new SymmetricSecurityKey(tokenKey),
-                        SecurityAlgorithms.HmacSha256
-            )};
+                SigningCredentials = new(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256)
+            };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);     
+            var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return (tokenHandler.WriteToken(token), user);
+            return tokenHandler.WriteToken(token);
         }
     }
 }

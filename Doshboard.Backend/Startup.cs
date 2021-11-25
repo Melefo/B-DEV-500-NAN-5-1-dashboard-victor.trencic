@@ -30,7 +30,7 @@ namespace Doshboard.Backend
         /// <param name="services">Where to register services</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(new Mongo(Configuration));
+            services.AddSingleton(new MongoService(Configuration));
             services.AddScoped<UserService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -77,6 +77,8 @@ namespace Doshboard.Backend
                     ValidateAudience = false
                 };
             });
+
+            services.AddRouting(x => x.LowercaseUrls = true);
         }
 
         /// <summary>
