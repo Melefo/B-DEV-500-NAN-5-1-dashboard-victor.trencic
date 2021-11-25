@@ -6,6 +6,7 @@
             <TextInput name="firstname" isRequired="true" placeHolder="First Name"/>
             <TextInput name="lastname" isRequired="true" placeHolder="Last Name"/>
             <PasswordInput name="password" isRequired="true" placeHolder="Password"/>
+            <PasswordInput name="password-confirm" isRequired="true" placeHolder="Confirme Password"/>
         </DForm>
     </div>
 </template>
