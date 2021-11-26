@@ -1,35 +1,19 @@
 <template>
-  <div id="home">
-      <Header/>
-      <div id="content">
-        <a href="Dashboard">Dashboard</a>
-        <RegisterFrame />
-        <LoginFrame />
-      </div>
+  <div>
+    <p>Welcome!</p>
+    <router-link v-if="!isLoggedIn" to="/login">
+      <p>Login</p>
+    </router-link>
   </div>
 </template>
 
-<style>
-  #home {
-    height: 100%;
-    width: 100%;
-  }
-  #content {
-    height: 100%;
-    width: 100%;
-    display: flex;
-  }
-</style>
-
 <script>
-import RegisterFrame from '@/components/RegisterFrame.vue'
-import LoginFrame from '@/components/LoginFrame.vue'
-import Header from '@/components/Header.vue'
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Home',
-  components: {
-    RegisterFrame, LoginFrame, Header
+  computed: {
+    ...mapGetters("user", ["isLoggedIn"])
   }
 }
 </script>

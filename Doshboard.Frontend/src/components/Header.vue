@@ -1,18 +1,66 @@
 <template>
-    <div id="header">
-        
-    </div>
+    <header id="header">
+        <router-link to="/">
+            <img src="@/assets/logo.png" />
+        </router-link>
+        <div>
+            <h1>Welcome on the Doshboard</h1>
+            <p>It's a great day for login or register</p>
+        </div>
+        <div>
+            <DateTime />
+        </div>
+    </header>
 </template>
 
-<style>
-    #header {
-        width: 80%;
-        height: 30%;
-        /* left: 403px;
-        top: 455px;   */
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 50px;
-        backdrop-filter: blur(30px);
-        box-shadow: 10px 5px 10px #00000010;
+<style scoped>
+    h1, p {
+        margin: 5px 0;
+        text-align: left;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+    
+    p {
+        font-size: 20px;
     }
 </style>
+
+<style>
+#header {
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+}
+
+#header a {
+  padding: 3%;
+  padding-top: 2%;
+  height: 40%;
+}
+
+#header img {
+  height: 100%;
+  transform: rotate(-17deg);
+}
+
+#header div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10%;
+}
+</style>
+
+<script lang="ts">
+import Vue from 'vue'
+import DateTime from '@/components/Widgets/DateTime.vue'
+
+export default Vue.extend({
+    components: {
+        DateTime
+    }
+})
+</script>

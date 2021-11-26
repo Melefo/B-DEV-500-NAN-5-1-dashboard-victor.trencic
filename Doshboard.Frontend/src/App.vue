@@ -20,12 +20,29 @@
         background: #E7E7E7;
     }
 
+    * {
+        font-family: 'AvenirLTStd';
+    }
+
     #app {
       display: flex;
       height: 100%;
       width: 100%;
       justify-content: center;
       align-items: center;
+    }
+
+    input {
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      box-shadow: 0 2px 1px #88888866;
+      color: grey;
+      background: white;
+    }
+
+    input::placeholder {
+      color: grey;
     }
 </style>
 
