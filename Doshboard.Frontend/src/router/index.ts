@@ -49,10 +49,4 @@ router.beforeEach((to, from, next) => {
   next();
 })
 
-export function authHeader() : HeadersInit {
-  if (store.getters["user/isLoggedIn"])
-    return { 'Authorization': 'Bearer ' + store.getters["user/token"] };
-  return {};
-}
-
 export default router

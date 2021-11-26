@@ -1,35 +1,26 @@
-import { authHeader } from "@/router";
+import { authHeader } from "@/state/index";
 
 export const user = {
     namespaced: true,
     state: {
         token: null,
-        all: null,
-        one: null
     },
     mutations: {
         login(state, token) {
             state.token = token;
-        },
-        all(state, users) {
-            state.all = users;
-        },
-        one(state, user) {
-            state.one = user;
         }
     },
     actions: {
-        login({ commit }, json) {
-            fetch("/api/user/login", {
+        async login({ commit }, json) {
+            const res = await fetch("/api/user/login", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json"
                 },
                 body: JSON.stringify(json)
-              }).then(async res => {
-                const { token } = await res.json();
-                commit('login', token);
-              })
+              });
+            const { token } = await res.json();
+            commit('login', token);
         },
         register({ commit }, json) {
             fetch("/api/user/register", {
@@ -45,23 +36,19 @@ export const user = {
                 method: "DELETE",
             })
         },
-        all({ commit }) {
-            fetch("/api/user", {
+        async all({ commit }) {
+            const res = await fetch("/api/user", {
                 method: "GET",
                 headers: authHeader()
-            }).then(async res => {
-                const list = await res.json();
-                commit('all', list);
-            })
+            });
+            return await await res.json();
         },
-        one({ commit }, user) {
-            fetch("/api/user/" + user, {
+        async one({ commit }, user) {
+            const res = await fetch("/api/user/" + user, {
                 method: "GET",
                 headers: authHeader()
-            }).then(async res => {
-                const user = await res.json();
-                commit('one', user);
-            })
+            });
+            return await await res.json();
         }
     },
     getters: {
