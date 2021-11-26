@@ -20,7 +20,7 @@ import Frame from '@/components/Frame.vue'
 import { mapActions } from 'vuex'
 
 export default {
-  name: 'HomeFrame',
+  name: 'LoginFrame',
   components: {
     Frame
   },

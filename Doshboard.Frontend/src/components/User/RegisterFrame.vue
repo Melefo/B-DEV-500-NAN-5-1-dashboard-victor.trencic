@@ -1,6 +1,6 @@
 <template>
     <Frame>
-        <form action="/" method="POST">
+        <form id="register" @submit.prevent="send">
             <div>
               <input name="firstname" required placeholder="First Name" type="text" v-model="firstname" />
               <input name="lastname" required placeholder="Last Name" type="text" v-model="lastname" />
@@ -22,9 +22,10 @@
 
 <script>
 import Frame from '@/components/Frame.vue'
+import { mapActions } from 'vuex'
 
 export default {
-  name: 'HomeFrame',
+  name: 'RegisterFrame',
   components: {
     Frame
   },
@@ -36,6 +37,14 @@ export default {
       email: "",
       password: "",
       confirm: ""
+    }
+  },
+  methods: {
+    ...mapActions("user", ["register"]),
+    async send(e) {
+      e.preventDefault();
+
+      await this.register({firstName: this.firstname, lastName: this.lastname, username: this.username, email: this.email, password: this.password});
     }
   }
 }
