@@ -1,4 +1,5 @@
 ﻿using Doshboard.Backend.Entities;
+using Doshboard.Backend.Utilities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -43,7 +44,11 @@ namespace Doshboard.Backend.Services
         /// Create an User account
         /// </summary>
         /// <param name="user">User informations</param>
-        public void Create(User user) => _db.CreateUser(user);
+        public void Create(User user)
+        {
+            user.Password = PasswordHash.HashPassword(user.Password);
+            _db.CreateUser(user);
+        }
 
         /// <summary>
         /// Deleta an User account
@@ -59,13 +64,17 @@ namespace Doshboard.Backend.Services
         /// <param name="password">User password</param>
         /// <param name="user">User informations</param>
         /// <returns>JWT</returns>
-        public string? Authenticate(string username, string password, out User user)
+        public string? Authenticate(string username, string password, out User? user)
         {
-            user = _db.GetUserByAuthentication(username, password);
+            var found = _db.GetUserByIdentifier(username);
+            user = default;
 
-            if (user == null)
+            if (found == null)
+                return null;
+            if (!PasswordHash.VerifyPassword(password, found.Password))
                 return null;
 
+            user = found;
             JwtSecurityTokenHandler tokenHandler = new();
 
             var tokenKey = Encoding.UTF8.GetBytes(_key);

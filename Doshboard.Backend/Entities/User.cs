@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Text.Json.Serialization;
 
 namespace Doshboard.Backend.Entities
 {
@@ -15,26 +16,33 @@ namespace Doshboard.Backend.Entities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; private init; } = ObjectId.GenerateNewId().ToString();
+
         /// <summary>
         /// User username
         /// </summary>
         public string Username { get; set; }
+
         /// <summary>
         /// User email
         /// </summary>
         public string Email { get; set; }
+
         /// <summary>
         /// User first name
         /// </summary>
         public string FirstName { get; set; }
+
         /// <summary>
         /// User last name
         /// </summary>
         public string LastName { get; set; }
+
         /// <summary>
         /// User password
         /// </summary>
+        [JsonIgnore]
         public string Password { get; set; }
+
         /// <summary>
         /// User constructor
         /// </summary>

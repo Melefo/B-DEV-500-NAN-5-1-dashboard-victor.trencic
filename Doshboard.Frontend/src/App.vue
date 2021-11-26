@@ -1,29 +1,59 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <Background />
+    <Foreground>
+      <router-view />
+    </Foreground>
   </div>
 </template>
 
+<style>
+    html, body {
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    body {
+        background: #E7E7E7;
+    }
+
+    * {
+        font-family: 'AvenirLTStd';
+    }
+
+    #app {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+
+    input {
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      box-shadow: 0 2px 1px #88888866;
+      color: grey;
+      background: white;
+    }
+
+    input::placeholder {
+      color: grey;
+    }
+</style>
+
 <script lang="ts">
-import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import Vue from 'vue'
+import Background from '@/components/Background.vue'
+import Foreground from '@/components/Foreground.vue'
 
 export default Vue.extend({
-  name: 'App',
   components: {
-    HelloWorld
+    Background, Foreground
   }
-});
+})
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
