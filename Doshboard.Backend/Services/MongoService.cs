@@ -54,11 +54,10 @@ namespace Doshboard.Backend
         /// <summary>
         /// Get user by its authentication informations
         /// </summary>
-        /// <param name="username">User username or email</param>
-        /// <param name="password">User password</param>
+        /// <param name="identifier">User username or email</param>
         /// <returns>User account</returns>
-        public User GetUserByAuthentication(string username, string password) =>
-            _userCollection.Find(x => (x.Username == username || x.Email == username) && x.Password == password).SingleOrDefault();
+        public User GetUserByIdentifier(string identifier) =>
+            _userCollection.Find(x => x.Username == identifier || x.Email == identifier).SingleOrDefault();
 
         /// <summary>
         /// Create and insert user inside database
