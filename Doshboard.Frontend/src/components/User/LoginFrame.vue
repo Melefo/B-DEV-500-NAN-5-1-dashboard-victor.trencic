@@ -5,6 +5,7 @@
             <input name="password" v-model="password" required placeholder="Password" /> 
             <input type="submit" value="Login" />
         </form>
+        <button @click="handleClickSignIn" :disabled="!isLoaded">signIn</button>
     </Frame>
 </template>
 
@@ -27,7 +28,8 @@ export default {
   data: () => {
     return {
       username: "",
-      password: ""
+      password: "",
+      isLoaded: true
     }
   },
   methods: {
@@ -37,6 +39,18 @@ export default {
 
       await this.login({username: this.username, password: this.password});
       this.$router.push("/");
+    },
+    async handleClickSignIn() {
+      const test = await this.$gAuth.getAuthCode()
+      /*const test2 = await this.$gAuth.signIn(function (user) {
+        //on success do something
+      console.log('user', user)
+      }, function (error) {
+        console.log(error)
+        //on fail do something
+      })*/
+      console.log(test)
+      //console.log(test2)
     }
   }
 }

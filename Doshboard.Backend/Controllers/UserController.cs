@@ -90,6 +90,12 @@ namespace Doshboard.Backend.Controllers
                 return Unauthorized();
             return Ok(new { token, user });
         }
-    }
 
+        [AllowAnonymous]
+        [HttpGet("login/google")]
+        public ActionResult Google()
+        {
+            return Ok();
+        }
+    }
 }
