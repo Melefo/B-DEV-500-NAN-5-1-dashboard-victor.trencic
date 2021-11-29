@@ -23,6 +23,10 @@ namespace Doshboard.Backend
         /// Mongo User Collection
         /// </summary>
         private readonly IMongoCollection<User> _userCollection;
+        /// <summary>
+        /// Mongo Service Collection
+        /// </summary>
+        private readonly IMongoCollection<UserServices> _userServicesCollection;
 
         /// <summary>
         /// Mongo constructor
@@ -34,6 +38,7 @@ namespace Doshboard.Backend
             _client = new MongoClient(config["Mongo:Client"]);
             _db = _client.GetDatabase(config["Mongo:Database"]);
             _userCollection = _db.GetCollection<User>("Users");
+            _userServicesCollection = _db.GetCollection<UserServices>("UserServices");
         }
 
         /// <summary>
@@ -76,6 +81,33 @@ namespace Doshboard.Backend
             var result = _userCollection.DeleteOne(x => x.Id == id);
 
             return result.IsAcknowledged && result.DeletedCount == 1;
+        }
+
+        /// <summary>
+        /// Get services linked to an user
+        /// </summary>
+        /// <param name="user">User account</param>
+        /// <returns>User services</returns>
+        public UserServices GetUserServices(string userId)
+        {
+            var result = _userServicesCollection.Find(x => x.Owner.Id == userId);
+
+            return result.SingleOrDefault() ?? new(userId);
+        }
+
+        /// <summary>
+        /// Save User services to database
+        /// </summary>
+        /// <param name="services">User services</param>
+        /// <returns>True if successfully saved</returns>
+        public bool SaveUserServices(UserServices services)
+        {
+            var result = _userServicesCollection.ReplaceOne(x => x.Id == services.Id, services, new ReplaceOptions 
+            {
+                IsUpsert = true
+            });
+
+            return result.IsAcknowledged && result.ModifiedCount == 1;
         }
     }
 

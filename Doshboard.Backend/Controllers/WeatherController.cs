@@ -1,11 +1,12 @@
-﻿using Doshboard.Backend.Services;
+﻿using Doshboard.Backend.Entities;
+using Doshboard.Backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Doshboard.Backend.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
+    [Route("services/[controller]")]
     [ApiController]
     public class WeatherController : ControllerBase
     {
@@ -15,9 +16,9 @@ namespace Doshboard.Backend.Controllers
             _service = service;
 
         [HttpGet]
-        public async Task<ActionResult<WeatherData>> Get(string city)
+        public async Task<ActionResult<WeatherData>> Get()
         {
-            WeatherData? response = await _service.Get();
+            WeatherData? response = await _service.Get(User.Identity!.Name!);
 
             if (response == null)
                 return BadRequest();
@@ -25,9 +26,7 @@ namespace Doshboard.Backend.Controllers
         }
 
         [HttpPost]
-        public void Configure(string? city, UnitType? unit)
-        {
-            _service.Configure(city, unit);
-        }
+        public void Configure(string? city, UnitType? unit) => 
+            _service.Configure(User.Identity!.Name!, city, unit);
     }
 }
