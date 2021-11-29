@@ -55,7 +55,7 @@ namespace Doshboard.Backend.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
             var user = new User(form.Username, form.Email, form.FirstName, form.LastName, form.Password);
-            if (GetUsers().Count == 0)
+            if (_service.GetUsers().Count == 0)
                 user.Role = "Admin";
             _service.Create(user);
             return Created("", user);
