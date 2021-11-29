@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/solid.css">
     <Background />
     <Foreground>
-      <router-view />
+        <router-view />
     </Foreground>
   </div>
 </template>
