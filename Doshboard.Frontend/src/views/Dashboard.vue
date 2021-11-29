@@ -13,12 +13,18 @@
                 <vuescroll>
                     <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="true" :is-mirrored="false" :vertical-compact="true" :margin="[40, 40]" :use-css-transforms="true">
                         <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i">
-                            {{ item.i }}
+                            <ul>
+                                <li>{{ weather.temp }}</li>
+                                <li>{{ weather.humidity }}</li>
+                                <li><img :src=weather.icon></li>
+                                <li>{{ weather.city }}</li>
+                            </ul>
                         </grid-item>
                     </grid-layout>
                 </vuescroll>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -68,6 +74,7 @@ i {
 
 <script lang="ts">
     import Vue from 'vue'
+    import { mapActions } from 'vuex';
     import VueGridLayout from 'vue-grid-layout'
     import Header from '@/components/Header.vue'
     import vuescroll from 'vuescroll'
@@ -79,6 +86,9 @@ i {
             GridItem: VueGridLayout.GridItem,
             Header, vuescroll
         },
+        computed: {
+            ...mapActions("weather", ["get"]),
+        },
         data: function () {
             return {
                 layout: [
@@ -89,7 +99,12 @@ i {
                     {"x":2,"y":2,"w":2,"h":2,"i":"4"},
                     {"x":4,"y":2,"w":2,"h":2,"i":"5"},
                 ],
+                weather:[]
             }
+        },
+        created: async function() {
+                this.weather = await this.get;
         }
     })
 </script>
+

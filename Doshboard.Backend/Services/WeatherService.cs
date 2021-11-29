@@ -92,7 +92,7 @@ namespace Doshboard.Backend.Services
         public async Task<WeatherData?> Get(string userId)
         {
             var weather = _mongo.GetUserServices(userId).Weather ?? new();
-
+            Console.WriteLine("GET");
             WeatherJson? response = await _client.GetFromJsonAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={weather.City}&appid={_apiKey}&unit={weather.Unit}");
             if (response == null)
                 return default;
