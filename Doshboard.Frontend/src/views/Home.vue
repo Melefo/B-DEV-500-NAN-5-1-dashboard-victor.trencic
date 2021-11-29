@@ -4,6 +4,9 @@
     <router-link v-if="!isLoggedIn" to="/login">
       <p>Login</p>
     </router-link>
+    <router-link v-if="isLoggedIn" to="/dashobard">
+      <p>Dashboard</p>
+    </router-link>
   </div>
 </template>
 
