@@ -84,6 +84,7 @@ namespace Doshboard.Backend.Services
                 Subject = new(new Claim[]
                 {
                     new(ClaimTypes.Email, user.Email),
+                    new(ClaimTypes.Role, user.Role),
                 }),
 
                 Expires = DateTime.UtcNow.AddHours(1),

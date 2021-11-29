@@ -10,7 +10,7 @@ namespace Doshboard.Backend.Controllers
     /// <summary>
     /// user information/auth route
     /// </summary>
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Route("[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -55,7 +55,9 @@ namespace Doshboard.Backend.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
             var user = new User(form.Username, form.Email, form.FirstName, form.LastName, form.Password);
-               _service.Create(user);
+            if (GetUsers().Count == 0)
+                user.Role = "Admin";
+            _service.Create(user);
             return Created("", user);
         }
         
