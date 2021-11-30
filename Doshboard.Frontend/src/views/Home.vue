@@ -4,7 +4,7 @@
     <router-link v-if="!isLoggedIn" to="/login">
       <p>Login</p>
     </router-link>
-    <router-link v-if="isLoggedIn" to="/dashobard">
+    <router-link v-if="isLoggedIn" to="/dashoboard">
       <p>Dashboard</p>
     </router-link>
   </div>
