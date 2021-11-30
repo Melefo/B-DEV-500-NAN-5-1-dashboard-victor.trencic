@@ -1,7 +1,7 @@
 <template>
     <div id="weather-widget">
         <div class="temperature">{{ weather.temp }}</div>
-        <div class="humidity">{{ weather.humidity }}</div>
+        <div class="humidity">{{ weather.humidity }}☔</div>
         <div class="icon"><img :src=weather.icon></div>
         <div class="city">{{ weather.city }}</div>
     </div>
