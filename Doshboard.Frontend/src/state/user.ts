@@ -41,7 +41,14 @@ export const user = {
                 method: "GET",
                 headers: authHeader()
             });
-            return await res.json();
+            return await await res.json();
+        },
+        async one({ commit }, user) {
+            const res = await fetch("/api/user/" + user, {
+                method: "GET",
+                headers: authHeader()
+            });
+            return await await res.json();
         }
     },
     getters: {

@@ -3,8 +3,8 @@ import { authHeader } from "@/state/index";
 export const weather = {
     namespaced: true,
     actions: {
-        async get({ commit }) {
-            const res = await fetch("/api/services/weather", {
+        async getById({ commit }, id) {
+            const res = await fetch("/api/services/weather/city_temperature?" + new URLSearchParams({ id: id }), {
                 method: "GET",
                 headers: authHeader()
             });

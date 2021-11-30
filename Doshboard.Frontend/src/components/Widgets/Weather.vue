@@ -17,8 +17,11 @@
 
     export default Vue.extend({
         name: 'Dashboard',
-        computed: {
-            ...mapActions("weather", ["get"]),
+        methods: {
+            ...mapActions("weather", ["getById"]),
+        },
+        props : {
+            id: Number
         },
         data: function () {
             return {
@@ -26,7 +29,8 @@
             }
         },
         created: async function() {
-                this.weather = await this.get;
+                
+                this.weather = await this.getById(this.id);
         }
     })
 </script>

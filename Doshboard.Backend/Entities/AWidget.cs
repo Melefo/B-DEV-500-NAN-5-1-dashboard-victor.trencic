@@ -10,6 +10,7 @@ namespace Doshboard.Backend.Entities
         CityTemp
     }
 
+    [BsonKnownTypes(typeof(CityTempWidget))]
     public abstract class AWidget
     {
         [BsonId]
