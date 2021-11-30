@@ -46,6 +46,10 @@ namespace Doshboard.Backend.Services
         /// <param name="user">User informations</param>
         public void Create(User user)
         {
+            if (_db.GetUserByIdentifier(user.Email) != null || _db.GetUserByIdentifier(user.Username) != null)
+            {
+                return;
+            }
             user.Password = PasswordHash.HashPassword(user.Password);
             _db.CreateUser(user);
         }
