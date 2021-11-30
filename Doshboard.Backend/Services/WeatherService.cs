@@ -119,6 +119,7 @@ namespace Doshboard.Backend.Services
                 return default;
 
             WeatherJson? response = await _client.GetFromJsonAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&unit={widget.Unit}");
+
             if (response == null)
                 return default;
 

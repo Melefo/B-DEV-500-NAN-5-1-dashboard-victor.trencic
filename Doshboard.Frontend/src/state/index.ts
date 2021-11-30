@@ -4,6 +4,7 @@ import Vue from 'vue'
 import { user } from '@/state/user'
 import { widget } from '@/state/widget'
 import { about } from '@/state/about'
+import { weather } from '@/state/weather'
 
 Vue.use(Vuex)
 
@@ -16,7 +17,8 @@ export const store = new Vuex.Store({
     modules: {
         user,
         widget,
-        about
+        about,
+        weather
     }
 })
 

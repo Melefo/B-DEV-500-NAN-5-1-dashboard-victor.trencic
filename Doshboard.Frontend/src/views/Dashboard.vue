@@ -11,9 +11,17 @@
             </div>
             <div id="right">
                 <vuescroll>
+<<<<<<< HEAD
                     <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="true" :is-mirrored="false" :vertical-compact="true" :margin="[40, 40]" :use-css-transforms="true" @breakpoint-changed="breakpointChangedEvent">
                         <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.width" :h="item.height" :i="item.i" :key="item.id" @resize="eventResize">
                             {{ item.id }}
+=======
+                    <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="true" :is-mirrored="false" :vertical-compact="true" :margin="[40, 40]" :use-css-transforms="true">
+                        <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i">
+                            <div v-if="item.type == 'weather'">
+                                <Weather/>
+                            </div>
+>>>>>>> fca389847f6dfeaaa788f4ec7e615b14356e31c7
                         </grid-item>
                     </grid-layout>
                 </vuescroll>
@@ -23,12 +31,13 @@
 </template>
 
 <style>
-  #content {
+
+#content {
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
-  }
+}
 
 #body {
     display: flex;
@@ -78,12 +87,13 @@ i {
     import VueGridLayout from 'vue-grid-layout'
     import Header from '@/components/Header.vue'
     import vuescroll from 'vuescroll'
+    import Weather from '@/components/Widgets/Weather.vue'
     import { mapActions } from 'vuex'
 
     export default Vue.extend({
         name: 'Dashboard',
         components: {
-            GridLayout: VueGridLayout.GridLayout,
+            Weather, GridLayout: VueGridLayout.GridLayout,
             GridItem: VueGridLayout.GridItem,
             Header, vuescroll
         },
@@ -109,3 +119,4 @@ i {
         }
     })
 </script>
+
