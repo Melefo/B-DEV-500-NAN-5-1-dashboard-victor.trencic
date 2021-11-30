@@ -4,6 +4,7 @@ import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Admin from '@/views/Admin.vue'
+import Widgets from '@/views/Widgets.vue'
 import { store } from '@/state/index'
 
 Vue.use(VueRouter)
@@ -31,6 +32,11 @@ const routes: Array<RouteConfig> = [
     name: 'Login',
     component: Login,
     meta: { onlyGuest: true }
+  },
+  {
+    path: '/widgets',
+    name: 'Widgets',
+    component: Widgets
   }
 ]
 

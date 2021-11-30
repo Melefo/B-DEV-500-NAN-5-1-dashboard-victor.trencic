@@ -34,13 +34,6 @@ namespace Doshboard.Backend.Services
         public List<User> GetUsers() => _db.GetUsers();
 
         /// <summary>
-        /// Get an User by its username
-        /// </summary>
-        /// <param name="username">User username</param>
-        /// <returns>User account</returns>
-        public User GetUserFromUsername(string username) => _db.GetUserByUsername(username);
-
-        /// <summary>
         /// Create an User account
         /// </summary>
         /// <param name="user">User informations</param>

@@ -11,9 +11,9 @@
             </div>
             <div id="right">
                 <vuescroll>
-                    <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="true" :is-mirrored="false" :vertical-compact="true" :margin="[40, 40]" :use-css-transforms="true">
-                        <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i">
-                            {{ item.i }}
+                    <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="true" :is-mirrored="false" :vertical-compact="true" :margin="[40, 40]" :use-css-transforms="true" @breakpoint-changed="breakpointChangedEvent">
+                        <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.width" :h="item.height" :i="item.i" :key="item.id" @resize="eventResize">
+                            {{ item.id }}
                         </grid-item>
                     </grid-layout>
                 </vuescroll>
@@ -78,6 +78,7 @@ i {
     import VueGridLayout from 'vue-grid-layout'
     import Header from '@/components/Header.vue'
     import vuescroll from 'vuescroll'
+    import { mapActions } from 'vuex'
 
     export default Vue.extend({
         name: 'Dashboard',
@@ -88,15 +89,23 @@ i {
         },
         data: function () {
             return {
-                layout: [
-                    {"x":0,"y":0,"w":2,"h":1,"i":"0"},
-                    {"x":2,"y":0,"w":2,"h":3,"i":"1"},
-                    {"x":4,"y":0,"w":2,"h":3,"i":"2"},
-                    {"x":0,"y":1,"w":2,"h":3,"i":"3"},
-                    {"x":2,"y":2,"w":2,"h":2,"i":"4"},
-                    {"x":4,"y":2,"w":2,"h":2,"i":"5"},
-                ],
+                layout: [],
             }
+        },
+        methods: {
+            ...mapActions("widget", ["get"]),
+            eventResize(i, newH, newW, newHPx, newWPx) {
+                const msg = "RESIZE i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx;
+                newH = 10;
+                newW = 10;
+                console.log(msg);
+            },
+            breakpointChangedEvent(newBreakpoint, newLayout){
+                console.log("BREAKPOINT CHANGED breakpoint=", newBreakpoint, ", layout: ", newLayout );
+            },
+        },
+        created: async function() {
+            this.layout = await this.get();
         }
     })
 </script>

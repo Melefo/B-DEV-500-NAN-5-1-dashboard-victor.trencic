@@ -1,4 +1,7 @@
-﻿using Doshboard.Backend.Entities;
+﻿using Doshboard.Backend.Attributes;
+using Doshboard.Backend.Entities;
+using Doshboard.Backend.Entities.Widget;
+using Doshboard.Backend.Interfaces;
 
 namespace Doshboard.Backend.Services
 {
@@ -64,11 +67,22 @@ namespace Doshboard.Backend.Services
         public int Cod { get; set; }
     }
 
-    public class WeatherService
+    public enum UnitType
     {
-        private HttpClient _client = new HttpClient();
-        private MongoService _mongo;
-        private string _apiKey;
+        Celsius,
+        Fahrenheit
+    }
+
+    [ServiceName("Weather")]
+    public class WeatherService : IService
+    {
+        private readonly HttpClient _client = new();
+        private readonly MongoService _mongo;
+        private readonly string _apiKey;
+        public static Type[] Widgets => new[]
+        {
+            typeof(CityTempWidget)
+        };
 
         public WeatherService(IConfiguration config, MongoService mongo)
         {
@@ -76,24 +90,35 @@ namespace Doshboard.Backend.Services
             _mongo = mongo;
         }
 
-        public void Configure(string userId, string? newCity, UnitType? newUnit)
+        public void ConfigureCityTemp(string userId, int id, string? newCity, UnitType? newUnit)
         {
-            var services = _mongo.GetUserServices(userId);
+            var refs = _mongo.GetUserWidgets(userId);
+            if (refs.Widgets.Count <= id)
+                return;
 
-            services.Weather ??= new();
+            var widget = _mongo.GetWidget<CityTempWidget>(refs.Widgets[id]);
+            if (widget.Type != WidgetType.CityTemp)
+                return;
+
             if (newCity != null)
-                services.Weather.City = newCity;
+                widget.City = newCity;
             if (newUnit != null)
-                services.Weather.Unit = (UnitType)newUnit;
+                widget.Unit = (UnitType)newUnit;
 
-            _mongo.SaveUserServices(services);
+            _mongo.SaveWidget(widget);
         }
 
-        public async Task<WeatherData?> Get(string userId)
+        public async Task<WeatherData?> GetCityTemp(string userId, int id)
         {
-            var weather = _mongo.GetUserServices(userId).Weather ?? new();
+            var refs = _mongo.GetUserWidgets(userId);
+            if (refs.Widgets.Count <= id)
+                return default;
 
-            WeatherJson? response = await _client.GetFromJsonAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={weather.City}&appid={_apiKey}&unit={weather.Unit}");
+            var widget = _mongo.GetWidget<CityTempWidget>(refs.Widgets[id]);
+            if (widget.Type != WidgetType.CityTemp)
+                return default;
+
+            WeatherJson? response = await _client.GetFromJsonAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&unit={widget.Unit}");
             if (response == null)
                 return default;
 
