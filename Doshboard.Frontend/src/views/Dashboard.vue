@@ -11,11 +11,9 @@
             </div>
             <div id="right">
                 <vuescroll>
-                    <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[40, 40]" :use-css-transforms="true">
-                        <grid-item v-for="(item, index) in layout" :x="item.x" :y="item.y" :w="item.width" :h="item.height" :i="index" :key="item.id">
-                            <div v-if="item.type == 0">
-                                <Weather :id=index />
-                            </div>
+                    <grid-layout :layout.sync="layout" :col-num="12" :row-height="30" :is-draggable="true" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[10, 10]" :use-css-transforms="true">
+                        <grid-item v-for="(item, index) in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i">
+                            <Weather v-if="item.type == 0" :id=index />
                         </grid-item>
                     </grid-layout>
                 </vuescroll>
@@ -81,35 +79,37 @@ i {
     import VueGridLayout from 'vue-grid-layout'
     import Header from '@/components/Header.vue'
     import vuescroll from 'vuescroll'
-    import Weather from '@/components/Widgets/Weather.vue'
     import { mapActions } from 'vuex'
+    import Weather from '@/components/Widgets/Weather.vue'
 
     export default Vue.extend({
         name: 'Dashboard',
         components: {
-            Weather, GridLayout: VueGridLayout.GridLayout,
+            GridLayout: VueGridLayout.GridLayout,
             GridItem: VueGridLayout.GridItem,
-            Header, vuescroll
+            Header, vuescroll, Weather
         },
         data: function () {
             return {
-                layout: [],
+                layout: []
             }
         },
         methods: {
-            ...mapActions("widget", ["get"]),
-            eventResize(i, newH, newW, newHPx, newWPx) {
-                const msg = "RESIZE i=" + i + ", H=" + newH + ", W=" + newW + ", H(px)=" + newHPx + ", W(px)=" + newWPx;
-                newH = 10;
-                newW = 10;
-                console.log(msg);
-            },
-            breakpointChangedEvent(newBreakpoint, newLayout){
-                console.log("BREAKPOINT CHANGED breakpoint=", newBreakpoint, ", layout: ", newLayout );
-            },
+            ...mapActions("widget", ["get"])
         },
         created: async function() {
-            this.layout = await this.get();
+            const data = await this.get();
+            const test = data.map((item) => {
+                return {
+                    x:item.x,
+                    y:item.y,
+                    w:item.width,
+                    h:item.height,
+                    i:item.id,
+                    type: item.type
+                }
+            })
+            this.layout = test
         }
     })
 </script>
