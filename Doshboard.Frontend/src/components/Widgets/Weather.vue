@@ -29,7 +29,7 @@
             }
         },
         created: async function() {
-            await this.getById(this.id);
+            this.weather = await this.getById(this.id);
         }
     })
 </script>
