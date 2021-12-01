@@ -46,7 +46,24 @@ const router = new VueRouter({
   routes
 })
 
+function parseJwt (token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(atob(base64).split("").map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
+}
+
 router.beforeEach((to, from, next) => {
+  if (store.getters["user/isLoggedIn"]) {
+    const jwtPayload = parseJwt(store.getters["user/token"]);
+    if (jwtPayload.exp < Date.now() / 1000) {
+        store.dispatch("user/logout");
+    }
+  }
+
   if (to.meta && to.meta.onlyUser && !store.getters["user/isLoggedIn"])
     return next('/login');
   if (to.meta && to.meta.onlyGuest && store.getters["user/isLoggedIn"])

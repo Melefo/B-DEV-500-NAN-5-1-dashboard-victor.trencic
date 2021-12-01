@@ -22,6 +22,9 @@ export const user = {
             const { token } = await res.json();
             commit('login', token);
         },
+        async logout({ commit }) {
+            commit('login', null);
+        },
         register({ commit }, json) {
             fetch("/api/user/register", {
                 method: "POST",
@@ -38,13 +41,6 @@ export const user = {
         },
         async all({ commit }) {
             const res = await fetch("/api/user", {
-                method: "GET",
-                headers: authHeader()
-            });
-            return await await res.json();
-        },
-        async one({ commit }, user) {
-            const res = await fetch("/api/user/" + user, {
                 method: "GET",
                 headers: authHeader()
             });
