@@ -1,11 +1,11 @@
 <template>
-    <Frame>
+    <div id="frame">
         <form id="login" @submit.prevent="send">
             <input name="identifier" v-model="username" required placeholder="Username / Email" />
             <input name="password" v-model="password" required placeholder="Password" /> 
             <input type="submit" value="Login" />
         </form>
-    </Frame>
+    </div>
 </template>
 
 <style>
@@ -13,16 +13,21 @@
     display: flex;
     flex-direction: column;
   }
+
+  #frame {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    backdrop-filter: blur(30px);
+    box-shadow: 10px 5px 10px #00000010;
+}
 </style>
 
 <script>
-import Frame from '@/components/Frame.vue'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'LoginFrame',
   components: {
-    Frame
   },
   data: () => {
     return {
