@@ -6,7 +6,7 @@
                 <router-link to="/dashboard"><i class="fa fa-home"></i></router-link>
                 <router-link to="/settings"><i class="fa fa-cog"></i></router-link>
                 <router-link to="/widgets"><i class="uis uis-apps"></i></router-link>
-                <router-link to="/logout"><i class="uis uis-signout"></i></router-link>
+                <a href="/" @click.prevent="click"><i class="uis uis-signout"></i></a>
                 <img id="avatar" src="https://imgsrv2.voi.id/ZX5NI_OyT7ebOGfkfnBBKLg4sVTFvxcAoHQSyJPTEk0/auto/1200/675/sm/1/bG9jYWw6Ly8vcHVibGlzaGVycy80NjU1MC8yMDIxMDQyMzE1MjMtbWFpbi5jcm9wcGVkXzE2MTkxNjYyMDIuanBn.jpg" />
             </div>
             <div id="right">
@@ -60,11 +60,20 @@ i {
 <script lang="ts">
     import Vue from 'vue'
     import Header from '@/components/Header.vue'
+    import { mapActions } from 'vuex'
 
     export default Vue.extend({
         name: 'Dashboard',
         components: {
             Header
+        },
+        methods: {
+            ...mapActions("user", ["logout"]),
+            click(e) {
+                e.preventDefault();
+                this.logout();
+                this.$router.push('/');
+            }
         }
     })
 </script>
