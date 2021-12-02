@@ -25,7 +25,7 @@ namespace Doshboard.Backend.Entities.Widgets
         [BsonIgnore]
         public UnitType Unit
         {
-            get => Params.ContainsKey("unit") ? (UnitType)Params["unit"] : UnitType.Celsius;
+            get => Params.ContainsKey("unit") ? (UnitType)Params["unit"] : UnitType.Metric;
             set => Params["unit"] = value;
         }
     }

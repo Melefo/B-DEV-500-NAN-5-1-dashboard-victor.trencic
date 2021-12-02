@@ -25,7 +25,7 @@ namespace Doshboard.Backend.Entities
             Width = width;
         }
 
-        [JsonConstructorAttribute]
+        [JsonConstructor]
         public Widget(string id, int x, int y, int height, int width, string type, Dictionary<string, object> @params)
         {
             Id = id;

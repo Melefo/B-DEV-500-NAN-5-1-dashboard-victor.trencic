@@ -123,7 +123,7 @@ namespace Doshboard.Backend
         /// <param name="widgetId">Widget id</param>
         /// <returns>Widget data</returns>
         public T GetWidget<T>(string widgetId) where T : Widget
-            => (T)_widgetsCollection.Find(x => x.Id == widgetId).SingleOrDefault();
+            => _widgetsCollection.OfType<T>().Find(x => x.Id == widgetId).SingleOrDefault();
 
         /// <summary>
         /// Get a widget
@@ -132,6 +132,13 @@ namespace Doshboard.Backend
         /// <returns>Widget data</returns>
         public Widget GetWidget(string widgetId) 
             => _widgetsCollection.Find(x => x.Id == widgetId).SingleOrDefault();
+
+        public bool DeleteWidget(string id)
+        {
+            var result = _widgetsCollection.DeleteOne(x => x.Id == id);
+
+            return result.IsAcknowledged && result.DeletedCount == 1;
+        }
 
         /// <summary>
         /// Save widget to database

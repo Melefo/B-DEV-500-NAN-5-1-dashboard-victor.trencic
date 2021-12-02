@@ -17,8 +17,14 @@ export const widget = {
             return await res.json();
         },
         async new({ commit }, type) {
-            const res = await fetch("/api/widget?"  + new URLSearchParams({ type: type }), {
+            const res = await fetch("/api/widget?" + new URLSearchParams({ type: type }), {
                 method: "POST",
+                headers: authHeader()
+            });
+        },
+        async delete({ commit }, id) {
+            const res = await fetch("/api/widget?" + new URLSearchParams({ id: id }), {
+                method: "DELETE",
                 headers: authHeader()
             });
         }

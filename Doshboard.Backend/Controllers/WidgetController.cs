@@ -33,8 +33,15 @@ namespace Doshboard.Backend.Controllers
             return Created("", widget);
         }
 
+        [HttpDelete]
+        public ActionResult DeleteWidget(string id)
+        {
+            _service.DeleteUserWidget(User.Identity!.Name!, id);
+            return Accepted();
+        }
+
         [HttpPost("update")]
-        public ActionResult UpdateWidget(Widget widgetData)
+        public ActionResult UpdateWidget([FromBody]Widget widgetData)
         {
             _service.UpdateWidget(widgetData);
             return Ok();

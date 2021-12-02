@@ -23,6 +23,7 @@ namespace Doshboard.Backend.Services
 
         public Widget GetWidget(string id)
             => _db.GetWidget(id);
+
         public Widget NewUserWidget(string userId, string type)
         {
             var user = _db.GetUserWidgets(userId);
@@ -38,6 +39,18 @@ namespace Doshboard.Backend.Services
 
             return widget;
         }
+
+        public void DeleteUserWidget(string userId, string widgetId)
+        {
+            var user = _db.GetUserWidgets(userId);
+            if (!user.Widgets.Contains(widgetId))
+                return;
+            user.Widgets.Remove(widgetId);
+
+            _db.DeleteWidget(widgetId);
+            _db.SaveUserWidgets(user);
+        }
+
         public void UpdateWidget(Widget widgetData)
         {
             _db.SaveWidget(widgetData);

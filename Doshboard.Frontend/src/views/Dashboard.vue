@@ -2,7 +2,7 @@
     <vuescroll>
         <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[20, 20]" :use-css-transforms="true">
             <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i">
-                <Weather v-if="item.type == 'city_temperature'" :id=item.i :config="$attrs.config || false" />
+                <Weather v-if="item.type == 'city_temperature'" :id=item.i :params=item.params :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
             </grid-item>
         </grid-layout>
     </vuescroll>
@@ -37,11 +37,15 @@
         },
         data: function () {
             return {
-                layout: [],
+                layout: [] as any[]
             }
         },
         methods: {
-            ...mapActions("widget", ["get"])
+            ...mapActions("widget", ["get", "delete"]),
+            deleteItem(id) {
+                this.delete(id);
+                this.layout = this.layout.filter(item => item.i !== id);
+            }
         },
         created: async function() {
             const data = await this.get();
@@ -52,7 +56,8 @@
                     w: item.width,
                     h: item.height,
                     i: item.id,
-                    type: item.type
+                    type: item.type,
+                    params: item.params
                 }
             })
         }

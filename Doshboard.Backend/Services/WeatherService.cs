@@ -70,8 +70,8 @@ namespace Doshboard.Backend.Services
 
     public enum UnitType
     {
-        Celsius,
-        Fahrenheit
+        Metric,
+        Imperial
     }
 
     [ServiceName("Weather")]
@@ -111,7 +111,7 @@ namespace Doshboard.Backend.Services
             if (widget == null || widget.Type != CityTempWidget.Name)
                 return default;
 
-            WeatherJson? response = await _client.GetFromJsonAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&unit={widget.Unit}");
+            WeatherJson? response = await _client.GetFromJsonAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&units={widget.Unit}");
 
             if (response == null)
                 return default;
