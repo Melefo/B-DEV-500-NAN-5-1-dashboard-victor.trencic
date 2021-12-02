@@ -2,10 +2,10 @@
 using Doshboard.Backend.Services;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Doshboard.Backend.Entities.Widget
+namespace Doshboard.Backend.Entities.Widgets
 {
     [WidgetInfo(Name, "Display temperature for a city")]
-    public class CityTempWidget : AWidget
+    public class CityTempWidget : Widget
     {
         public const string Name = "city_temperature";
 

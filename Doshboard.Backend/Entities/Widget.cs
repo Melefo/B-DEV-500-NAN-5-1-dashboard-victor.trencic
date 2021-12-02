@@ -1,12 +1,10 @@
-﻿using Doshboard.Backend.Entities.Widget;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System.Numerics;
+using System.Text.Json.Serialization;
 
 namespace Doshboard.Backend.Entities
 {
-    [BsonKnownTypes(typeof(CityTempWidget))]
-    public abstract class AWidget
+    public class Widget
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -20,11 +18,23 @@ namespace Doshboard.Backend.Entities
 
         public Dictionary<string, object> Params { get; set; } = new();
 
-        public AWidget(string type, int height, int width)
+        public Widget(string type, int height, int width)
         { 
             Type = type;
             Height = height;
             Width = width;
+        }
+
+        [JsonConstructorAttribute]
+        public Widget(string id, int x, int y, int height, int width, string type, Dictionary<string, object> @params)
+        {
+            Id = id;
+            X = x;
+            Y = y;
+            Height = height;
+            Width = width;
+            Type = type;
+            Params = @params;
         }
     }
 }

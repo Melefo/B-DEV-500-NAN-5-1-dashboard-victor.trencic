@@ -1,5 +1,5 @@
 ﻿using Doshboard.Backend.Entities;
-using Doshboard.Backend.Entities.Widget;
+using Doshboard.Backend.Entities.Widgets;
 
 namespace Doshboard.Backend.Services
 {
@@ -21,10 +21,9 @@ namespace Doshboard.Backend.Services
         public UserWidgets GetUserWidgets(string userId)
             => _db.GetUserWidgets(userId);
 
-        public AWidget GetWidget(string id)
+        public Widget GetWidget(string id)
             => _db.GetWidget(id);
-
-        public AWidget NewUserWidget(string userId, string type)
+        public Widget NewUserWidget(string userId, string type)
         {
             var user = _db.GetUserWidgets(userId);
             var widget = type switch
@@ -38,6 +37,10 @@ namespace Doshboard.Backend.Services
             _db.SaveUserWidgets(user);
 
             return widget;
-        }    
+        }
+        public void UpdateWidget(Widget widgetData)
+        {
+            _db.SaveWidget(widgetData);
+        }
     }
 }

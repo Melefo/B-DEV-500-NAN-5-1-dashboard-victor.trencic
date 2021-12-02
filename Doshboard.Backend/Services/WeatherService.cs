@@ -1,7 +1,8 @@
 ﻿using Doshboard.Backend.Attributes;
 using Doshboard.Backend.Entities;
-using Doshboard.Backend.Entities.Widget;
+using Doshboard.Backend.Entities.Widgets;
 using Doshboard.Backend.Interfaces;
+using Doshboard.Backend.Models;
 
 namespace Doshboard.Backend.Services
 {

@@ -27,7 +27,7 @@ namespace Doshboard.Backend
         /// <summary>
         /// Mongo Widget Collection
         /// </summary>
-        private readonly IMongoCollection<AWidget> _widgetsCollection;
+        private readonly IMongoCollection<Widget> _widgetsCollection;
         /// <summary>
         /// Mongo User Widget Collection
         /// </summary>
@@ -44,7 +44,7 @@ namespace Doshboard.Backend
             _db = _client.GetDatabase(config["Mongo:Database"]);
 
             _usersCollection = _db.GetCollection<User>("Users");
-            _widgetsCollection = _db.GetCollection<AWidget>("Widgets");
+            _widgetsCollection = _db.GetCollection<Widget>("Widgets");
             _userWidgetsCollection = _db.GetCollection<UserWidgets>("UserWidgets");
         }
 
@@ -122,7 +122,7 @@ namespace Doshboard.Backend
         /// </summary>
         /// <param name="widgetId">Widget id</param>
         /// <returns>Widget data</returns>
-        public T GetWidget<T>(string widgetId) where T : AWidget
+        public T GetWidget<T>(string widgetId) where T : Widget
             => (T)_widgetsCollection.Find(x => x.Id == widgetId).SingleOrDefault();
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Doshboard.Backend
         /// </summary>
         /// <param name="widgetId">Widget id</param>
         /// <returns>Widget data</returns>
-        public AWidget GetWidget(string widgetId) 
+        public Widget GetWidget(string widgetId) 
             => _widgetsCollection.Find(x => x.Id == widgetId).SingleOrDefault();
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Doshboard.Backend
         /// </summary>
         /// <param name="widget">Widget to save</param>
         /// <returns>True if successfully saved</returns>
-        public bool SaveWidget(AWidget widget)
+        public bool SaveWidget(Widget widget)
         {
             var result = _widgetsCollection.ReplaceOne(x => x.Id == widget.Id, widget, new ReplaceOptions
             {

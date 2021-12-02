@@ -61,14 +61,14 @@ namespace Doshboard.Backend.Models
     /// <summary>
     /// Widget informations
     /// </summary>
-    public class Widget
+    public class WidgetInfo
     {
         /// <summary>
         /// Widget constructor
         /// </summary>
         /// <param name="name">Widget name</param>
         /// <param name="description">Widget parameter</param>
-        public Widget(Type type)
+        public WidgetInfo(Type type)
         {
             var infos = type.GetCustomAttribute<WidgetInfoAttribute>();
 
@@ -121,7 +121,7 @@ namespace Doshboard.Backend.Models
             var widgets = (Type[])type.GetProperty("Widgets")!.GetGetMethod()!.Invoke(null, null)!;
             foreach (var widget in widgets!)
             {
-                var infos = widget.GetCustomAttribute<WidgetInfoAttribute>();
+                widget.GetCustomAttribute<WidgetInfoAttribute>();
                 Widgets.Add(new(widget));
             }
         }
@@ -133,7 +133,7 @@ namespace Doshboard.Backend.Models
         /// <summary>
         /// Widgets using the service
         /// </summary>
-        public List<Widget> Widgets { get; set; } = new();
+        public List<WidgetInfo> Widgets { get; set; } = new();
     }
 
     /// <summary>

@@ -1,5 +1,4 @@
 ﻿using Doshboard.Backend.Entities;
-using Doshboard.Backend.Entities.Widget;
 using Doshboard.Backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +16,9 @@ namespace Doshboard.Backend.Controllers
             _service = service;
 
         [HttpGet]
-        public ActionResult<List<AWidget>> GetUserWidgets()
+        public ActionResult<List<Widget>> GetUserWidgets()
         {
-            List<AWidget> widgets = new();
+            List<Widget> widgets = new();
 
             foreach (var widget in _service.GetUserWidgets(User.Identity!.Name!).Widgets)
                 widgets.Add(_service.GetWidget(widget));
@@ -32,6 +31,13 @@ namespace Doshboard.Backend.Controllers
         {
             var widget = _service.NewUserWidget(User.Identity!.Name!, type);
             return Created("", widget);
+        }
+
+        [HttpPost("update")]
+        public ActionResult UpdateWidget(Widget widgetData)
+        {
+            _service.UpdateWidget(widgetData);
+            return Ok();
         }
     }
 }

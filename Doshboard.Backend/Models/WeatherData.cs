@@ -1,4 +1,4 @@
-﻿namespace Doshboard.Backend.Entities
+﻿namespace Doshboard.Backend.Models
 {
     public class WeatherData
     {
@@ -14,6 +14,6 @@
             Temp = temp;
             City = city;
         }
-    }                 
+    }
 
 }
