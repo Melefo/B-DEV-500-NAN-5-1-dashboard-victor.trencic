@@ -36,7 +36,8 @@ const routes: Array<RouteConfig> = [
   {
     path: '/widgets',
     name: 'Widgets',
-    component: Widgets
+    component: Widgets,
+    meta: { onlyUser: true }
   }
 ]
 

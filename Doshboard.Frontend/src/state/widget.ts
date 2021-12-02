@@ -15,6 +15,12 @@ export const widget = {
                 headers: authHeader()
             });
             return await res.json();
+        },
+        async new({ commit }, type) {
+            const res = await fetch("/api/widget?"  + new URLSearchParams({ type: type }), {
+                method: "POST",
+                headers: authHeader()
+            });
         }
     },
     getters: {

@@ -1,4 +1,6 @@
-﻿namespace Doshboard.Backend.Attributes
+﻿using Doshboard.Backend.Entities;
+
+namespace Doshboard.Backend.Attributes
 {
     public class WidgetInfoAttribute : Attribute
     {
@@ -7,7 +9,7 @@
 
         public WidgetInfoAttribute(string name, string description)
         {
-            Name = name.ToLowerInvariant().Replace(' ', '_');
+            Name = name;
             Description = description;
         }
     }

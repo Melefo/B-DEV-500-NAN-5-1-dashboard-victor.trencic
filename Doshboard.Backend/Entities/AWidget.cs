@@ -5,11 +5,6 @@ using System.Numerics;
 
 namespace Doshboard.Backend.Entities
 {
-    public enum WidgetType
-    {
-        CityTemp
-    }
-
     [BsonKnownTypes(typeof(CityTempWidget))]
     public abstract class AWidget
     {
@@ -21,11 +16,11 @@ namespace Doshboard.Backend.Entities
         public int Y { get; set; } = 0;
         public int Height { get; set; }
         public int Width { get; set; }
-        public WidgetType Type { get; set; }
+        public string Type { get; set; }
 
         public Dictionary<string, object> Params { get; set; } = new();
 
-        public AWidget(WidgetType type, int height, int width)
+        public AWidget(string type, int height, int width)
         { 
             Type = type;
             Height = height;

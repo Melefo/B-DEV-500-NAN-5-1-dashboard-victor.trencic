@@ -16,7 +16,6 @@ namespace Doshboard.Backend.Controllers
         public WidgetController(WidgetService service) =>
             _service = service;
 
-        [Authorize]
         [HttpGet]
         public ActionResult<List<AWidget>> GetUserWidgets()
         {
@@ -28,9 +27,8 @@ namespace Doshboard.Backend.Controllers
             return widgets;
         }
 
-        [Authorize]
         [HttpPost]
-        public ActionResult AddWidget(WidgetType type)
+        public ActionResult AddWidget(string type)
         {
             var widget = _service.NewUserWidget(User.Identity!.Name!, type);
             return Created("", widget);

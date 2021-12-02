@@ -14,7 +14,6 @@ export const about = {
                 method: "GET"
             });
             const { server } = await res.json();
-            console.log(server.services);
             return server.services;
         }
     }

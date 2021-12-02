@@ -97,7 +97,7 @@ namespace Doshboard.Backend.Services
                 return;
 
             var widget = _mongo.GetWidget<CityTempWidget>(refs.Widgets[id]);
-            if (widget.Type != WidgetType.CityTemp)
+            if (widget.Type != CityTempWidget.Name)
                 return;
 
             if (newCity != null)
@@ -115,7 +115,7 @@ namespace Doshboard.Backend.Services
                 return default;
 
             var widget = _mongo.GetWidget<CityTempWidget>(refs.Widgets[id]);
-            if (widget.Type != WidgetType.CityTemp)
+            if (widget.Type != CityTempWidget.Name)
                 return default;
 
             WeatherJson? response = await _client.GetFromJsonAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&unit={widget.Unit}");

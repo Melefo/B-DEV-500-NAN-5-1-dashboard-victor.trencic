@@ -35,7 +35,7 @@ export const user = {
             })
         },
         delete({ commit }, id) {
-            fetch("/api/user/delete" + new URLSearchParams({ id: id }), {
+            fetch("/api/user/delete?" + new URLSearchParams({ id: id }), {
                 method: "DELETE",
             })
         },

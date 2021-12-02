@@ -1,14 +1,15 @@
 ﻿using Doshboard.Backend.Attributes;
 using Doshboard.Backend.Services;
 using MongoDB.Bson.Serialization.Attributes;
-using System.Numerics;
 
 namespace Doshboard.Backend.Entities.Widget
 {
-    [WidgetInfo("City temperature", "Display temperature for a city")]
+    [WidgetInfo(Name, "Display temperature for a city")]
     public class CityTempWidget : AWidget
     {
-        public CityTempWidget() : base(WidgetType.CityTemp, 2, 2)
+        public const string Name = "city_temperature";
+
+        public CityTempWidget() : base(Name, 2, 2)
         {
         }
 

@@ -24,12 +24,12 @@ namespace Doshboard.Backend.Services
         public AWidget GetWidget(string id)
             => _db.GetWidget(id);
 
-        public AWidget NewUserWidget(string userId, WidgetType type)
+        public AWidget NewUserWidget(string userId, string type)
         {
             var user = _db.GetUserWidgets(userId);
             var widget = type switch
             {
-                WidgetType.CityTemp => new CityTempWidget(),
+                CityTempWidget.Name => new CityTempWidget(),
                 _ => throw new NotImplementedException()
             };
 
