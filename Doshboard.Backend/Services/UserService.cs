@@ -34,18 +34,15 @@ namespace Doshboard.Backend.Services
         public List<User> GetUsers() => _db.GetUsers();
 
         /// <summary>
-        /// Get an User by its username
-        /// </summary>
-        /// <param name="username">User username</param>
-        /// <returns>User account</returns>
-        public User GetUserFromUsername(string username) => _db.GetUserByUsername(username);
-
-        /// <summary>
         /// Create an User account
         /// </summary>
         /// <param name="user">User informations</param>
         public void Create(User user)
         {
+            if (_db.GetUserByIdentifier(user.Email) != null || _db.GetUserByIdentifier(user.Username) != null)
+            {
+                return;
+            }
             user.Password = PasswordHash.HashPassword(user.Password);
             _db.CreateUser(user);
         }

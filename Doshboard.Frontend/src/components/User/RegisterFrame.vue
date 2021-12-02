@@ -1,5 +1,5 @@
 <template>
-    <Frame>
+    <div id="frame">
         <form id="register" @submit.prevent="send">
             <div>
               <input name="firstname" required placeholder="First Name" type="text" v-model="firstname" />
@@ -17,17 +17,24 @@
             </div>
             <input type="submit" value="Register" />
         </form>
-    </Frame>
+    </div>
 </template>
 
+<style>
+#frame {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    backdrop-filter: blur(30px);
+    box-shadow: 10px 5px 10px #00000010;
+}
+</style>
+
 <script>
-import Frame from '@/components/Frame.vue'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'RegisterFrame',
   components: {
-    Frame
   },
   data: function() {
     return {

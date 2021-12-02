@@ -31,7 +31,11 @@ namespace Doshboard.Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(new MongoService(Configuration));
+
             services.AddScoped<UserService>();
+            services.AddSingleton<WidgetService>();
+            services.AddSingleton<WeatherService>();
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

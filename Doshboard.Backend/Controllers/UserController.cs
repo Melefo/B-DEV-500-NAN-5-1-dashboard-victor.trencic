@@ -29,21 +29,6 @@ namespace Doshboard.Backend.Controllers
             _service.GetUsers();
 
         /// <summary>
-        /// Get user by its username
-        /// </summary>
-        /// <param name="username">User username</param>
-        /// <returns>User account</returns>
-        [HttpGet("{username}")]
-        public ActionResult<User> GetUserFromUsername(string username)
-        {
-            var user = _service.GetUserFromUsername(username);
-
-            if (user == null)
-                return NotFound();
-            return user;
-        }
-
-        /// <summary>
         /// Register an user to database
         /// </summary>
         /// <param name="form">User informations</param>
@@ -72,7 +57,6 @@ namespace Doshboard.Backend.Controllers
             _service.Delete(id);
             return Accepted();
         }
-
 
         /// <summary>
         /// Login user to API

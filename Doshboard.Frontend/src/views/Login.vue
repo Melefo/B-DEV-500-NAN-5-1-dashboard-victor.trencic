@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
   #home {
     height: 100%;
     width: 100%;

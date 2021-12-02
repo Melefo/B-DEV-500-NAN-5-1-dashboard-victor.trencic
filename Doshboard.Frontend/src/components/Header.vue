@@ -33,6 +33,7 @@
     height: 20%;
     display: flex;
     flex-direction: row;
+    width: 100%;
 }
 
 #header a {
