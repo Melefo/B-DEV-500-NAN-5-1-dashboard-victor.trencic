@@ -55,6 +55,19 @@ namespace Doshboard.Backend.Services
         public bool Delete(string id) => _db.DeleteUser(id);
 
         /// <summary>
+        /// Promote an User to Admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool Promote(string id)
+        {
+            User user = _db.GetUser(id);
+            user.Role = user.Role == "Admin" ? "User" : "Admin";
+
+            return _db.UserSave(user);
+        }
+
+        /// <summary>
         /// Authenticate User and give him a token
         /// </summary>
         /// <param name="username">User username or email</param>

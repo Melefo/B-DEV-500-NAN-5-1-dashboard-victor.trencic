@@ -1,4 +1,5 @@
 import { authHeader } from "@/state/index";
+import { parseJwt } from "@/router/index"
 
 export const user = {
     namespaced: true,
@@ -34,9 +35,16 @@ export const user = {
                   body: JSON.stringify(json)
             })
         },
-        delete({ commit }, id) {
+        del({ commit }, id) {
             fetch("/api/user/delete?" + new URLSearchParams({ id: id }), {
                 method: "DELETE",
+                headers: authHeader()
+            })
+        },
+        promote({ commit }, id) {
+            fetch("/api/user/promote?" + new URLSearchParams({ id: id }), {
+                method: "PATCH",
+                headers: authHeader()
             })
         },
         async all({ commit }) {
@@ -44,12 +52,15 @@ export const user = {
                 method: "GET",
                 headers: authHeader()
             });
-            return await await res.json();
+            return await res.json();
         }
     },
     getters: {
         isLoggedIn(state) : Boolean {
             return !!state.token;
+        },
+        isAdmin(state) : Boolean {
+            return (!!state.token && parseJwt(state.token).role == "Admin")
         },
         token(state) {
             return state.token;

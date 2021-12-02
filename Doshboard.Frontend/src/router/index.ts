@@ -19,7 +19,10 @@ const routes: Array<RouteConfig> = [
     path: '/admin',
     name: 'Admin',
     component: Admin,
-    meta: { onlyUser: true }
+    meta: { 
+      onlyAdmin: true,
+      layout: 'dashboard-layout'  
+    }
   },
   {
     path: '/login',
@@ -53,7 +56,7 @@ const router = new VueRouter({
   routes
 })
 
-function parseJwt (token) {
+export function parseJwt (token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   const jsonPayload = decodeURIComponent(atob(base64).split("").map(function(c) {
@@ -71,6 +74,8 @@ router.beforeEach((to, from, next) => {
     }
   }
 
+  if (to.meta && to.meta.onlyAdmin && !store.getters["user/isAdmin"])
+    return next('/dashboard');
   if (to.meta && to.meta.onlyUser && !store.getters["user/isLoggedIn"])
     return next('/login');
   if (to.meta && to.meta.onlyGuest && store.getters["user/isLoggedIn"])

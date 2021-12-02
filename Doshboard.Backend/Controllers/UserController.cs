@@ -76,6 +76,14 @@ namespace Doshboard.Backend.Controllers
                 return Unauthorized();
             return Ok(new { token, user });
         }
+
+        [HttpPatch("promote")]
+        public ActionResult PromoteUser(string id)
+        {
+            _service.Promote(id);
+
+            return Ok();
+        }
     }
 
 }
