@@ -27,6 +27,12 @@ export const widget = {
                 method: "DELETE",
                 headers: authHeader()
             });
+        },
+        async update({ commit }, { id, x, y}) {
+            const res = await fetch("/api/widget/update?" + new URLSearchParams({ id: id, x: x, y: y}),{
+                method: "PATCH",
+                headers: authHeader(),
+            });
         }
     },
     getters: {

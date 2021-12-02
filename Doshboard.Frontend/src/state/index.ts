@@ -26,5 +26,5 @@ export function authHeader() : HeadersInit {
     if (store.getters["user/isLoggedIn"])
       return { 'Authorization': 'Bearer ' + store.getters["user/token"] };
     return {};
-  }
+}
   

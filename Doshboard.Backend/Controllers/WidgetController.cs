@@ -40,10 +40,13 @@ namespace Doshboard.Backend.Controllers
             return Accepted();
         }
 
-        [HttpPost("update")]
-        public ActionResult UpdateWidget([FromBody]Widget widgetData)
+        [HttpPatch("update")]
+        public ActionResult UpdateWidget(string id, int x, int y)
         {
-            _service.UpdateWidget(widgetData);
+            Widget widget = _service.GetWidget(id);
+            widget.X = x;
+            widget.Y = y;
+            _service.UpdateWidget(widget);
             return Ok();
         }
     }
