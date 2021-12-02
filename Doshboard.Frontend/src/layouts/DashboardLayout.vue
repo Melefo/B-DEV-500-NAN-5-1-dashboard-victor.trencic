@@ -3,14 +3,14 @@
         <Header/>
         <div id="body">
             <div id="left">
-                <router-link to="/dashboard"><i class="fa fa-home"></i></router-link>
-                <router-link to="/settings"><i class="fa fa-cog"></i></router-link>
+                <a href="/dashboard" @click.prevent="clickDashboard"><i class="fa fa-home"></i></a>
+                <a href="/settings" @click.prevent="clickSettings"><i class="fa fa-cog"></i></a>
                 <router-link to="/widgets"><i class="uis uis-apps"></i></router-link>
-                <a href="/" @click.prevent="click"><i class="uis uis-signout"></i></a>
+                <a href="/" @click.prevent="clickLogout"><i class="uis uis-signout"></i></a>
                 <img id="avatar" src="https://imgsrv2.voi.id/ZX5NI_OyT7ebOGfkfnBBKLg4sVTFvxcAoHQSyJPTEk0/auto/1200/675/sm/1/bG9jYWw6Ly8vcHVibGlzaGVycy80NjU1MC8yMDIxMDQyMzE1MjMtbWFpbi5jcm9wcGVkXzE2MTkxNjYyMDIuanBn.jpg" />
             </div>
             <div id="right">
-                <slot></slot>
+                <slot :config=config></slot>
             </div>
         </div>
     </div>
@@ -63,16 +63,33 @@ i {
     import { mapActions } from 'vuex'
 
     export default Vue.extend({
-        name: 'Dashboard',
+        name: 'DashboardLayout',
         components: {
             Header
         },
+        data: function () {
+            return {
+                config: false
+            }
+        },
         methods: {
             ...mapActions("user", ["logout"]),
-            click(e) {
+            clickLogout(e) {
                 e.preventDefault();
                 this.logout();
                 this.$router.push('/');
+            },
+            clickSettings(e) {
+                e.preventDefault();
+                this.config = true;
+                if (this.$route.path != '/dashboard')
+                    this.$router.push('/dashboard');
+            },
+            clickDashboard(e) {
+                e.preventDefault();
+                this.config = false;
+                if (this.$route.path != '/dashboard')
+                    this.$router.push('/dashboard');
             }
         }
     })

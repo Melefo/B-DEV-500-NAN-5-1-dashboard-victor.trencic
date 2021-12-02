@@ -1,13 +1,11 @@
 <template>
-    <Layout>
-        <vuescroll>
-            <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[20, 20]" :use-css-transforms="true">
-                <grid-item v-for="(item, index) in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i">
-                    <Weather v-if="item.type == 'city_temperature'" :id=index />
-                </grid-item>
-            </grid-layout>
-        </vuescroll>
-    </Layout>
+    <vuescroll>
+        <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[20, 20]" :use-css-transforms="true">
+            <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i">
+                <Weather v-if="item.type == 'city_temperature'" :id=item.i :config="$attrs.config || false" />
+            </grid-item>
+        </grid-layout>
+    </vuescroll>
 </template>
 
 <style>
@@ -26,7 +24,6 @@
 <script lang="ts">
     import Vue from 'vue'
     import VueGridLayout from 'vue-grid-layout'
-    import Layout from '@/components/Layout.vue'
     import vuescroll from 'vuescroll'
     import { mapActions } from 'vuex'
     import Weather from '@/components/Widgets/Weather.vue'
@@ -36,11 +33,11 @@
         components: {
             GridLayout: VueGridLayout.GridLayout,
             GridItem: VueGridLayout.GridItem,
-            Layout, vuescroll, Weather
+            vuescroll, Weather
         },
         data: function () {
             return {
-                layout: []
+                layout: [],
             }
         },
         methods: {
@@ -49,7 +46,6 @@
         created: async function() {
             const data = await this.get();
             this.layout = data.map((item) => {
-                console.log(item);
                 return {
                     x: item.x,
                     y: item.y,

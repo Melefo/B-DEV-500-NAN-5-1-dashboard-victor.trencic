@@ -1,14 +1,12 @@
 <template>
-    <Layout>
-        <div id="list">
-            <div v-for="service in services" :key="service.name">
-                <p>{{ service.name }}</p>
-                <div v-for="widget in service.widgets" :key="widget.name" @click="click(widget)">
-                    {{ widget.name }}
-                </div>
+    <div id="list">
+        <div v-for="service in services" :key="service.name">
+            <p>{{ service.name }}</p>
+            <div v-for="widget in service.widgets" :key="widget.name" @click="click(widget)">
+                {{ widget.name }}
             </div>
         </div>
-    </Layout>
+    </div>
 </template>
 
 <style>
@@ -21,13 +19,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Layout from '@/components/Layout.vue'
 import { mapActions } from 'vuex'
 
 export default Vue.extend({
     name: 'Widgets',
     components: {
-        Layout
     },
     data: function() {
         return {

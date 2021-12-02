@@ -90,14 +90,10 @@ namespace Doshboard.Backend.Services
             _mongo = mongo;
         }
 
-        public void ConfigureCityTemp(string userId, int id, string? newCity, UnitType? newUnit)
+        public void ConfigureCityTemp(string id, string? newCity, UnitType? newUnit)
         {
-            var refs = _mongo.GetUserWidgets(userId);
-            if (refs.Widgets.Count <= id)
-                return;
-
-            var widget = _mongo.GetWidget<CityTempWidget>(refs.Widgets[id]);
-            if (widget.Type != CityTempWidget.Name)
+            var widget = _mongo.GetWidget<CityTempWidget>(id);
+            if (widget == null || widget.Type != CityTempWidget.Name)
                 return;
 
             if (newCity != null)
@@ -108,14 +104,10 @@ namespace Doshboard.Backend.Services
             _mongo.SaveWidget(widget);
         }
 
-        public async Task<WeatherData?> GetCityTemp(string userId, int id)
+        public async Task<WeatherData?> GetCityTemp(string id)
         {
-            var refs = _mongo.GetUserWidgets(userId);
-            if (refs.Widgets.Count <= id)
-                return default;
-
-            var widget = _mongo.GetWidget<CityTempWidget>(refs.Widgets[id]);
-            if (widget.Type != CityTempWidget.Name)
+            var widget = _mongo.GetWidget<CityTempWidget>(id);
+            if (widget == null || widget.Type != CityTempWidget.Name)
                 return default;
 
             WeatherJson? response = await _client.GetFromJsonAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&unit={widget.Unit}");

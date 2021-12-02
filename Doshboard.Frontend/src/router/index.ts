@@ -16,12 +16,6 @@ const routes: Array<RouteConfig> = [
     component: Home,
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: Dashboard,
-    meta: { onlyUser: true }
-  },
-  {
     path: '/admin',
     name: 'Admin',
     component: Admin,
@@ -34,10 +28,22 @@ const routes: Array<RouteConfig> = [
     meta: { onlyGuest: true }
   },
   {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+    meta: {
+       onlyUser: true,
+       layout: 'dashboard-layout'
+      }
+  },
+  {
     path: '/widgets',
     name: 'Widgets',
     component: Widgets,
-    meta: { onlyUser: true }
+    meta: { 
+      onlyUser: true,
+      layout: 'dashboard-layout'
+    }
   }
 ]
 

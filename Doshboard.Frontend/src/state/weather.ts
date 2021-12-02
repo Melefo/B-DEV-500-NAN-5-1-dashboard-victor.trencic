@@ -8,7 +8,7 @@ export const weather = {
                 method: "GET",
                 headers: authHeader()
             });
-            return await await res.json();
+            return await res.json();
         },
     },
 }

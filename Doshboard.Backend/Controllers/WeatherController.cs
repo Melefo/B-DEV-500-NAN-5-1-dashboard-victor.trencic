@@ -17,9 +17,9 @@ namespace Doshboard.Backend.Controllers
             _service = service;
 
         [HttpGet("city_temperature")]
-        public async Task<ActionResult<WeatherData>> GetCityTemperature([Required]int id)
+        public async Task<ActionResult<WeatherData>> GetCityTemperature([Required]string id)
         {
-            WeatherData? response = await _service.GetCityTemp(User.Identity!.Name!, id);
+            WeatherData? response = await _service.GetCityTemp(id);
 
             if (response == null)
                 return BadRequest();
@@ -27,7 +27,7 @@ namespace Doshboard.Backend.Controllers
         }
 
         [HttpPost("city_temperature")]
-        public void ConfigureCityTemperature([Required]int id, string? city, UnitType? unit) => 
-            _service.ConfigureCityTemp(User.Identity!.Name!, id, city, unit);
+        public void ConfigureCityTemperature([Required]string id, string? city, UnitType? unit) => 
+            _service.ConfigureCityTemp(id, city, unit);
     }
 }
