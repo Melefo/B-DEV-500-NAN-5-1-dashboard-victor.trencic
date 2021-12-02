@@ -3,13 +3,14 @@
     <p>Admin</p>
     <div v-if="isLoggedIn">
       <div v-for="user in users" :key="user.id" class="user">
-        <p>id: {{ user.id }}</p>
-        <p>username: {{ user.username }}</p>
-        <p>email: {{ user.email }}</p>
-        <p>first name: {{ user.firstName }}</p>
-        <p>last name: {{ user.lastName }}</p>
-        <p>password: {{ user.password }}</p>
-      </div>
+        <p>id: <b>{{ user.id }}</b></p>
+        <p>username: <b>{{ user.username }}</b></p>
+        <p>email: <b>{{ user.email }}</b></p>
+        <p>first name: <b>{{ user.firstName }}</b></p>
+        <p>last name: <b>{{ user.lastName }}</b></p>
+        <button @click="del(user.id)" >Delete</button>
+        <button @click="promote(user.id)">Promote / Dedmote</button>
+      </div>  
     </div>
   </div>
 </template>
@@ -25,10 +26,12 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  name: 'Home',
+  name: 'Admin',
   computed: {
     ...mapGetters("user", ["isLoggedIn"]),
-    ...mapActions("user", ["all"]),
+  },
+  methods:{
+    ...mapActions("user", ["all", "promote", "del"]),
   },
   data: function() {
     return {
@@ -36,7 +39,7 @@ export default {
     }
   },
   created: async function() {
-    this.users = await this.all;
+    this.users = await this.all();
   }
 }
 </script>

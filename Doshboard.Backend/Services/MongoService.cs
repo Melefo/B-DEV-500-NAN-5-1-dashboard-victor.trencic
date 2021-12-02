@@ -140,6 +140,12 @@ namespace Doshboard.Backend
             return result.IsAcknowledged && result.DeletedCount == 1;
         }
 
+        public bool UserSave(User user)
+        {
+            var result = _usersCollection.ReplaceOne(x => x.Id == user.Id, user);
+            return result.IsAcknowledged && result.ModifiedCount == 1;
+        }
+
         /// <summary>
         /// Save widget to database
         /// </summary>

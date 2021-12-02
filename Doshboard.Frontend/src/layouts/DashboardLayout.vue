@@ -6,6 +6,7 @@
                 <a href="/dashboard" @click.prevent="clickDashboard"><i class="fa fa-home"></i></a>
                 <a href="/settings" @click.prevent="clickSettings"><i class="fa fa-cog"></i></a>
                 <router-link to="/widgets"><i class="uis uis-apps"></i></router-link>
+                <router-link v-if=isAdmin to="/admin"><i class="fa fa-key"></i></router-link>
                 <a href="/" @click.prevent="clickLogout"><i class="uis uis-signout"></i></a>
                 <img id="avatar" src="https://imgsrv2.voi.id/ZX5NI_OyT7ebOGfkfnBBKLg4sVTFvxcAoHQSyJPTEk0/auto/1200/675/sm/1/bG9jYWw6Ly8vcHVibGlzaGVycy80NjU1MC8yMDIxMDQyMzE1MjMtbWFpbi5jcm9wcGVkXzE2MTkxNjYyMDIuanBn.jpg" />
             </div>
@@ -61,6 +62,7 @@ i {
     import Vue from 'vue'
     import Header from '@/components/Header.vue'
     import { mapActions } from 'vuex'
+    import { mapGetters } from 'vuex'
 
     export default Vue.extend({
         name: 'DashboardLayout',
@@ -71,6 +73,9 @@ i {
             return {
                 config: false
             }
+        },
+        computed: {
+            ...mapGetters("user", ["isAdmin"])
         },
         methods: {
             ...mapActions("user", ["logout"]),
