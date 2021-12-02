@@ -1,13 +1,13 @@
-﻿namespace Doshboard.Backend.Models
+﻿namespace Doshboard.Backend.Models.Widgets
 {
-    public class WeatherData
+    public class CityTempData
     {
         public string Icon { get; set; }
         public int Humidity { get; set; }
         public double Temp { get; set; }
         public string City { get; set; }
 
-        public WeatherData(string icon, int hum, double temp, string city)
+        public CityTempData(string icon, int hum, double temp, string city)
         {
             Icon = icon;
             Humidity = hum;

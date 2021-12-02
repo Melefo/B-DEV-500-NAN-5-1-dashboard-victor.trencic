@@ -25,7 +25,7 @@
     import { mapActions } from 'vuex';
 
     export default Vue.extend({
-        name: 'Dashboard',
+        name: 'CityTemp',
         methods: {
             ...mapActions("weather", ["getById", "update"]),
             clickDelete(e) {

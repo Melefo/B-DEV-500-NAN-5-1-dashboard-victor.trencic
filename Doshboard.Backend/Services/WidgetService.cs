@@ -27,9 +27,10 @@ namespace Doshboard.Backend.Services
         public Widget NewUserWidget(string userId, string type)
         {
             var user = _db.GetUserWidgets(userId);
-            var widget = type switch
+            Widget widget = type switch
             {
                 CityTempWidget.Name => new CityTempWidget(),
+                RealTimeCryptoWidget.Name => new RealTimeCryptoWidget(),
                 _ => throw new NotImplementedException()
             };
 
