@@ -5,6 +5,7 @@ import { user } from '@/state/user'
 import { widget } from '@/state/widget'
 import { about } from '@/state/about'
 import { weather } from '@/state/weather'
+import { crypto } from '@/state/crypto'
 
 Vue.use(Vuex)
 
@@ -18,7 +19,8 @@ export const store = new Vuex.Store({
         user,
         widget,
         about,
-        weather
+        weather,
+        crypto
     }
 })
 

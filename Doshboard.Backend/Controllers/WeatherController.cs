@@ -1,4 +1,5 @@
 ﻿using Doshboard.Backend.Entities;
+using Doshboard.Backend.Entities.Widgets;
 using Doshboard.Backend.Models;
 using Doshboard.Backend.Models.Widgets;
 using Doshboard.Backend.Services;
@@ -19,17 +20,17 @@ namespace Doshboard.Backend.Controllers
         public WeatherController(WeatherService service) =>
             _service = service;
 
-        [HttpGet("city_temperature")]
-        public async Task<ActionResult<WeatherData>> GetCityTemperature([BindRequired]string id)
+        [HttpGet(CityTempWidget.Name)]
+        public async Task<ActionResult<CityTempData>> GetCityTemperature([BindRequired]string id)
         {
-            WeatherData? response = await _service.GetCityTemp(id);
+            CityTempData? response = await _service.GetCityTemp(id);
 
             if (response == null)
                 return BadRequest();
             return response;
         }
 
-        [HttpPatch("city_temperature")]
+        [HttpPatch(CityTempWidget.Name)]
         public ActionResult ConfigureCityTemperature([FromBody] CityTempModel model)
         {
             if (!ModelState.IsValid)

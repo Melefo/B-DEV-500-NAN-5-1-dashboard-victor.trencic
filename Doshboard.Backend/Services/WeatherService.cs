@@ -1,8 +1,8 @@
 ﻿using Doshboard.Backend.Attributes;
-using Doshboard.Backend.Entities;
 using Doshboard.Backend.Entities.Widgets;
 using Doshboard.Backend.Interfaces;
 using Doshboard.Backend.Models;
+using Doshboard.Backend.Models.Widgets;
 
 namespace Doshboard.Backend.Services
 {
@@ -91,6 +91,19 @@ namespace Doshboard.Backend.Services
             _mongo = mongo;
         }
 
+        public async Task<CityTempData?> GetCityTemp(string id)
+        {
+            var widget = _mongo.GetWidget<CityTempWidget>(id);
+            if (widget == null || widget.Type != CityTempWidget.Name)
+                return default;
+
+            WeatherJson? response = await _client.GetFromJsonAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&units={widget.Unit}");
+            if (response == null)
+                return default;
+
+            return new CityTempData($"https://openweathermap.org/img/wn/{response.Weather[0].Icon}@4x.png", response.Main.Humidity, response.Main.Temp, response.Name);
+        }
+
         public void ConfigureCityTemp(string id, string? newCity, UnitType? newUnit)
         {
             var widget = _mongo.GetWidget<CityTempWidget>(id);
@@ -103,20 +116,6 @@ namespace Doshboard.Backend.Services
                 widget.Unit = (UnitType)newUnit;
 
             _mongo.SaveWidget(widget);
-        }
-
-        public async Task<WeatherData?> GetCityTemp(string id)
-        {
-            var widget = _mongo.GetWidget<CityTempWidget>(id);
-            if (widget == null || widget.Type != CityTempWidget.Name)
-                return default;
-
-            WeatherJson? response = await _client.GetFromJsonAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&units={widget.Unit}");
-
-            if (response == null)
-                return default;
-
-            return new WeatherData($"https://openweathermap.org/img/wn/{response.Weather[0].Icon}@4x.png", response.Main.Humidity, response.Main.Temp, response.Name);
         }
     }
 }
