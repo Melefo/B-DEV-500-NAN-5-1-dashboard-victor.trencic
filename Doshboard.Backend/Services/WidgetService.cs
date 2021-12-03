@@ -31,6 +31,7 @@ namespace Doshboard.Backend.Services
             {
                 CityTempWidget.Name => new CityTempWidget(),
                 RealTimeCryptoWidget.Name => new RealTimeCryptoWidget(),
+                GameWidget.Name => new GameWidget(),
                 _ => throw new NotImplementedException()
             };
 

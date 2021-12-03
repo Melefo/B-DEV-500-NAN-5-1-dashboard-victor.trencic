@@ -6,6 +6,7 @@ import { widget } from '@/state/widget'
 import { about } from '@/state/about'
 import { weather } from '@/state/weather'
 import { crypto } from '@/state/crypto'
+import { steam } from '@/state/steam'
 
 Vue.use(Vuex)
 
@@ -20,7 +21,8 @@ export const store = new Vuex.Store({
         widget,
         about,
         weather,
-        crypto
+        crypto,
+        steam
     }
 })
 

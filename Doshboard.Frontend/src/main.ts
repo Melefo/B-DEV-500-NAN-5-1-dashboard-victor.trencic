@@ -8,7 +8,7 @@ import DefaultLayout from './layouts/DefaultLayout.vue'
 import DashboardLayout from './layouts/DashboardLayout.vue'
 
 Vue.use(GAuth, {
-    clientId: process.env.Google__ClientId
+    clientId: process.env.VUE_APP_GOOGLE_CLIENTID
 })
 
 Vue.config.productionTip = false
