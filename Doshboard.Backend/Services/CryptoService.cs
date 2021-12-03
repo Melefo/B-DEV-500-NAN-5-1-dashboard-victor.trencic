@@ -2,6 +2,8 @@
 using Doshboard.Backend.Entities.Widgets;
 using Doshboard.Backend.Interfaces;
 using Doshboard.Backend.Models.Widgets;
+using Doshboard.Backend.Utilities;
+using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 
 namespace Doshboard.Backend.Services
@@ -71,7 +73,6 @@ namespace Doshboard.Backend.Services
     [ServiceName("Crypto")]
     public class CryptoService : IService
     {
-        private readonly HttpClient _client = new();
         private readonly MongoService _mongo;
         private readonly string _apiKey;
 
@@ -92,7 +93,7 @@ namespace Doshboard.Backend.Services
             if (widget == null || widget.Type != RealTimeCryptoWidget.Name)
                 return default;
 
-            List<CryptoInfo>? listing = await _client.GetFromJsonAsync<List<CryptoInfo>>($"https://api.nomics.com/v1/currencies/ticker?key={_apiKey}&ids={widget.Currency}&convert={widget.Convert}");
+            List<CryptoInfo>? listing = await ClientAPI.GetAsync<List<CryptoInfo>>($"https://api.nomics.com/v1/currencies/ticker?key={_apiKey}&ids={widget.Currency}&convert={widget.Convert}");
             if (listing == null)
                 return default;
 

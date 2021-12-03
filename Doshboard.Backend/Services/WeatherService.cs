@@ -2,6 +2,7 @@
 using Doshboard.Backend.Entities.Widgets;
 using Doshboard.Backend.Interfaces;
 using Doshboard.Backend.Models.Widgets;
+using Doshboard.Backend.Utilities;
 
 namespace Doshboard.Backend.Services
 {
@@ -76,7 +77,6 @@ namespace Doshboard.Backend.Services
     [ServiceName("Weather")]
     public class WeatherService : IService
     {
-        private readonly HttpClient _client = new();
         private readonly MongoService _mongo;
         private readonly string _apiKey;
         public static Type[] Widgets => new[]
@@ -96,7 +96,7 @@ namespace Doshboard.Backend.Services
             if (widget == null || widget.Type != CityTempWidget.Name)
                 return default;
 
-            WeatherJson? response = await _client.GetFromJsonAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&units={widget.Unit}");
+            WeatherJson? response = await ClientAPI.GetAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&units={widget.Unit}");
             if (response == null)
                 return default;
 

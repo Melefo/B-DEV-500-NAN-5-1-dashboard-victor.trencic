@@ -2,29 +2,12 @@
 using Doshboard.Backend.Entities.Widgets;
 using Doshboard.Backend.Interfaces;
 using Doshboard.Backend.Models.Widgets;
+using Doshboard.Backend.Utilities;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Doshboard.Backend.Services
 {
-    public class PcRequirements
-    {
-        [JsonPropertyName("minimum")]
-        public string Minimum { get; set; }
-    }
-
-    public class MacRequirements
-    {
-        [JsonPropertyName("minimum")]
-        public string Minimum { get; set; }
-    }
-
-    public class LinuxRequirements
-    {
-        [JsonPropertyName("minimum")]
-        public string Minimum { get; set; }
-    }
-
     public class Sub
     {
         [JsonPropertyName("packageid")]
@@ -282,15 +265,6 @@ namespace Doshboard.Backend.Services
         [JsonPropertyName("website")]
         public string Website { get; set; }
 
-        [JsonPropertyName("pc_requirements")]
-        public PcRequirements PcRequirements { get; set; }
-
-        [JsonPropertyName("mac_requirements")]
-        public MacRequirements MacRequirements { get; set; }
-
-        [JsonPropertyName("linux_requirements")]
-        public LinuxRequirements LinuxRequirements { get; set; }
-
         [JsonPropertyName("developers")]
         public List<string> Developers { get; set; }
 
@@ -523,7 +497,6 @@ namespace Doshboard.Backend.Services
     [ServiceName("Steam")]
     public class SteamService : IService
     {
-        private readonly HttpClient _client = new();
         private readonly MongoService _mongo;
         private readonly string _apiKey;
         private GameList? _games = null;
@@ -541,17 +514,17 @@ namespace Doshboard.Backend.Services
         }
 
         private async Task<MetadataJson?> GetMetadataJson(int id)
-            => await _client.GetFromJsonAsync<MetadataJson>($"https://api.steampowered.com/ICommunityService/GetApps/v1/?key={_apiKey}&appids[0]={id}");
+            => await ClientAPI.GetAsync<MetadataJson>($"https://api.steampowered.com/ICommunityService/GetApps/v1/?key={_apiKey}&appids[0]={id}");
 
         private async Task<PlayerJson?> GetPlayerJson(int id)
-            => await _client.GetFromJsonAsync<PlayerJson>($"https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?key={_apiKey}&appid={id}");
+            => await ClientAPI.GetAsync<PlayerJson>($"https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?key={_apiKey}&appid={id}");
 
         private async Task<ReviewJson?> GetReviewJson(int id)
-            => await _client.GetFromJsonAsync<ReviewJson>($"https://store.steampowered.com/appreviews/{id}?json=1&language=all");
+            => await ClientAPI.GetAsync<ReviewJson>($"https://store.steampowered.com/appreviews/{id}?json=1&language=all");
 
         private async Task<PriceJson?> GetPriceJson(int id)
         {
-            var priceJson = await _client.GetFromJsonAsync<JsonElement>($"https://store.steampowered.com/api/appdetails?appids={id}");
+            var priceJson = await ClientAPI.GetAsync<JsonElement>($"https://store.steampowered.com/api/appdetails?appids={id}");
             if (priceJson.Equals(default))
                 return null;
             return priceJson.GetProperty(id.ToString()).Deserialize<PriceJson>();
@@ -563,11 +536,11 @@ namespace Doshboard.Backend.Services
             if (widget == null || widget.Type != GameWidget.Name)
                 return default;
 
-            _games ??= await _client.GetFromJsonAsync<GameList>($"https://api.steampowered.com/ISteamApps/GetAppList/v2/?key={_apiKey}");
+            _games ??= await ClientAPI.GetAsync<GameList>($"https://api.steampowered.com/ISteamApps/GetAppList/v2/?key={_apiKey}");
             if (_games == null)
                 return default;
 
-            var game = _games.Applist.Apps.FirstOrDefault(x => x.Name == widget.GameName);
+            var game = _games.Applist.Apps.FirstOrDefault(x => string.Equals(x.Name, widget.GameName, StringComparison.OrdinalIgnoreCase));
             if (game == null)
                 return default;
 
@@ -579,19 +552,32 @@ namespace Doshboard.Backend.Services
             await Task.WhenAll(metaTask, playersTask, reviewTask, priceTask);
 
             var meta = await metaTask;
-            var players = await playersTask;
-            var review = await reviewTask;
-            var price = await priceTask;
-            if (meta == null || players == null || review == null || price == null)
+            var playersInfo = await playersTask;
+            var reviewInfo = await reviewTask;
+            var priceInfo = await priceTask;
+            if (meta == null || reviewInfo == null || priceInfo == null)
                 return default;
 
-            return new GameData(meta.Response.Apps[0].FriendlyName ?? meta.Response.Apps[0].Name, $"https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/{game.Appid}/{meta.Response.Apps[0].Icon}.jpg", price.Data.PriceOverview?.FinalFormatted ?? "Free", (float)review.QuerySummary.TotalPositive / review.QuerySummary.TotalReviews * 100, players.Response.PlayerCount);
+            var name = meta.Response.Apps[0].FriendlyName ?? meta.Response.Apps[0].Name;
+            var icon = $"https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/{game.Appid}/{meta.Response.Apps[0].Icon}.jpg";
+            var price = priceInfo.Data.PriceOverview?.FinalFormatted ?? "Free";
+            var review = reviewInfo.QuerySummary.TotalReviews > 0 ? (float)reviewInfo.QuerySummary.TotalPositive / reviewInfo.QuerySummary.TotalReviews * 100 : 0;
+            var players = playersInfo?.Response?.PlayerCount ?? 0;
+
+            return new GameData(name, icon, price, review, players);
         }
 
-        public void ConfigureGame(string id, string name)
+        public async Task ConfigureGame(string id, string name)
         {
             var widget = _mongo.GetWidget<GameWidget>(id);
             if (widget == null || widget.Type != GameWidget.Name)
+                return;
+
+            _games ??= await ClientAPI.GetAsync<GameList>($"https://api.steampowered.com/ISteamApps/GetAppList/v2/?key={_apiKey}");
+            if (_games == null)
+                return;
+            var game = _games.Applist.Apps.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
+            if (game == null)
                 return;
 
             widget.GameName = name;

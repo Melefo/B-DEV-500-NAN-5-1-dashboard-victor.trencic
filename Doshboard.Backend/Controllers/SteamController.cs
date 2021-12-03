@@ -28,7 +28,7 @@ namespace Doshboard.Backend.Controllers
         }
 
 
-        [HttpPatch(RealTimeCryptoWidget.Name)]
+        [HttpPatch(GameWidget.Name)]
         public ActionResult ConfigureGame([BindRequired]string id, [BindRequired]string name)
         {
             if (!ModelState.IsValid)

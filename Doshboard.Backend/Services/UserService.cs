@@ -23,7 +23,6 @@ namespace Doshboard.Backend.Services
         private readonly string _key;
         private readonly string _googleId;
         private readonly string _googleSecret;
-        private readonly HttpClient _client = new();
 
         public UserService(MongoService db, IConfiguration config)
         {
@@ -90,16 +89,12 @@ namespace Doshboard.Backend.Services
 
         public async Task<(string?, User?)> GoogleAuthenticate(string code)
         {
-            var res = await _client.PostAsync($"https://oauth2.googleapis.com/token?code={code}&client_id={_googleId}&client_secret={_googleSecret}&redirect_uri=postmessage&grant_type=authorization_code&access_type=offline", null);
-            if (!res.IsSuccessStatusCode)
-                return (null, null);
-
-            var auth = await res.Content.ReadFromJsonAsync<GoogleAuth>();
-            if (auth == null)
+            var res = await ClientAPI.PostAsync<GoogleAuth>($"https://oauth2.googleapis.com/token?code={code}&client_id={_googleId}&client_secret={_googleSecret}&redirect_uri=postmessage&grant_type=authorization_code&access_type=offline");
+            if (res == null)
                 return (null, null);
 
             JwtSecurityTokenHandler tokenHandler = new();
-            string? email = tokenHandler.ReadJwtToken(auth.IdToken).Payload["email"].ToString();
+            string? email = tokenHandler.ReadJwtToken(res.IdToken).Payload["email"].ToString();
             if (email == null)
                 return (null, null);
 
