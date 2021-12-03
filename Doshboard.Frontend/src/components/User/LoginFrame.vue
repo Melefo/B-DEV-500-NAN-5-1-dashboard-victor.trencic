@@ -1,12 +1,12 @@
 <template>
-    <Frame>
+    <div id="frame">
         <form id="login" @submit.prevent="send">
             <input name="identifier" v-model="username" required placeholder="Username / Email" />
             <input name="password" v-model="password" required placeholder="Password" /> 
             <input type="submit" value="Login" />
         </form>
-        <button @click="handleClickSignIn" :disabled="!isLoaded">signIn</button>
-    </Frame>
+        <button @click="handleClickSignIn">Google</button>
+    </div>
 </template>
 
 <style>
@@ -14,26 +14,30 @@
     display: flex;
     flex-direction: column;
   }
+
+  #frame {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    backdrop-filter: blur(30px);
+    box-shadow: 10px 5px 10px #00000010;
+}
 </style>
 
 <script>
-import Frame from '@/components/Frame.vue'
 import { mapActions } from 'vuex'
 
 export default {
   name: 'LoginFrame',
   components: {
-    Frame
   },
   data: () => {
     return {
       username: "",
       password: "",
-      isLoaded: true
     }
   },
   methods: {
-    ...mapActions("user", ["login"]),
+    ...mapActions("user", ["login", "googleLogin"]),
     async send(e) {
       e.preventDefault();
 
@@ -41,16 +45,9 @@ export default {
       this.$router.push("/");
     },
     async handleClickSignIn() {
-      const test = await this.$gAuth.getAuthCode()
-      /*const test2 = await this.$gAuth.signIn(function (user) {
-        //on success do something
-      console.log('user', user)
-      }, function (error) {
-        console.log(error)
-        //on fail do something
-      })*/
-      console.log(test)
-      //console.log(test2)
+      const code = await this.$gAuth.getAuthCode()
+      await this.googleLogin(code);
+      this.$router.push("/");
     }
   }
 }

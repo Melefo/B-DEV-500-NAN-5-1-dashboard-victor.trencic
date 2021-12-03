@@ -10,7 +10,7 @@ namespace Doshboard.Backend.Controllers
     /// <summary>
     /// user information/auth route
     /// </summary>
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Route("[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -29,21 +29,6 @@ namespace Doshboard.Backend.Controllers
             _service.GetUsers();
 
         /// <summary>
-        /// Get user by its username
-        /// </summary>
-        /// <param name="username">User username</param>
-        /// <returns>User account</returns>
-        [HttpGet("{username}")]
-        public ActionResult<User> GetUserFromUsername(string username)
-        {
-            var user = _service.GetUserFromUsername(username);
-
-            if (user == null)
-                return NotFound();
-            return user;
-        }
-
-        /// <summary>
         /// Register an user to database
         /// </summary>
         /// <param name="form">User informations</param>
@@ -55,7 +40,9 @@ namespace Doshboard.Backend.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
             var user = new User(form.Username, form.Email, form.FirstName, form.LastName, form.Password);
-               _service.Create(user);
+            if (_service.GetUsers().Count == 0)
+                user.Role = "Admin";
+            _service.Create(user);
             return Created("", user);
         }
         
@@ -70,7 +57,6 @@ namespace Doshboard.Backend.Controllers
             _service.Delete(id);
             return Accepted();
         }
-
 
         /// <summary>
         /// Login user to API
@@ -91,11 +77,22 @@ namespace Doshboard.Backend.Controllers
             return Ok(new { token, user });
         }
 
-        [AllowAnonymous]
-        [HttpGet("login/google")]
-        public ActionResult Google()
+        [HttpPatch("promote")]
+        public ActionResult PromoteUser(string id)
         {
+            _service.Promote(id);
             return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("login/google")]
+        public async Task<ActionResult> Google([BindRequired]string code)
+        {
+            (var token, var user) = await _service.GoogleAuthenticate(code);
+
+            if (token == null)
+                return Unauthorized();
+            return Ok(new { token, user });
         }
     }
 }

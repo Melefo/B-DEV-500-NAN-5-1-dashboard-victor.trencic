@@ -44,6 +44,10 @@ namespace Doshboard.Backend.Entities
         public string Password { get; set; }
 
         /// <summary>
+        /// User Role
+        /// </summary>
+        public string Role { get; set; } = "User";
+        /// <summary>
         /// User constructor
         /// </summary>
         /// <param name="username">Username</param>

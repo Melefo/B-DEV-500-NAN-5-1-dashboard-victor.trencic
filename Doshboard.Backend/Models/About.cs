@@ -1,4 +1,9 @@
-﻿namespace Doshboard.Backend.Models
+﻿using Doshboard.Backend.Attributes;
+using Doshboard.Backend.Entities;
+using Doshboard.Backend.Interfaces;
+using System.Reflection;
+
+namespace Doshboard.Backend.Models
 {
     /// <summary>
     /// Client informations
@@ -24,7 +29,7 @@
     public enum ParamType
     {
         String = 0,
-        Interger = 1
+        Integer = 1
     }
 
     /// <summary>
@@ -39,8 +44,8 @@
         /// <param name="type">Type of parameter</param>
         public Param(string name, ParamType type)
         {
-            Name = name;
-            Type = type;
+            Name = name.ToLowerInvariant();
+            Type = type.ToString().ToLowerInvariant();
         }
 
         /// <summary>
@@ -50,33 +55,50 @@
         /// <summary>
         /// Type of parameter
         /// </summary>
-        public ParamType Type { get; set; }
+        public string Type { get; set; }
     }
 
     /// <summary>
     /// Widget informations
     /// </summary>
-    public class Widget
+    public class WidgetInfo
     {
         /// <summary>
         /// Widget constructor
         /// </summary>
         /// <param name="name">Widget name</param>
         /// <param name="description">Widget parameter</param>
-        public Widget(string name, string description)
+        public WidgetInfo(Type type)
         {
-            Name = name;
-            Description = description;
+            var infos = type.GetCustomAttribute<WidgetInfoAttribute>();
+
+            Name = infos.Name;
+            Description = infos.Description;
+
+            var @params = type.GetProperties().Where(x => x.GetCustomAttribute<WidgetParamAttribute>() != null);
+            foreach (var param in @params)
+            {
+                var prop = Type.GetTypeCode(param.PropertyType) switch
+                {
+                    TypeCode.String => ParamType.String,
+                    TypeCode.Int32 => ParamType.Integer,
+                    _ => throw new NotImplementedException()
+                };
+
+                Params.Add(new(param.Name, prop));
+            }
         }
 
         /// <summary>
         /// Widget name
         /// </summary>
         public string Name { get; set; }
+
         /// <summary>
         /// Widget description
         /// </summary>
         public string Description { get; set; }
+
         /// <summary>
         /// Widget parameters
         /// </summary>
@@ -92,8 +114,17 @@
         /// Service constructor
         /// </summary>
         /// <param name="name">Service name</param>
-        public Service(string name) =>
-            Name = name;
+        public Service(Type type)
+        {
+            Name = type.GetCustomAttribute<ServiceNameAttribute>()!.Name;
+
+            var widgets = (Type[])type.GetProperty("Widgets")!.GetGetMethod()!.Invoke(null, null)!;
+            foreach (var widget in widgets!)
+            {
+                widget.GetCustomAttribute<WidgetInfoAttribute>();
+                Widgets.Add(new(widget));
+            }
+        }
 
         /// <summary>
         /// Service name
@@ -102,7 +133,7 @@
         /// <summary>
         /// Widgets using the service
         /// </summary>
-        public List<Widget> Widgets { get; set; } = new();
+        public List<WidgetInfo> Widgets { get; set; } = new();
     }
 
     /// <summary>
@@ -113,8 +144,16 @@
         /// <summary>
         /// Server constructor
         /// </summary>
-        public Server() =>
+        public Server()
+        {
             CurrentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+            var @interface = typeof(IService).GetTypeInfo();
+            var services = Assembly.GetExecutingAssembly().GetTypes().Where(x => x.GetInterfaces().Contains(@interface) && !x.IsAbstract && !x.IsInterface);
+
+            foreach (var service in services)
+                Services.Add(new(service));
+        }
 
         /// <summary>
         /// Posix Epoch when class created

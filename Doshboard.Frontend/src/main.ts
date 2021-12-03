@@ -3,13 +3,31 @@ import App from './App.vue'
 import router from './router'
 import { store } from './state/index'
 import GAuth from 'vue-google-oauth2'
+import vuescrool from 'vuescroll'
+import DefaultLayout from './layouts/DefaultLayout.vue'
+import DashboardLayout from './layouts/DashboardLayout.vue'
 
 Vue.use(GAuth, {
     clientId: process.env.Goole__ClientId || '280847036120-6finfco2oc5tuqu4ikq4erscmlt65i9j.apps.googleusercontent.com'
 })
 
-
 Vue.config.productionTip = false
+
+Vue.use(vuescrool, {
+  ops: {
+    bar: {
+      background: 'linear-gradient(#6700FF4C, #1DE5E24C)'
+    },
+    scrollPanel: {
+      scrollingX: false,
+      scrollingY: true,
+    },
+  },
+  name: 'scroll'
+})
+
+Vue.component('default-layout', DefaultLayout)
+Vue.component('dashboard-layout', DashboardLayout)
 
 new Vue({
   router,
