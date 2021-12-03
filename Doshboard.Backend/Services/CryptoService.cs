@@ -3,7 +3,6 @@ using Doshboard.Backend.Entities.Widgets;
 using Doshboard.Backend.Interfaces;
 using Doshboard.Backend.Models.Widgets;
 using Doshboard.Backend.Utilities;
-using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 
 namespace Doshboard.Backend.Services
