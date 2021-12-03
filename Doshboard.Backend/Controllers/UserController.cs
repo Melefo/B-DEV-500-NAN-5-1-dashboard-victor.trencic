@@ -81,9 +81,18 @@ namespace Doshboard.Backend.Controllers
         public ActionResult PromoteUser(string id)
         {
             _service.Promote(id);
-
             return Ok();
         }
-    }
 
+        [AllowAnonymous]
+        [HttpPost("login/google")]
+        public async Task<ActionResult> Google([BindRequired]string code)
+        {
+            (var token, var user) = await _service.GoogleAuthenticate(code);
+
+            if (token == null)
+                return Unauthorized();
+            return Ok(new { token, user });
+        }
+    }
 }

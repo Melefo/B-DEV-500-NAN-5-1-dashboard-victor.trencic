@@ -39,7 +39,6 @@ namespace Doshboard.Backend
         /// <param name="config">Host configuration</param>
         public MongoService(IConfiguration config)
         {
-            Console.WriteLine(config["Mongo:Client"]);
             _client = new MongoClient(config["Mongo:Client"]);
             _db = _client.GetDatabase(config["Mongo:Database"]);
 

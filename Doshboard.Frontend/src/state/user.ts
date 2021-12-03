@@ -23,6 +23,13 @@ export const user = {
             const { token } = await res.json();
             commit('login', token);
         },
+        async googleLogin({ commit }, code) {
+            const res = await fetch("/api/user/login/google?" + new URLSearchParams({code: code}), {
+                method: "POST"
+              });
+            const { token } = await res.json();
+            commit('login', token);
+        },
         async logout({ commit }) {
             commit('login', null);
         },

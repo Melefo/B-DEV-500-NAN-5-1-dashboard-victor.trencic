@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Doshboard.Backend.Services
 {
@@ -20,11 +21,16 @@ namespace Doshboard.Backend.Services
         /// JWT key
         /// </summary>
         private readonly string _key;
+        private readonly string _googleId;
+        private readonly string _googleSecret;
+        private readonly HttpClient _client = new();
 
         public UserService(MongoService db, IConfiguration config)
         {
             _db = db;
             _key = config["JwtKey"];
+            _googleId = config["Google:ClientId"];
+            _googleSecret = config["Google:ClientSecret"];
         }
 
         /// <summary>
@@ -65,6 +71,61 @@ namespace Doshboard.Backend.Services
             user.Role = user.Role == "Admin" ? "User" : "Admin";
 
             return _db.UserSave(user);
+        }
+
+        private class GoogleAuth
+        {
+            [JsonPropertyName("access_token")]
+            public string AccessToken { get; set; }
+            [JsonPropertyName("refresh_token")]
+            public string RefreshToken { get; set; }
+            [JsonPropertyName("expire_in")]
+            public int ExpiresIn { get; set; }
+            public string Scope { get; set; }
+            [JsonPropertyName("token_type")]
+            public string TokenType { get; set; }
+            [JsonPropertyName("id_token")]
+            public string IdToken { get; set; }
+        }
+
+        public async Task<(string?, User?)> GoogleAuthenticate(string code)
+        {
+            var res = await _client.PostAsync($"https://oauth2.googleapis.com/token?code={code}&client_id={_googleId}&client_secret={_googleSecret}&redirect_uri=postmessage&grant_type=authorization_code&access_type=offline", null);
+            if (!res.IsSuccessStatusCode)
+                return (null, null);
+
+            var auth = await res.Content.ReadFromJsonAsync<GoogleAuth>();
+            if (auth == null)
+                return (null, null);
+
+            JwtSecurityTokenHandler tokenHandler = new();
+            string? email = tokenHandler.ReadJwtToken(auth.IdToken).Payload["email"].ToString();
+            if (email == null)
+                return (null, null);
+
+            var user = _db.GetUserByIdentifier(email);
+            if (user == null)
+                return (null, null);
+
+            var tokenKey = Encoding.UTF8.GetBytes(_key);
+
+            SecurityTokenDescriptor tokenDescriptor = new()
+            {
+                Subject = new(new Claim[]
+                {
+                    new(ClaimTypes.Email, user.Email),
+                    new(ClaimTypes.Role, user.Role),
+                    new(ClaimTypes.Name, user.Id),
+                }),
+
+                Expires = DateTime.UtcNow.AddHours(1),
+
+                SigningCredentials = new(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return (tokenHandler.WriteToken(token), user);
         }
 
         /// <summary>
