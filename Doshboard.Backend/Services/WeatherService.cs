@@ -94,11 +94,11 @@ namespace Doshboard.Backend.Services
         {
             var widget = _mongo.GetWidget<CityTempWidget>(id);
             if (widget == null || widget.Type != CityTempWidget.Name)
-                return default;
+                return null;
 
             WeatherJson? response = await ClientAPI.GetAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&units={widget.Unit}");
             if (response == null)
-                return default;
+                return null;
 
             return new CityTempData($"https://openweathermap.org/img/wn/{response.Weather[0].Icon}@4x.png", response.Main.Humidity, response.Main.Temp, response.Name);
         }

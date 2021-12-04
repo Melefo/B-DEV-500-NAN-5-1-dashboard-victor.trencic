@@ -69,7 +69,7 @@ namespace Doshboard.Backend.Services
             User user = _db.GetUser(id);
             user.Role = user.Role == "Admin" ? "User" : "Admin";
 
-            return _db.UserSave(user);
+            return _db.SaveUser(user);
         }
 
         private class GoogleAuth
@@ -88,19 +88,33 @@ namespace Doshboard.Backend.Services
         }
 
         public async Task<(string?, User?)> GoogleAuthenticate(string code)
-        {
-            var res = await ClientAPI.PostAsync<GoogleAuth>($"https://oauth2.googleapis.com/token?code={code}&client_id={_googleId}&client_secret={_googleSecret}&redirect_uri=postmessage&grant_type=authorization_code&access_type=offline");
+        { 
+            var res = await ClientAPI.PostAsync<GoogleAuth>($"https://oauth2.googleapis.com/token?code={code}&client_id={_googleId}&client_secret={_googleSecret}&redirect_uri=postmessage&grant_type=authorization_code");
             if (res == null)
                 return (null, null);
 
             JwtSecurityTokenHandler tokenHandler = new();
+            string? id = tokenHandler.ReadJwtToken(res.IdToken).Payload["sub"].ToString();
             string? email = tokenHandler.ReadJwtToken(res.IdToken).Payload["email"].ToString();
-            if (email == null)
-                return (null, null);
 
-            var user = _db.GetUserByIdentifier(email);
-            if (user == null)
+            if (id == null)
                 return (null, null);
+            var user = _db.GetUserByGoogle(id);
+            if (user == null)
+            {
+                if (email == null)
+                    return (null, null);
+
+                user = _db.GetUserByIdentifier(email);
+                if (user == null)
+                    return (null, null);
+            }
+
+            if (user.Google == null)
+            {
+                user.Google ??= new(id, res.RefreshToken);
+                _db.SaveUser(user);
+            }
 
             var tokenKey = Encoding.UTF8.GetBytes(_key);
 

@@ -47,6 +47,8 @@ namespace Doshboard.Backend.Entities
         /// User Role
         /// </summary>
         public string Role { get; set; } = "User";
+        public GoogleAccount? Google { get; set; }
+
         /// <summary>
         /// User constructor
         /// </summary>
@@ -62,6 +64,18 @@ namespace Doshboard.Backend.Entities
             FirstName = firstName;
             LastName = lastName;
             Password = password;
+        }
+    }
+
+    public class GoogleAccount
+    {
+        public string UserId { get; set; }
+        public string RefreshToken { get; set; }
+
+        public GoogleAccount(string id, string refresh)
+        {
+            UserId = id;
+            RefreshToken = refresh;
         }
     }
 }

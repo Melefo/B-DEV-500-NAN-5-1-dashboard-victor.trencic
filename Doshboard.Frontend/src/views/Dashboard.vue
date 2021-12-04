@@ -5,6 +5,7 @@
                 <CityTemp v-if="item.type == 'city_temperature'" :id=item.i :params=item.params :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
                 <RealTimeCrypto v-if="item.type == 'realtime_crypto'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
                 <Game v-if="item.type == 'game_info'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
+                <Video v-if="item.type == 'video'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
             </grid-item>
         </grid-layout>
     </vuescroll>
@@ -31,13 +32,14 @@
     import CityTemp from '@/components/Widgets/CityTemp.vue'
     import RealTimeCrypto from '@/components/Widgets/RealTimeCrypto.vue'
     import Game from '@/components/Widgets/Game.vue'
+    import Video from '@/components/Widgets/Video.vue'
 
     export default Vue.extend({
         name: 'Dashboard',
         components: {
             GridLayout: VueGridLayout.GridLayout,
             GridItem: VueGridLayout.GridItem,
-            vuescroll, CityTemp, RealTimeCrypto, Game
+            vuescroll, CityTemp, RealTimeCrypto, Game, Video
         },
         data: function () {
             return {

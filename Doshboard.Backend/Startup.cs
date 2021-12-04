@@ -37,6 +37,7 @@ namespace Doshboard.Backend
             services.AddSingleton<WeatherService>();
             services.AddSingleton<CryptoService>();
             services.AddSingleton<SteamService>();
+            services.AddSingleton<YouTubeService>();
             
             services.AddControllers();
             services.AddSwaggerGen(c =>

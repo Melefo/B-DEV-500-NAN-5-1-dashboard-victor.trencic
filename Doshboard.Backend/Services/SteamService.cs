@@ -236,15 +236,15 @@ namespace Doshboard.Backend.Services
         {
             var widget = _mongo.GetWidget<GameWidget>(id);
             if (widget == null || widget.Type != GameWidget.Name)
-                return default;
+                return null;
 
             _games ??= await ClientAPI.GetAsync<GameList>($"https://api.steampowered.com/ISteamApps/GetAppList/v2/?key={_apiKey}");
             if (_games == null)
-                return default;
+                return null;
 
             var game = _games.Applist.Apps.FirstOrDefault(x => string.Equals(x.Name, widget.GameName, StringComparison.OrdinalIgnoreCase));
             if (game == null)
-                return default;
+                return null;
 
             var metaTask = GetMetadataJson(game.Appid);
             var playersTask = GetPlayerJson(game.Appid);
@@ -258,7 +258,7 @@ namespace Doshboard.Backend.Services
             var reviewInfo = await reviewTask;
             var priceInfo = await priceTask;
             if (meta == null || reviewInfo == null || priceInfo == null)
-                return default;
+                return null;
 
             var name = meta.Response.Apps[0].FriendlyName ?? meta.Response.Apps[0].Name;
             var icon = $"https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/{game.Appid}/{meta.Response.Apps[0].Icon}.jpg";

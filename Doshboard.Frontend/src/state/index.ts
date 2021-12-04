@@ -7,6 +7,7 @@ import { about } from '@/state/about'
 import { weather } from '@/state/weather'
 import { crypto } from '@/state/crypto'
 import { steam } from '@/state/steam'
+import { youtube } from '@/state/youtube'
 
 Vue.use(Vuex)
 
@@ -22,7 +23,8 @@ export const store = new Vuex.Store({
         about,
         weather,
         crypto,
-        steam
+        steam,
+        youtube
     }
 })
 

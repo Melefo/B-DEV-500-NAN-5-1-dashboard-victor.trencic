@@ -1,12 +1,12 @@
 <template>
-    <div id="weather-game" v-if=!config>
+    <div id="game-widget" v-if=!config>
         <img :src="game.logo" />
         <div class="name">{{ game.name }}</div>
         <div class="players">{{ game.players }}</div>
         <div class="review">{{ game.review }}%</div>
         <div class="price">{{ game.price }}</div>
     </div>
-    <div id="weather-game" v-else>
+    <div id="game-widget" v-else>
         <button type="button" @click="clickDelete">X</button>
         <input type="text" placeholder="Game name" v-model="params.name" @change="send" />
     </div>

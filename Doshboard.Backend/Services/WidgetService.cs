@@ -24,7 +24,7 @@ namespace Doshboard.Backend.Services
         public Widget GetWidget(string id)
             => _db.GetWidget(id);
 
-        public Widget NewUserWidget(string userId, string type)
+        public Widget? NewUserWidget(string userId, string type)
         {
             var user = _db.GetUserWidgets(userId);
             Widget widget = type switch
@@ -32,8 +32,16 @@ namespace Doshboard.Backend.Services
                 CityTempWidget.Name => new CityTempWidget(),
                 RealTimeCryptoWidget.Name => new RealTimeCryptoWidget(),
                 GameWidget.Name => new GameWidget(),
+                VideoWidget.Name => new VideoWidget(),
                 _ => throw new NotImplementedException()
             };
+
+            if (widget is VideoWidget)
+            {
+                var account = _db.GetUser(userId);
+                if (account.Google == null)
+                    return null;
+            }
 
             user.Widgets.Add(widget.Id);
             _db.SaveWidget(widget);
