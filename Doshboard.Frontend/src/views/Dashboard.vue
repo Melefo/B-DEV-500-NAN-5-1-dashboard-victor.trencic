@@ -1,7 +1,7 @@
 <template>
     <vuescroll>
         <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[20, 20]" :use-css-transforms="true">
-            <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i">
+            <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @moved="movedEvent">
                 <CityTemp v-if="item.type == 'city_temperature'" :id=item.i :params=item.params :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
                 <RealTimeCrypto v-if="item.type == 'realtime_crypto'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
             </grid-item>
@@ -43,11 +43,15 @@
             }
         },
         methods: {
-            ...mapActions("widget", ["get", "delete"]),
+            ...mapActions("widget", ["get", "delete", "update"]),
             deleteItem(id) {
                 this.delete(id);
                 this.layout = this.layout.filter(item => item.i !== id);
-            }
+            },
+            movedEvent(i, newX, newY){
+                this.update({id: i, x: newX, y: newY}),
+                console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
+            },
         },
         created: async function() {
             const data = await this.get();
