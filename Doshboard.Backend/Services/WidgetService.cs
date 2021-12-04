@@ -33,6 +33,7 @@ namespace Doshboard.Backend.Services
                 RealTimeCryptoWidget.Name => new RealTimeCryptoWidget(),
                 GameWidget.Name => new GameWidget(),
                 VideoWidget.Name => new VideoWidget(),
+                FeedWidget.Name => new FeedWidget(),
                 _ => throw new NotImplementedException()
             };
 
