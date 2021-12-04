@@ -26,7 +26,7 @@
     import Vue from 'vue'
     import VueGridLayout from 'vue-grid-layout'
     import vuescroll from 'vuescroll'
-    import { mapActions } from 'vuex'
+    import { mapActions, mapGetters } from 'vuex'
     import CityTemp from '@/components/Widgets/CityTemp.vue'
     import RealTimeCrypto from '@/components/Widgets/RealTimeCrypto.vue'
 
@@ -37,9 +37,13 @@
             GridItem: VueGridLayout.GridItem,
             vuescroll, CityTemp, RealTimeCrypto
         },
+        computed: {
+            ...mapGetters("user", ["token"])
+        },
         data: function () {
             return {
-                layout: [] as any[]
+                layout: [] as any[],
+                ws: null as null | WebSocket
             }
         },
         methods: {
@@ -66,7 +70,16 @@
                     params: item.params
                 }
             })
-        }
+            this.ws = new WebSocket("ws:/" + window.location.host + "/api/widget/ws", ["widgets", this.token]);
+
+            this.ws.onmessage = function() {
+                this.send('');
+            }
+        },
+        destroyed: async function() {
+            this.ws?.close();
+        },
+        
     })
 </script>
 

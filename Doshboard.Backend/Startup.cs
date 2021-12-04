@@ -81,6 +81,19 @@ namespace Doshboard.Backend
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+
+                x.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = (context) =>
+                    {
+                        var ws = context.HttpContext.WebSockets;
+                        var protocols = ws.WebSocketRequestedProtocols;
+
+                        if (ws.IsWebSocketRequest && protocols.Count > 0)
+                            context.Token = protocols[protocols.Count - 1];
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
             services.AddRouting(x => x.LowercaseUrls = true);
@@ -99,10 +112,14 @@ namespace Doshboard.Backend
                 app.UseSwaggerUI();
             }
 
+            app.UseWebSockets(new()
+            {
+                KeepAliveInterval = TimeSpan.FromMinutes(1)
+            });
+
             app.UseRouting();
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

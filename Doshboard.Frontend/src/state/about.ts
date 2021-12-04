@@ -1,12 +1,8 @@
 export const about = {
     namespaced: true,
     state: {
-        content: null
     },
     mutations: {
-        set(state, value) {
-            state.content = value;
-        }
     },
     actions: {
         async get({ commit }) {
