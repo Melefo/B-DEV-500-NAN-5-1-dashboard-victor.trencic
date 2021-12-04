@@ -55,7 +55,10 @@ namespace Doshboard.Backend.Services
         public async Task<VideoData?> GetVideoData(string id, string userId)
         {
             var user = _mongo.GetUser(userId);
-            var ytb = CreateYouTube(user.Google!);
+            if (user.Google == null)
+                return null;
+
+            var ytb = CreateYouTube(user.Google);
 
             var widget = _mongo.GetWidget<VideoWidget>(id);
             if (widget == null || widget.Type != VideoWidget.Name)
@@ -83,10 +86,13 @@ namespace Doshboard.Backend.Services
             _mongo.SaveWidget(widget);
         }
 
-        public async Task<Dictionary<string, string>> GetVideos(string id, string userId)
+        public async Task<Dictionary<string, string>?> GetUserVideos(string userId)
         {
             var user = _mongo.GetUser(userId);
-            var ytb = CreateYouTube(user.Google!);
+            if (user.Google == null)
+                return null;
+
+            var ytb = CreateYouTube(user.Google);
             Dictionary<string, string> videos = new();
 
             var channelsRequest = ytb.Channels.List("contentDetails");

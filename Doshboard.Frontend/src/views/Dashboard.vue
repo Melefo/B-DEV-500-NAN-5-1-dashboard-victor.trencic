@@ -53,8 +53,7 @@
                 this.layout = this.layout.filter(item => item.i !== id);
             },
             movedEvent(i, newX, newY){
-                this.update({id: i, x: newX, y: newY}),
-                console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
+                this.update({id: i, x: newX, y: newY});
             },
         },
         created: async function() {

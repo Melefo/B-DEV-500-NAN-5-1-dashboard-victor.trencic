@@ -38,5 +38,15 @@ namespace Doshboard.Backend.Controllers
             _service.ConfigureVideo(id, videoId);
             return NoContent();
         }
+
+        [HttpGet("uservideos")]
+        public async Task<ActionResult<Dictionary<string, string>>> GetUserVideos()
+        {
+            var res = await _service.GetUserVideos(User.Identity!.Name!);
+
+            if (res == null)
+                return BadRequest();
+            return res;
+        }
     }
 }

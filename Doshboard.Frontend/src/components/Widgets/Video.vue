@@ -10,7 +10,9 @@
     </div>
     <div id="video-widget" v-else>
         <button type="button" @click="clickDelete">X</button>
-        <input type="text" placeholder="Video id" v-model="params.videoId" @change="send" />
+        <select v-model="params.videoId" @change='send'>
+            <option :value="key" v-for="(value, key) in videos" :key="key">{{ value }}</option>
+        </select>
     </div>
 </template>
 
@@ -25,7 +27,7 @@
     export default Vue.extend({
         name: 'Video',
         methods: {
-            ...mapActions("youtube", ["getById", "update"]),
+            ...mapActions("youtube", ["getById", "update", "getUserVideos"]),
             clickDelete(e) {
                 e.preventDefault();
                 this.$emit('deleted');
@@ -43,10 +45,12 @@
         data: function () {
             return {
                 video: {},
+                videos: []
             }
         },
         created: async function() {
             this.video = await this.getById(this.id);
+            this.videos = await this.getUserVideos();
         }
     })
 </script>
