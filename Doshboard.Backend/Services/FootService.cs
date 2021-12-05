@@ -356,6 +356,7 @@ namespace Doshboard.Backend.Services
 
         private readonly MongoService _mongo;
         private readonly string _apiKey;
+        private readonly HttpClient _client = new();
         public static Type[] Widgets => new[]
         {
             typeof(FootWidget)
@@ -370,6 +371,7 @@ namespace Doshboard.Backend.Services
         {
             _apiKey = config["Foot:ApiKey"];
             _mongo = mongo;
+            _client.DefaultRequestHeaders.Add("X-Auth-Token", _apiKey);
         }
 
         /// <summary>
@@ -379,7 +381,7 @@ namespace Doshboard.Backend.Services
         /// <exception cref="ApiException"></exception>
         public async Task<List<CompetitionData>> GetCompetitions()
         {
-            CompetitionsJson? response = await ClientAPI.GetAsync<CompetitionsJson>($"http://api.football-data.org/v2/competitions/", new("X-Auth-Token", _apiKey));
+            CompetitionsJson? response = await _client.GetAsync<CompetitionsJson>($"http://api.football-data.org/v2/competitions/");
             if (response == null)
                 throw new ApiException("Failed to call API");
 
@@ -395,7 +397,7 @@ namespace Doshboard.Backend.Services
         /// <exception cref="ApiException"></exception>
         public async Task<CompetitionData> GetCompetitionById(string id)
         {
-            CompetitionFull? response = await ClientAPI.GetAsync<CompetitionFull>($"http://api.football-data.org/v2/competitions/{id}", new("X-Auth-Token", _apiKey));
+            CompetitionFull? response = await _client.GetAsync<CompetitionFull>($"http://api.football-data.org/v2/competitions/{id}");
             if (response == null)
                 throw new ApiException("Failed to call API");
 
@@ -423,9 +425,9 @@ namespace Doshboard.Backend.Services
             FootJson? response;
 
             if (matchDay == null)
-                response = await ClientAPI.GetAsync<FootJson>($"http://api.football-data.org/v2/competitions/{widget.CompetitionId}/matches?dateFrom={today:yyyy-MM-dd}&dateTo={today.AddDays(5):yyyy-MM-dd}", new("X-Auth-Token", _apiKey));
+                response = await _client.GetAsync<FootJson>($"http://api.football-data.org/v2/competitions/{widget.CompetitionId}/matches?dateFrom={today:yyyy-MM-dd}&dateTo={today.AddDays(5):yyyy-MM-dd}");
             else
-                response = await ClientAPI.GetAsync<FootJson>($"http://api.football-data.org/v2/competitions/{widget.CompetitionId}/matches?matchday={ matchDay }", new("X-Auth-Token", _apiKey));
+                response = await _client.GetAsync<FootJson>($"http://api.football-data.org/v2/competitions/{widget.CompetitionId}/matches?matchday={ matchDay }");
             if (response == null)
                 throw new ApiException("Failed to call API");
 
@@ -440,7 +442,7 @@ namespace Doshboard.Backend.Services
         /// <exception cref="ApiException"></exception>
         public async Task<FootTeamJson> GetTeam(string teamsId)
         {
-            FootTeamJson? response = await ClientAPI.GetAsync<FootTeamJson>($"http://api.football-data.org/v2/teams/{teamsId}", new("X-Auth-Token", _apiKey));
+            FootTeamJson? response = await _client.GetAsync<FootTeamJson>($"http://api.football-data.org/v2/teams/{teamsId}");
             if (response == null)
                 throw new ApiException("Failed to call API");
 

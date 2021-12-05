@@ -205,7 +205,7 @@ namespace Doshboard.Backend.Services
         private readonly MongoService _mongo;
         private readonly string _apiKey;
         private GameList? _games = null;
-
+        private HttpClient _client = new();
 
         public static Type[] Widgets => new[]
         {
@@ -224,7 +224,7 @@ namespace Doshboard.Backend.Services
         /// <param name="id"></param>
         /// <returns></returns>
         private async Task<MetadataJson?> GetMetadataJson(int id)
-            => await ClientAPI.GetAsync<MetadataJson>($"https://api.steampowered.com/ICommunityService/GetApps/v1/?key={_apiKey}&appids[0]={id}");
+            => await _client.GetAsync<MetadataJson>($"https://api.steampowered.com/ICommunityService/GetApps/v1/?key={_apiKey}&appids[0]={id}");
 
         /// <summary>
         /// Get Player Data from ID
@@ -232,7 +232,7 @@ namespace Doshboard.Backend.Services
         /// <param name="id"></param>
         /// <returns></returns>
         private async Task<PlayerJson?> GetPlayerJson(int id)
-            => await ClientAPI.GetAsync<PlayerJson>($"https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?key={_apiKey}&appid={id}");
+            => await _client.GetAsync<PlayerJson>($"https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?key={_apiKey}&appid={id}");
 
         /// <summary>
         /// Get Game Review from ID
@@ -240,7 +240,7 @@ namespace Doshboard.Backend.Services
         /// <param name="id"></param>
         /// <returns></returns>
         private async Task<ReviewJson?> GetReviewJson(int id)
-            => await ClientAPI.GetAsync<ReviewJson>($"https://store.steampowered.com/appreviews/{id}?json=1&language=all");
+            => await _client.GetAsync<ReviewJson>($"https://store.steampowered.com/appreviews/{id}?json=1&language=all");
 
         /// <summary>
         /// Get Game Price from ID
@@ -249,7 +249,7 @@ namespace Doshboard.Backend.Services
         /// <returns></returns>
         private async Task<PriceJson?> GetPriceJson(int id)
         {
-            var priceJson = await ClientAPI.GetAsync<JsonElement>($"https://store.steampowered.com/api/appdetails?appids={id}");
+            var priceJson = await _client.GetAsync<JsonElement>($"https://store.steampowered.com/api/appdetails?appids={id}");
             if (priceJson.Equals(default))
                 return null;
             return priceJson.GetProperty(id.ToString()).Deserialize<PriceJson>();
@@ -269,7 +269,7 @@ namespace Doshboard.Backend.Services
             if (widget == null)
                 throw new MongoException("Widget not found");
 
-            _games ??= await ClientAPI.GetAsync<GameList>($"https://api.steampowered.com/ISteamApps/GetAppList/v2/?key={_apiKey}");
+            _games ??= await _client.GetAsync<GameList>($"https://api.steampowered.com/ISteamApps/GetAppList/v2/?key={_apiKey}");
             if (_games == null)
                 throw new ApiException("Failed to call API");
 
@@ -315,7 +315,7 @@ namespace Doshboard.Backend.Services
             if (widget == null)
                 throw new MongoException("Widget not found");
 
-            _games ??= await ClientAPI.GetAsync<GameList>($"https://api.steampowered.com/ISteamApps/GetAppList/v2/?key={_apiKey}");
+            _games ??= await _client.GetAsync<GameList>($"https://api.steampowered.com/ISteamApps/GetAppList/v2/?key={_apiKey}");
             if (_games == null)
                 throw new ApiException("Failed to call API");
 

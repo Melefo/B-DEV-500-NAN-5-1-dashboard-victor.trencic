@@ -24,6 +24,7 @@ namespace Doshboard.Backend.Services
         private readonly string _key;
         private readonly string _googleId;
         private readonly string _googleSecret;
+        private readonly HttpClient _client = new();
 
         public UserService(MongoService db, IConfiguration config)
         {
@@ -97,7 +98,7 @@ namespace Doshboard.Backend.Services
         /// <exception cref="UserException"></exception>
         public async Task<(string, User)> GoogleAuthenticate(string code)
         { 
-            var res = await ClientAPI.PostAsync<GoogleAuth>($"https://oauth2.googleapis.com/token?code={code}&client_id={_googleId}&client_secret={_googleSecret}&redirect_uri=postmessage&grant_type=authorization_code");
+            var res = await _client.PostAsync<GoogleAuth>($"https://oauth2.googleapis.com/token?code={code}&client_id={_googleId}&client_secret={_googleSecret}&redirect_uri=postmessage&grant_type=authorization_code");
             if (res == null)
                 throw new ApiException("Failed to call API");
 

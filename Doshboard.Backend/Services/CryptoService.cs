@@ -78,6 +78,7 @@ namespace Doshboard.Backend.Services
     {
         private readonly MongoService _mongo;
         private readonly string _apiKey;
+        private readonly HttpClient _client = new();
 
         public static Type[] Widgets => new[]
         {
@@ -108,7 +109,7 @@ namespace Doshboard.Backend.Services
             if (widget == null)
                 throw new MongoException("Widget not found");
 
-            List<CryptoInfo>? listing = await ClientAPI.GetAsync<List<CryptoInfo>>($"https://api.nomics.com/v1/currencies/ticker?key={_apiKey}&ids={widget.Currency}&convert={widget.Convert}");
+            List<CryptoInfo>? listing = await _client.GetAsync<List<CryptoInfo>>($"https://api.nomics.com/v1/currencies/ticker?key={_apiKey}&ids={widget.Currency}&convert={widget.Convert}");
             if (listing == null)
                 throw new ApiException("Failed to call API");
             if (listing.Count == 0)

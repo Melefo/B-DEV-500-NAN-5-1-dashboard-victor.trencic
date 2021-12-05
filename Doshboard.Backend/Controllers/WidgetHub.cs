@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace Doshboard.Backend.Controllers
 {
     /// <summary>
-    /// WidgetHub controller
+    /// SignalR WebSocket Hub for widgets
     /// </summary>
     [Authorize]
     public class WidgetHub : Hub
@@ -46,7 +46,7 @@ namespace Doshboard.Backend.Controllers
         }
 
         /// <summary>
-        /// ?
+        /// Executed when a client connect to websocket
         /// </summary>
         /// <returns></returns>
         public override Task OnConnectedAsync()
@@ -56,7 +56,7 @@ namespace Doshboard.Backend.Controllers
             return base.OnConnectedAsync();
         }
         /// <summary>
-        /// ?
+        /// Executed When a client disconnect from websocket
         /// </summary>
         /// <param name="exception"></param>
         /// <returns></returns>
@@ -69,11 +69,11 @@ namespace Doshboard.Backend.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Create timer job for widget
         /// </summary>
-        /// <param name="widget"></param>
-        /// <param name="id"></param>
-        /// <param name="userId"></param>
+        /// <param name="widget">Widget</param>
+        /// <param name="id">Client id</param>
+        /// <param name="userId">User id</param>
         /// <returns></returns>
         private async Task Job(Widget widget, string id, string userId)
         {
@@ -122,10 +122,10 @@ namespace Doshboard.Backend.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// Add timer for every user widgets
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="userId"></param>
+        /// <param name="id">client id</param>
+        /// <param name="userId">user id</param>
         private void RegisterJobs(string id, string userId)
         {
             var widgets = _mongo.GetUserWidgets(userId).Widgets.Select(x => _mongo.GetWidget(x));
@@ -141,10 +141,10 @@ namespace Doshboard.Backend.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// Update Timer sinide job list
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="minutes"></param>
+        /// <param name="id">widget id</param>
+        /// <param name="minutes">Timer refresh rate</param>
         public void UpdateTimer(string id, int minutes)
         {
             var widget = _mongo.GetWidget(id);
@@ -158,9 +158,9 @@ namespace Doshboard.Backend.Controllers
             _mongo.SaveWidget(widget);
         }
         /// <summary>
-        /// 
+        /// Delete Timer from Job list
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">job id</param>
         public void DeleteTimer(string id) 
             => JobManager.RemoveJob($"{Context.ConnectionId}#{id}");
     }

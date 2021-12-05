@@ -83,6 +83,8 @@ namespace Doshboard.Backend.Services
     {
         private readonly MongoService _mongo;
         private readonly string _apiKey;
+        private readonly HttpClient _client = new();
+
         public static Type[] Widgets => new[]
         {
             typeof(CityTempWidget)
@@ -112,7 +114,7 @@ namespace Doshboard.Backend.Services
             if (widget == null)
                 throw new MongoException("Widget not found");
 
-            WeatherJson? response = await ClientAPI.GetAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&units={widget.Unit}");
+            WeatherJson? response = await _client.GetAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&units={widget.Unit}");
             if (response == null)
                 throw new ApiException("Failed to call API");
 

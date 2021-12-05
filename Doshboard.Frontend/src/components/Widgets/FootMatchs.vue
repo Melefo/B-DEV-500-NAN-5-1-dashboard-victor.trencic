@@ -2,7 +2,11 @@
     <div id="competition-widget" v-if=!config>
         <code v-if='error'>{{ this.error }}</code>
         <div v-else-if="footMatchs">
-            {{ this.footMatchs }}
+            <div v-for="value in footMatchs" :key="value.id" class="match">
+                <div>{{ value.homeTeam.name }}</div>
+                <b>{{ value.score.fullTime.homeTeam }} - {{ value.score.fullTime.awayTeam }}</b>
+                <div>{{ value.awayTeam.name }}</div>
+            </div>
         </div>
     </div>
     <div id="competition-widget" v-else>
@@ -16,7 +20,9 @@
 </template>
 
 <style scoped>
-
+.match {
+    display: flex;
+}
 </style>
 
 <script lang="ts">
@@ -77,7 +83,7 @@
             {
                 const { success: successMatchs, json: jsonMatchs } = await this.getMatchByCompetitions(this.id);
                 if (successMatchs)
-                    this.footMatchs = jsonMatchs;
+                    this.footMatchs = jsonMatchs.matches;
                 else
                     this.error = jsonMatchs;
             }
