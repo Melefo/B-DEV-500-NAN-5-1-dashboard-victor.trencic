@@ -1,5 +1,6 @@
 ﻿using Doshboard.Backend.Attributes;
 using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Interfaces;
 using Doshboard.Backend.Models.Widgets;
 using System.Text.Json.Serialization;
 
@@ -347,7 +348,7 @@ namespace Doshboard.Backend.Services
 
 
     [ServiceName("Foot")]
-    public class FootService
+    public class FootService : IService
     {
 
         private readonly HttpClient _client = new();
