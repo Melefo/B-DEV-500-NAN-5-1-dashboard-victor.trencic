@@ -7,8 +7,6 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "doshboard.frontend", "Doshb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Doshboard.Backend", "Doshboard.Backend\Doshboard.Backend.csproj", "{6BD205BB-3EDD-420F-84BB-467F7D511F33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doshboard.Test", "Doshboard.Test\Doshboard.Test.csproj", "{0B9BBDD1-2058-40B0-B77D-98BA06014ACC}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,10 +23,6 @@ Global
 		{6BD205BB-3EDD-420F-84BB-467F7D511F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BD205BB-3EDD-420F-84BB-467F7D511F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BD205BB-3EDD-420F-84BB-467F7D511F33}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B9BBDD1-2058-40B0-B77D-98BA06014ACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B9BBDD1-2058-40B0-B77D-98BA06014ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B9BBDD1-2058-40B0-B77D-98BA06014ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B9BBDD1-2058-40B0-B77D-98BA06014ACC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
