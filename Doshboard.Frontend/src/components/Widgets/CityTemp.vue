@@ -1,11 +1,15 @@
 <template>
     <div id="temp-widget" v-if=!config>
         <code v-if='error'>{{ this.error }}</code>
-        <div v-else-if="weather">
-            <div class="temperature">{{ weather.temp }}</div>
-            <div class="humidity">{{ weather.humidity }}☔</div>
-            <div class="icon"><img :src=weather.icon></div>
-            <div class="city">{{ weather.city }}</div>
+        <div v-else-if="weather" id="data">
+            <div class="icon">
+                <img :src=weather.icon width="80%">
+            </div>
+            <div>
+                <h1 class="temperature">{{ weather.temp }}°</h1>
+                <div class="humidity">{{ weather.humidity }}% ☔</div>
+                <div class="city"><b>{{ weather.city }}</b></div>
+            </div>
         </div>
     </div>
     <div id="temp-widget" v-else>
@@ -22,7 +26,22 @@
 </template>
 
 <style scoped>
+#temp-widget {
+    height: 100%;
+}
 
+#data {
+        display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+img {
+        background: linear-gradient(180deg, #97f1ec, #d9c5f8);
+    border-radius: 100px;
+}
 </style>
 
 <script lang="ts">

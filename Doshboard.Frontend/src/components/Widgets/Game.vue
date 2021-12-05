@@ -8,7 +8,7 @@
             </div>
             <div>
                 <div class="players">Number of player online: <b>{{ game.players }}</b></div>
-                <div class="review">Positive reviews: <b>{{ game.review }}%</b></div>
+                <div class="review">Positive reviews: <b>{{ game.review.toFixed(2) }}%</b></div>
                 <div class="price">Current price: <b>{{ game.price }}</b></div>
             </div>
         </div>
