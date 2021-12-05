@@ -134,6 +134,7 @@ namespace Doshboard.Backend.Services
                     new(ClaimTypes.Email, user.Email),
                     new(ClaimTypes.Role, user.Role),
                     new(ClaimTypes.Name, user.Id),
+                    new(ClaimTypes.GivenName, $"{user.FirstName} {user.LastName}")
                 }),
 
                 Expires = DateTime.UtcNow.AddHours(1),
@@ -174,6 +175,7 @@ namespace Doshboard.Backend.Services
                     new(ClaimTypes.Email, user.Email),
                     new(ClaimTypes.Role, user.Role),
                     new(ClaimTypes.Name, user.Id),
+                    new(ClaimTypes.GivenName, $"{user.FirstName} {user.LastName}")
                 }),
 
                 Expires = DateTime.UtcNow.AddHours(1),

@@ -44,6 +44,7 @@ export default {
       password: "",
       error: null,
       errors: null,
+      fullname: null
     }
   },
   methods: {

@@ -3,9 +3,13 @@
         <router-link to="/">
             <img src="@/assets/logo.png" />
         </router-link>
-        <div>
+        <div v-if="!isLoggedIn">
             <h1>Welcome on the Doshboard</h1>
             <p>It's a great day for login or register</p>
+        </div>
+        <div v-else>
+            <h1>Hello, {{ fullname }}</h1>
+            <p>It's a great for a workout !</p>
         </div>
         <div>
             <DateTime />
@@ -58,10 +62,24 @@
 <script lang="ts">
 import Vue from 'vue'
 import DateTime from '@/components/Widgets/DateTime.vue'
+    import { parseJwt } from "@/router/index"
+import { mapGetters } from 'vuex'
 
 export default Vue.extend({
     components: {
         DateTime
+    },
+    data: () => {
+    return {
+      fullname: null
+    }
+  },
+    computed: {
+        ...mapGetters("user", ["token", "isLoggedIn"])
+    },
+    created: function() {
+        if (this.isLoggedIn)
+            this.fullname = parseJwt(this.token).given_name
     }
 })
 </script>
