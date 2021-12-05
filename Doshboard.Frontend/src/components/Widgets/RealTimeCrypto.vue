@@ -11,6 +11,7 @@
         <button type="button" @click="clickDelete">X</button>
         <input type="text" placeholder="Currency" v-model="params.currency" @change="send" />
         <input type="text" placeholder="Convert" v-model="params.convert" @change="send" />
+        <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
 </template>
 
@@ -26,19 +27,24 @@
         name: 'RealTimeCrypto',
         methods: {
             ...mapActions("crypto", ["getById", "update"]),
-            clickDelete(e) {
+            async clickDelete(e) {
                 e.preventDefault();
+                await this.ws.invoke("DeleteTimer", this.id);
                 this.$emit('deleted');
             },
             async send() {
                 await this.update({ id: this.id, currency: this.params.currency, convert: this.params.convert})
                 this.crypto = await this.getById(this.id);
+            },
+            async timer() {
+                await this.ws.invoke("UpdateTimer", this.id, parseInt(this.params.timer));
             }
         },
         props : {
             id: String,
             config: Boolean,
-            params: Object
+            params: Object,
+            ws: Object
         },
         data: function () {
             return {
@@ -46,8 +52,11 @@
             }
         },
         created: async function() {
-            const res = await this.getById(this.id);
-            this.crypto = res
+            this.crypto = await this.getById(this.id);
+
+            this.ws.on(this.id, (e) => {
+                this.crypto = e;
+            })
         }
     })
 </script>

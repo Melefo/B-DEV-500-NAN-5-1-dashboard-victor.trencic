@@ -1,4 +1,6 @@
-﻿using Doshboard.Backend.Services;
+﻿using Doshboard.Backend.Controllers;
+using Doshboard.Backend.Services;
+using FluentScheduler;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -84,8 +86,22 @@ namespace Doshboard.Backend
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+
+                x.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/widget/hub"))
+                            context.Token = accessToken;
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
+            services.AddSignalR();
             services.AddRouting(x => x.LowercaseUrls = true);
         }
 
@@ -96,20 +112,27 @@ namespace Doshboard.Backend
         /// <param name="env">Environment</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            JobManager.Initialize();
+
             if (env.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
+            app.UseWebSockets(new()
+            {
+                KeepAliveInterval = TimeSpan.FromMinutes(1)
+            });
+
             app.UseRouting();
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<WidgetHub>("/widget/hub");
                 endpoints.MapControllers();
             });
         }

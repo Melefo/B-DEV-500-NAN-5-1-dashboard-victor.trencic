@@ -1,7 +1,11 @@
 ﻿using Doshboard.Backend.Entities;
 using Doshboard.Backend.Services;
+using FluentScheduler;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Net.WebSockets;
+using System.Text;
 
 namespace Doshboard.Backend.Controllers
 {
@@ -12,8 +16,8 @@ namespace Doshboard.Backend.Controllers
     {
         private readonly WidgetService _service;
 
-        public WidgetController(WidgetService service) =>
-            _service = service;
+        public WidgetController(WidgetService service)
+            => _service = service;
 
         [HttpGet]
         public ActionResult<List<Widget>> GetUserWidgets()

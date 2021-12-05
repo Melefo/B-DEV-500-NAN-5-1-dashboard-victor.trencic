@@ -2,11 +2,11 @@
     <vuescroll>
         <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[20, 20]" :use-css-transforms="true">
             <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @moved="movedEvent">
-                <CityTemp v-if="item.type == 'city_temperature'" :id=item.i :params=item.params :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
-                <RealTimeCrypto v-if="item.type == 'realtime_crypto'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
-                <Game v-if="item.type == 'game_info'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
-                <Video v-if="item.type == 'video'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
-                <Feed v-if="item.type == 'rss_feed'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
+                <CityTemp v-if="item.type == 'city_temperature'" :id=item.i :params=item.params :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
+                <RealTimeCrypto v-if="item.type == 'realtime_crypto'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
+                <Game v-if="item.type == 'game_info'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
+                <Video v-if="item.type == 'video'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
+                <Feed v-if="item.type == 'rss_feed'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
             </grid-item>
         </grid-layout>
     </vuescroll>
@@ -35,6 +35,7 @@
     import Game from '@/components/Widgets/Game.vue'
     import Video from '@/components/Widgets/Video.vue'
     import Feed from '@/components/Widgets/Feed.vue'
+    import { HubConnectionBuilder } from '@microsoft/signalr'
 
     export default Vue.extend({
         name: 'Dashboard',
@@ -44,8 +45,15 @@
             vuescroll, CityTemp, RealTimeCrypto, Game, Video, Feed
         },
         data: function () {
+            const token = this.$store.getters["user/token"];
             return {
-                layout: [] as any[]
+                layout: [] as any[],
+                ws: new HubConnectionBuilder()
+                    .withUrl("/api/widget/hub", {
+                        accessTokenFactory: () => {
+                            return token;
+                        }
+                    }).withAutomaticReconnect().build()
             }
         },
         methods: {
@@ -57,6 +65,11 @@
             movedEvent(i, newX, newY){
                 this.update({id: i, x: newX, y: newY});
             },
+            messaged() {
+                this.layout.forEach(element => {
+                    element.params.test = 10
+                });
+            }
         },
         created: async function() {
             const data = await this.get();
@@ -71,7 +84,13 @@
                     params: item.params
                 }
             })
-        }
+
+            await this.ws.start();
+        },
+        destroyed: async function() {
+            this.ws.stop();
+        },
+        
     })
 </script>
 

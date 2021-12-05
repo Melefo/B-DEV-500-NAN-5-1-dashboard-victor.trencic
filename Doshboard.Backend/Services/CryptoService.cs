@@ -89,7 +89,7 @@ namespace Doshboard.Backend.Services
         public async Task<RealTimeCryptoData?> GetRealTimeCrypto(string id)
         {
             var widget = _mongo.GetWidget<RealTimeCryptoWidget>(id);
-            if (widget == null || widget.Type != RealTimeCryptoWidget.Name)
+            if (widget == null)
                 return null;
 
             List<CryptoInfo>? listing = await ClientAPI.GetAsync<List<CryptoInfo>>($"https://api.nomics.com/v1/currencies/ticker?key={_apiKey}&ids={widget.Currency}&convert={widget.Convert}");
@@ -102,7 +102,7 @@ namespace Doshboard.Backend.Services
         public void ConfigureRealTimeCrypto(string id, string? currency, string? convert)
         {
             var widget = _mongo.GetWidget<RealTimeCryptoWidget>(id);
-            if (widget == null || widget.Type != RealTimeCryptoWidget.Name)
+            if (widget == null)
                 return;
 
             if (currency != null)

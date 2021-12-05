@@ -10,6 +10,7 @@
         <button type="button" @click="clickDelete">X</button>
         <input type="text" placeholder="Feed URL" v-model="params.url" @change="send" />
         <input type="number" placeholder="Limit of items" v-model="params.items" @change="send" />
+        <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
 </template>
 
@@ -25,19 +26,24 @@ export default Vue.extend({
     name: "Feed",
     methods: {
         ...mapActions("rss", ["getById", "update"]),
-        clickDelete(e) {
+        async clickDelete(e) {
             e.preventDefault();
+            await this.ws.invoke("DeleteTimer", this.id);
             this.$emit('deleted');
         },
         async send() {
             await this.update({ id: this.id, url: this.params.url, items: parseInt(this.params.items)})
             this.feed = await this.getById(this.id);
+        },
+        async timer() {
+            await this.ws.invoke("UpdateTimer", this.id, parseInt(this.params.timer));
         }
     },
     props : {
         id: String,
         config: Boolean,
-        params: Object
+        params: Object,
+        ws: Object
     },
     data: function () {
         return {
@@ -46,6 +52,10 @@ export default Vue.extend({
     },
     created: async function() {
         this.feed = await this.getById(this.id);
+
+        this.ws.on(this.id, (e) => {
+            this.feed = e;
+        })
     }
 })
 </script>

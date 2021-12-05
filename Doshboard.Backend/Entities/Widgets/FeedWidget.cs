@@ -8,15 +8,11 @@ namespace Doshboard.Backend.Entities.Widgets
     {
         public const string Name = "rss_feed";
 
-        public FeedWidget() : base(Name, 3, 2)
-        {
-        }
-
         [WidgetParam]
         [BsonIgnore]
         public string Url
         {
-            get => Params.ContainsKey("url") ? (string)Params["url"] : "https://news.google.com/rss";
+            get => (string)Params["url"] ;
             set => Params["url"] = value;
         }
 
@@ -24,8 +20,14 @@ namespace Doshboard.Backend.Entities.Widgets
         [BsonIgnore]
         public int Items
         {
-            get => Params.ContainsKey("items") ? (int)Params["items"] : 5;
+            get => (int)Params["items"];
             set => Params["items"] = value;
+        }
+
+        public FeedWidget() : base(Name, 3, 2)
+        {
+            Url = "https://news.google.com/rss";
+            Items = 5;
         }
     }
 }

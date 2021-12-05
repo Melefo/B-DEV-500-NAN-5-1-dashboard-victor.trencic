@@ -13,6 +13,7 @@
             <option value="1">Fahrenheit</option>
             <option value="2">Kelvin</option>
         </select>
+        <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
 </template>
 
@@ -28,19 +29,24 @@
         name: 'CityTemp',
         methods: {
             ...mapActions("weather", ["getById", "update"]),
-            clickDelete(e) {
+            async clickDelete(e) {
                 e.preventDefault();
+                await this.ws.invoke("DeleteTimer", this.id);
                 this.$emit('deleted');
             },
             async send() {
                 await this.update({ id: this.id, city: this.params.city, unit: parseInt(this.params.unit)})
                 this.weather = await this.getById(this.id);
+            },
+            async timer() {
+                await this.ws.invoke("UpdateTimer", this.id, parseInt(this.params.timer));
             }
         },
         props : {
             id: String,
             config: Boolean,
-            params: Object
+            params: Object,
+            ws: Object
         },
         data: function () {
             return {
@@ -49,6 +55,10 @@
         },
         created: async function() {
             this.weather = await this.getById(this.id);
+
+            this.ws.on(this.id, (e) => {
+                this.weather = e;
+            })
         }
     })
 </script>

@@ -13,6 +13,7 @@
         <select v-model="params.videoId" @change='send'>
             <option :value="key" v-for="(value, key) in videos" :key="key">{{ value }}</option>
         </select>
+        <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
 </template>
 
@@ -28,19 +29,24 @@
         name: 'Video',
         methods: {
             ...mapActions("youtube", ["getById", "update", "getUserVideos"]),
-            clickDelete(e) {
+            async clickDelete(e) {
                 e.preventDefault();
+                await this.ws.invoke("DeleteTimer", this.id);
                 this.$emit('deleted');
             },
             async send() {
                 await this.update({ id: this.id, videoId: this.params.videoId})
                 this.video = await this.getById(this.id);
+            },
+            async timer() {
+                await this.ws.invoke("UpdateTimer", this.id, parseInt(this.params.timer));
             }
         },
         props : {
             id: String,
             config: Boolean,
-            params: Object
+            params: Object,
+            ws: Object
         },
         data: function () {
             return {
@@ -51,6 +57,11 @@
         created: async function() {
             this.video = await this.getById(this.id);
             this.videos = await this.getUserVideos();
+
+            this.ws.on(this.id, (e, es) => {
+                this.video = e;
+                this.videos = es;
+            })
         }
     })
 </script>

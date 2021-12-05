@@ -93,7 +93,7 @@ namespace Doshboard.Backend.Services
         public async Task<CityTempData?> GetCityTemp(string id)
         {
             var widget = _mongo.GetWidget<CityTempWidget>(id);
-            if (widget == null || widget.Type != CityTempWidget.Name)
+            if (widget == null)
                 return null;
 
             WeatherJson? response = await ClientAPI.GetAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&units={widget.Unit}");
@@ -106,7 +106,7 @@ namespace Doshboard.Backend.Services
         public void ConfigureCityTemp(string id, string? newCity, UnitType? newUnit)
         {
             var widget = _mongo.GetWidget<CityTempWidget>(id);
-            if (widget == null || widget.Type != CityTempWidget.Name)
+            if (widget == null)
                 return;
 
             if (newCity != null)
