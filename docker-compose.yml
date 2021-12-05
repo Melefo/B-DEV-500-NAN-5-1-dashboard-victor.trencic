@@ -6,13 +6,35 @@ services:
       dockerfile: "Doshboard.Backend/Dockerfile"
     ports:
       - "8080:80"
+    depends_on:
+      - "mongo"
+    environment:
+      - Mongo__Client=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/
+      - Mongo__Database=${MONGO_DATABASE}
+      - Google__ClientId=${GOOGLE_CLIENTID}
+      - Google__ClientSecret=${GOOGLE_CLIENTSECRET}
+      - Google__ApiKey=${GOOGLE_APIKEY}
+      - Weather__ApiKey=${WEATHER_APIKEY}
+      - Crypto__ApiKey=${CRYPTO_APIKEY}
+      - Steam__ApiKey=${STEAM_APIKEY}
+      - Foot__ApiKey=${FOOT_APIKEY}
+      - JwtKey=${JWTKEY}
   client:
     build:
       context: .
       dockerfile: "Doshboard.Frontend/Dockerfile"
     environment:
       - BACKEND_URL=http://server:80/
+      - VUE_APP_GOOGLE_CLIENTID=${GOOGLE_CLIENTID}
     ports:
       - "80:80"
     depends_on:
       - "server"
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
