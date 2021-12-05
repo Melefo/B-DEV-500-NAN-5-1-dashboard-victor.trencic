@@ -51,6 +51,7 @@ Then the API keys of all used APIs
  - WEATHER_APIKEY = Your API Key from [OpenWeather](https://api.openweathermap.org)
  - CRYPTO_APIKEY = Your API Key from [Nomics](https://api.nomics.com)
  - STEAM_APIKEY = Your API Key from [Steam](https://steamcommunity.com/dev/apikey)
+ - FOOT_APIKEY = Yout API Key from [football-data.org](https://www.football-data.org/)
 
  Finally the key used by the backend to create the JWT
  - JWTKEY = A random string with at least 16 chars

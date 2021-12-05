@@ -17,6 +17,7 @@ services:
       - Weather__ApiKey=${WEATHER_APIKEY}
       - Crypto__ApiKey=${CRYPTO_APIKEY}
       - Steam__ApiKey=${STEAM_APIKEY}
+      - Foot__ApiKey=${FOOT_APIKEY}
       - JwtKey=${JWTKEY}
   client:
     build:
