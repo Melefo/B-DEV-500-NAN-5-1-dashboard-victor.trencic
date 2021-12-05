@@ -1,14 +1,18 @@
 <template>
     <div id="video-widget" v-if=!config>
         <code v-if='error'>{{ this.error }}</code>
-        <div v-else-if="video">
+        <div v-else-if="video" id="data">
             <img :src="video.thumbnail" />
             <div class="title">{{ video.title }}</div>
-            <div class="likes">{{ video.likes }}👍</div>
-            <div class="percent">{{ video.likes / (video.likes + video.dislikes) * 100 }}%</div>
-            <div class="dislikes">{{ video.dislikes }}👎</div>
-            <div class="views">{{ video.views }}</div>
-            <div class="comments">{{ video.comments }}</div>
+            <div id="likes">
+                <div class="likes">{{ video.likes }}👍</div>
+                <div class="percent">{{ (video.likes / (video.likes + video.dislikes) * 100).toFixed(2) }}%</div>
+                <div class="dislikes">👎{{ video.dislikes }}</div>
+            </div>
+            <div id="pct">
+                <div class="views">{{ video.views }} views</div>
+                <div class="comments">{{ video.comments }} comments</div>
+            </div>
         </div>
     </div>
     <div id="video-widget" v-else>
@@ -22,7 +26,30 @@
 </template>
 
 <style scoped>
+#video-widget {
+    height: 100%;
+}
 
+#data {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#likes, #pct {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+img {
+    width: 25%;
+    border-radius: 5px;
+}
 </style>
 
 <script lang="ts">
