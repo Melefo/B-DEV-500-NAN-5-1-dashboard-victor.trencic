@@ -15,7 +15,7 @@ namespace Doshboard.Backend.Entities.Widgets
 
         [WidgetParam]
         [BsonIgnore]
-        public string Id
+        public string CompetitionId
         {   
             get => Params.ContainsKey("id") ? (string)Params["id"] : "2015"; //2015 == Ligue 1
             set => Params["id"] = value;

@@ -7,6 +7,7 @@
                 <Game v-if="item.type == 'game_info'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
                 <Video v-if="item.type == 'video'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
                 <Feed v-if="item.type == 'rss_feed'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
+                <Competition v-if="item.type == 'foot_competitions'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
             </grid-item>
         </grid-layout>
     </vuescroll>
@@ -35,6 +36,7 @@
     import Game from '@/components/Widgets/Game.vue'
     import Video from '@/components/Widgets/Video.vue'
     import Feed from '@/components/Widgets/Feed.vue'
+    import Competition from '@/components/Widgets/Competition.vue'
     import { HubConnectionBuilder } from '@microsoft/signalr'
 
     export default Vue.extend({
@@ -42,7 +44,7 @@
         components: {
             GridLayout: VueGridLayout.GridLayout,
             GridItem: VueGridLayout.GridItem,
-            vuescroll, CityTemp, RealTimeCrypto, Game, Video, Feed
+            vuescroll, CityTemp, RealTimeCrypto, Game, Video, Feed, Competition
         },
         data: function () {
             const token = this.$store.getters["user/token"];

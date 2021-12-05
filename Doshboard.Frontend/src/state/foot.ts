@@ -11,7 +11,7 @@ export const foot = {
             return await res.json();
         },
         async getMatchByCompetitions({ commit }, id) {
-            const res = await fetch("/api/services/foot/match" + new URLSearchParams({ id: id }), { //user id here : same as a getById
+            const res = await fetch("/api/services/foot/match?" + new URLSearchParams({ id: id }), { //user id here : same as a getById
                 method: "GET",
                 headers: authHeader()
             });

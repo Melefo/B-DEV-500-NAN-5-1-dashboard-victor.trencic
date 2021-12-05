@@ -389,15 +389,15 @@ namespace Doshboard.Backend.Services
             var widget = _mongo.GetWidget<FootWidget>(userId);
             if (widget == null)
                 return null;
-            CompetitionData? compet = await GetCompetitionById(widget.Id);
+            CompetitionData? compet = await GetCompetitionById(widget.CompetitionId);
             DateTime today = DateTime.UtcNow;
             int? matchDay = compet?.CurrentMatchDay;
             FootJson? response = null;
 
             if (matchDay == null)
-                response = await _client.GetFromJsonAsync<FootJson>($"http://api.football-data.org/v2/competitions/{ competitionId }/matches?dateFrom={today:yyyy-MM-dd}&dateTo={today.AddDays(5):yyyy-MM-dd}");
+                response = await _client.GetFromJsonAsync<FootJson>($"http://api.football-data.org/v2/competitions/{ widget.CompetitionId }/matches?dateFrom={today:yyyy-MM-dd}&dateTo={today.AddDays(5):yyyy-MM-dd}");
             else
-                response = await _client.GetFromJsonAsync<FootJson>($"http://api.football-data.org/v2/competitions/{ competitionId }/matches?matchday={ matchDay }");
+                response = await _client.GetFromJsonAsync<FootJson>($"http://api.football-data.org/v2/competitions/{ widget.CompetitionId }/matches?matchday={ matchDay }");
             if (response == null)
                 return default;
 
@@ -418,9 +418,9 @@ namespace Doshboard.Backend.Services
                 return;
 
             if (competitionId != null)
-                widget.Id = competitionId;
+                widget.CompetitionId = competitionId;
             else
-                widget.Id = "2015";
+                widget.CompetitionId = "2015";
             _mongo.SaveWidget(widget);
         }
 
