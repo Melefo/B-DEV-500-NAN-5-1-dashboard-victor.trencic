@@ -34,6 +34,8 @@ namespace Doshboard.Backend.Controllers
         public ActionResult AddWidget(string type)
         {
             var widget = _service.NewUserWidget(User.Identity!.Name!, type);
+            if (widget == null)
+                return BadRequest();
             return Created("", widget);
         }
 

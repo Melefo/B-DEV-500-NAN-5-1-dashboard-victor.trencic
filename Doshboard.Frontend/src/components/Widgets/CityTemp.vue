@@ -1,11 +1,11 @@
 <template>
-    <div id="weather-widget" v-if=!config>
+    <div id="temp-widget" v-if=!config>
         <div class="temperature">{{ weather.temp }}</div>
         <div class="humidity">{{ weather.humidity }}☔</div>
         <div class="icon"><img :src=weather.icon></div>
         <div class="city">{{ weather.city }}</div>
     </div>
-    <div id="weather-widget" v-else>
+    <div id="temp-widget" v-else>
         <button type="button" @click="clickDelete">X</button>
         <input type="text" placeholder="City" v-model="params.city" @change="send" />
         <select v-model="params.unit" @change="send">

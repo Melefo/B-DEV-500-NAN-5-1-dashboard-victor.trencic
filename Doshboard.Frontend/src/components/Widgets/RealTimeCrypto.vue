@@ -47,7 +47,6 @@
         },
         created: async function() {
             const res = await this.getById(this.id);
-            console.log(res)
             this.crypto = res
         }
     })
