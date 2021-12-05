@@ -57,7 +57,6 @@
             }
         },
         methods: {
-<<<<<<< Updated upstream
             ...mapActions("widget", ["get", "delete", "update"]),
             deleteItem(id) {
                 this.delete(id);
@@ -71,13 +70,6 @@
                     element.params.test = 10
                 });
             }
-=======
-            ...mapActions("widget", ["get", "update"]),
-            movedEvent(i, newX, newY){
-                this.update(i, newX, newY),
-                console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
-            },
->>>>>>> Stashed changes
         },
         created: async function() {
             const data = await this.get();

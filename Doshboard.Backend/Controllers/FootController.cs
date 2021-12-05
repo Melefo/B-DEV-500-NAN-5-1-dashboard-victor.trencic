@@ -25,7 +25,7 @@ namespace Doshboard.Backend.Controllers
         }
 
         [HttpGet("competition/{id:int}")]
-        public async Task<ActionResult<CompetitionData>> GetCompetitionById(int id)
+        public async Task<ActionResult<CompetitionData>> GetCompetitionById(string id)
         {
             CompetitionData? response = await _service.GetCompetitionById(id);
 
@@ -35,7 +35,7 @@ namespace Doshboard.Backend.Controllers
         }
 
         [HttpGet("match")]
-        public async Task<ActionResult<FootJson>> GetTeamsByCompetition(int competitionId)
+        public async Task<ActionResult<FootJson>> GetTeamsByCompetition(string competitionId)
         {
             FootJson? response = await _service.GetTeams(competitionId);
 
@@ -45,7 +45,7 @@ namespace Doshboard.Backend.Controllers
         }
 
         [HttpGet("team/{id:int}")]
-        public async Task<ActionResult<FootTeamJson>> GetTeamById(int id)
+        public async Task<ActionResult<FootTeamJson>> GetTeamById(string id)
         {
             FootTeamJson? response = await _service.GetTeam(id);
 

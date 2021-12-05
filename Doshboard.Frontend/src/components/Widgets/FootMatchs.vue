@@ -27,11 +27,11 @@ export default Vue.extend({
     },
     data: function () {
         return {
-            weather: {},
+            footMatchs: {},
         }
     },
     created: async function() {
-        this.weather = await this.getById(this.id);
+        this.footMatchs = await this.getById(this.id);
     }
 })
 </script>

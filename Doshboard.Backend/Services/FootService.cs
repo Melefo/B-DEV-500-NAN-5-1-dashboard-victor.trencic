@@ -375,7 +375,7 @@ namespace Doshboard.Backend.Services
             return result;
         }
 
-        public async Task<CompetitionData?> GetCompetitionById(int id)
+        public async Task<CompetitionData?> GetCompetitionById(string id)
         {
             CompetitionFull? response = await _client.GetFromJsonAsync<CompetitionFull>($"http://api.football-data.org/v2/competitions/{ id }");
             if (response == null)
@@ -384,9 +384,12 @@ namespace Doshboard.Backend.Services
             return result;
         }
 
-        public async Task<FootJson?> GetTeams(int competitionId)
+        public async Task<FootJson?> GetTeams(string userId)
         {
-            CompetitionData? compet = await GetCompetitionById(competitionId);
+            var widget = _mongo.GetWidget<FootWidget>(userId);
+            if (widget == null)
+                return null;
+            CompetitionData? compet = await GetCompetitionById(widget.Id);
             DateTime today = DateTime.UtcNow;
             int? matchDay = compet?.CurrentMatchDay;
             FootJson? response = null;
@@ -401,11 +404,24 @@ namespace Doshboard.Backend.Services
             return response;
         }
 
-        public async Task<FootTeamJson?> GetTeam(int teamsId)
+        public async Task<FootTeamJson?> GetTeam(string teamsId)
         {
             FootTeamJson? response = await _client.GetFromJsonAsync<FootTeamJson>($"http://api.football-data.org/v2/teams/{ teamsId }");
 
             return response;
+        }
+
+        public void ConfigureFootCompetition(string userId, string? competitionId)
+        {
+            var widget = _mongo.GetWidget<FootWidget>(userId);
+            if (widget == null)
+                return;
+
+            if (competitionId != null)
+                widget.Id = competitionId;
+            else
+                widget.Id = "2015";
+            _mongo.SaveWidget(widget);
         }
 
     }
