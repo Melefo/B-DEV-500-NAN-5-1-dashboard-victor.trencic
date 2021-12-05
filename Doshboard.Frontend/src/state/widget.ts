@@ -14,13 +14,19 @@ export const widget = {
                 method: "GET",
                 headers: authHeader()
             });
-            return await res.json();
+            if (res.status == 500)
+                return { success: false, error: "Backend unavailable" }
+            return { success: false, data: await res.json() }
         },
         async new({ commit }, type) {
             const res = await fetch("/api/widget?" + new URLSearchParams({ type: type }), {
                 method: "POST",
                 headers: authHeader()
             });
+            if (res.status == 500)
+                return "Backend unavailable";
+            const { error } = await res.json();
+            return error
         },
         async delete({ commit }, id) {
             const res = await fetch("/api/widget?" + new URLSearchParams({ id: id }), {

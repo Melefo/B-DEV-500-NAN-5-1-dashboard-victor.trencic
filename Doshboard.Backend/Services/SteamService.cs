@@ -1,5 +1,6 @@
 ﻿using Doshboard.Backend.Attributes;
 using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Interfaces;
 using Doshboard.Backend.Models.Widgets;
 using Doshboard.Backend.Utilities;
@@ -232,19 +233,19 @@ namespace Doshboard.Backend.Services
             return priceJson.GetProperty(id.ToString()).Deserialize<PriceJson>();
         }
 
-        public async Task<GameData?> GetGameData(string id)
+        public async Task<GameData> GetGameData(string id)
         {
             var widget = _mongo.GetWidget<GameWidget>(id);
             if (widget == null)
-                return null;
+                throw new MongoException("Widget not found");
 
             _games ??= await ClientAPI.GetAsync<GameList>($"https://api.steampowered.com/ISteamApps/GetAppList/v2/?key={_apiKey}");
             if (_games == null)
-                return null;
+                throw new ApiException("Failed to call API");
 
             var game = _games.Applist.Apps.FirstOrDefault(x => string.Equals(x.Name, widget.GameName, StringComparison.OrdinalIgnoreCase));
             if (game == null)
-                return null;
+                throw new WidgetException("No game with this name found");
 
             var metaTask = GetMetadataJson(game.Appid);
             var playersTask = GetPlayerJson(game.Appid);
@@ -258,7 +259,7 @@ namespace Doshboard.Backend.Services
             var reviewInfo = await reviewTask;
             var priceInfo = await priceTask;
             if (meta == null || reviewInfo == null || priceInfo == null)
-                return null;
+                throw new ApiException("Failed to call API");
 
             var name = meta.Response.Apps[0].FriendlyName ?? meta.Response.Apps[0].Name;
             var icon = $"https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/{game.Appid}/{meta.Response.Apps[0].Icon}.jpg";
@@ -269,18 +270,21 @@ namespace Doshboard.Backend.Services
             return new GameData(name, icon, price, review, players);
         }
 
-        public async Task ConfigureGame(string id, string name)
+        public async Task ConfigureGame(string id, string? name)
         {
             var widget = _mongo.GetWidget<GameWidget>(id);
             if (widget == null)
-                return;
+                throw new MongoException("Widget not found");
 
             _games ??= await ClientAPI.GetAsync<GameList>($"https://api.steampowered.com/ISteamApps/GetAppList/v2/?key={_apiKey}");
             if (_games == null)
+                throw new ApiException("Failed to call API");
+
+            if (name == null)
                 return;
             var game = _games.Applist.Apps.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
             if (game == null)
-                return;
+                throw new WidgetException("No game with this name found");
 
             widget.GameName = name;
             _mongo.SaveWidget(widget);

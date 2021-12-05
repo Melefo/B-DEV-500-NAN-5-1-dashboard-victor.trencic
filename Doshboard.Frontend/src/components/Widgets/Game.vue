@@ -1,12 +1,16 @@
 <template>
     <div id="game-widget" v-if=!config>
-        <img :src="game.logo" />
-        <div class="name">{{ game.name }}</div>
-        <div class="players">{{ game.players }}</div>
-        <div class="review">{{ game.review }}%</div>
-        <div class="price">{{ game.price }}</div>
+        <code v-if='error'>{{ this.error }}</code>
+        <div v-else-if="game">
+            <img :src="game.logo" />
+            <div class="name">{{ game.name }}</div>
+            <div class="players">{{ game.players }}</div>
+            <div class="review">{{ game.review }}%</div>
+            <div class="price">{{ game.price }}</div>
+        </div>
     </div>
     <div id="game-widget" v-else>
+        <code v-if='error'>{{ this.error }}</code>
         <button type="button" @click="clickDelete">X</button>
         <input type="text" placeholder="Game name" v-model="params.name" @change="send" />
         <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
@@ -31,10 +35,23 @@
                 this.$emit('deleted');
             },
             async send() {
-                await this.update({ id: this.id, name: this.params.name})
-                this.game = await this.getById(this.id);
-            },
+                if (this.params.name == '')
+                    this.params.name = null;
+                const { error } = await this.update({ id: this.id, name: this.params.name})
+                this.error = error
+                if (this.error)
+                    return;
+                const { success, json } = await this.getById(this.id);
+                if (success)
+                    this.game = json;
+                else
+                    this.error = json;
+                },
             async timer() {
+                if (this.params.timer < 1) {
+                    this.params.timer = 1;
+                    return;
+                }
                 await this.ws.invoke("UpdateTimer", this.id, parseInt(this.params.timer));
             }
         },
@@ -46,11 +63,16 @@
         },
         data: function () {
             return {
-                game: {},
+                game: null,
+                error: null
             }
         },
         created: async function() {
-            this.game = await this.getById(this.id);
+            const { success, json } = await this.getById(this.id);
+            if (success)
+                this.game = json;
+            else
+                this.error = json;
 
             this.ws.on(this.id, (e) => {
                 this.game = e;

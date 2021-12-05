@@ -1,5 +1,6 @@
 <template>
     <div id="list">
+        <div v-if="error">{{ this.error }}</div>
         <div v-for="service in services" :key="service.name">
             <p>{{ service.name }}</p>
             <div v-for="widget in service.widgets" :key="widget.name" @click="click(widget)">
@@ -27,19 +28,24 @@ export default Vue.extend({
     },
     data: function() {
         return {
-            services: []
+            services: null,
+            error: null
         }
     },
     methods: {
         ...mapActions("about", ["get"]),
         ...mapActions("widget", ["new"]),
         async click(widget) {
-            await this.new(widget.name);
-            this.$router.push('/dashboard');
+            this.error = await this.new(widget.name);
+            if (!this.error) {
+                this.$router.push('/dashboard');
+            }
         }
     },
     created: async function() {
-        this.services = await this.get()
+        const { error, data } = await this.get()
+        this.error = error;
+        this.services = data;
     }
 })
 </script>

@@ -10,17 +10,17 @@ namespace Doshboard.Backend.Models
         /// <summary>
         /// User username or email
         /// </summary>
-        [MinLength(2)]
-        [MaxLength(256)]
-        [Required]
+        [MinLength(2, ErrorMessage = "Username must contain at least 2 characters")]
+        [MaxLength(256, ErrorMessage = "Username must be less than 256 characters")]
+        [Required(ErrorMessage = "Username is required")]
         public string Username { get; set; }
 
         /// <summary>
         /// User password
         /// </summary>
-        [MinLength(2)]
-        [MaxLength(256)]
-        [Required]
+        [MinLength(4, ErrorMessage = "Password must contain at least 4 characters")]
+        [MaxLength(256, ErrorMessage = "Password must be less than 256 characters")]
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
 
         /// <summary>

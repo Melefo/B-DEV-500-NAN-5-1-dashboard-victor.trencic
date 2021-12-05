@@ -1,4 +1,5 @@
 ﻿using Doshboard.Backend.Entities;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Utilities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -44,10 +45,10 @@ namespace Doshboard.Backend.Services
         /// <param name="user">User informations</param>
         public void Create(User user)
         {
-            if (_db.GetUserByIdentifier(user.Email) != null || _db.GetUserByIdentifier(user.Username) != null)
-            {
-                return;
-            }
+            if (_db.GetUserByIdentifier(user.Email) != null)
+                throw new UserException("An user with this email is already registered");
+            if (_db.GetUserByIdentifier(user.Username) != null)
+                throw new UserException("An user with this username is already registered");
             user.Password = PasswordHash.HashPassword(user.Password);
             _db.CreateUser(user);
         }
@@ -87,27 +88,27 @@ namespace Doshboard.Backend.Services
             public string IdToken { get; set; }
         }
 
-        public async Task<(string?, User?)> GoogleAuthenticate(string code)
+        public async Task<(string, User)> GoogleAuthenticate(string code)
         { 
             var res = await ClientAPI.PostAsync<GoogleAuth>($"https://oauth2.googleapis.com/token?code={code}&client_id={_googleId}&client_secret={_googleSecret}&redirect_uri=postmessage&grant_type=authorization_code");
             if (res == null)
-                return (null, null);
+                throw new ApiException("Failed to call API");
 
             JwtSecurityTokenHandler tokenHandler = new();
             string? id = tokenHandler.ReadJwtToken(res.IdToken).Payload["sub"].ToString();
             string? email = tokenHandler.ReadJwtToken(res.IdToken).Payload["email"].ToString();
 
             if (id == null)
-                return (null, null);
+                throw new ApiException("API did not return the necessary arguments");
             var user = _db.GetUserByGoogle(id);
             if (user == null)
             {
                 if (email == null)
-                    return (null, null);
+                    throw new UserException("You must register before using OAuth");
 
                 user = _db.GetUserByIdentifier(email);
                 if (user == null)
-                    return (null, null);
+                    throw new UserException("You must register before using OAuth");
             }
 
             if (user.Google == null)
@@ -144,15 +145,14 @@ namespace Doshboard.Backend.Services
         /// <param name="password">User password</param>
         /// <param name="user">User informations</param>
         /// <returns>JWT</returns>
-        public string? Authenticate(string username, string password, out User? user)
+        public string Authenticate(string username, string password, out User user)
         {
             var found = _db.GetUserByIdentifier(username);
-            user = default;
 
             if (found == null)
-                return null;
+                throw new MongoException("User not found");
             if (!PasswordHash.VerifyPassword(password, found.Password))
-                return null;
+                throw new UserException("Wrong password");
 
             user = found;
             JwtSecurityTokenHandler tokenHandler = new();
