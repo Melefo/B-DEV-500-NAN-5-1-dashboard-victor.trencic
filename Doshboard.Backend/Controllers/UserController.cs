@@ -98,6 +98,11 @@ namespace Doshboard.Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Promote user to Admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPatch("promote")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         public ActionResult PromoteUser(string id)
@@ -106,6 +111,11 @@ namespace Doshboard.Backend.Controllers
             return Accepted();
         }
 
+        /// <summary>
+        /// Login and link user with google account
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("login/google")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

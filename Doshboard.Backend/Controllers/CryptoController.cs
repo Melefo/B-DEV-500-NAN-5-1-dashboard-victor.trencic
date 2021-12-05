@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Doshboard.Backend.Controllers
 {
+    /// <summary>
+    /// Crypto Controller route
+    /// </summary>
     [Authorize]
     [Route("services/[controller]")]
     [ApiController]
@@ -38,6 +41,11 @@ namespace Doshboard.Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Widget configuration
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPatch(RealTimeCryptoWidget.Name)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
