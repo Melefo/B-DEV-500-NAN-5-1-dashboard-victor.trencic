@@ -1,16 +1,14 @@
 <template>
-    <div id="crypto-widget" v-if=!config>
-        <img :src="crypto.logoUrl" />
-        <div>{{ crypto.currency }}</div>
-        <div>{{ crypto.priceChange }}%</div>
-        <div>{{ crypto.price }}</div>
-        <div>{{ crypto.rank }}</div>
-
+    <div id="game-widget" v-if=!config>
+        <img :src="game.logo" />
+        <div class="name">{{ game.name }}</div>
+        <div class="players">{{ game.players }}</div>
+        <div class="review">{{ game.review }}%</div>
+        <div class="price">{{ game.price }}</div>
     </div>
-    <div id="crypto-widget" v-else>
+    <div id="game-widget" v-else>
         <button type="button" @click="clickDelete">X</button>
-        <input type="text" placeholder="Currency" v-model="params.currency" @change="send" />
-        <input type="text" placeholder="Convert" v-model="params.convert" @change="send" />
+        <input type="text" placeholder="Game name" v-model="params.name" @change="send" />
         <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
 </template>
@@ -24,17 +22,17 @@
     import { mapActions } from 'vuex';
 
     export default Vue.extend({
-        name: 'RealTimeCrypto',
+        name: 'Game',
         methods: {
-            ...mapActions("crypto", ["getById", "update"]),
+            ...mapActions("steam", ["getById", "update"]),
             async clickDelete(e) {
                 e.preventDefault();
                 await this.ws.invoke("DeleteTimer", this.id);
                 this.$emit('deleted');
             },
             async send() {
-                await this.update({ id: this.id, currency: this.params.currency, convert: this.params.convert})
-                this.crypto = await this.getById(this.id);
+                await this.update({ id: this.id, name: this.params.name})
+                this.game = await this.getById(this.id);
             },
             async timer() {
                 await this.ws.invoke("UpdateTimer", this.id, parseInt(this.params.timer));
@@ -48,14 +46,14 @@
         },
         data: function () {
             return {
-                crypto: {},
+                game: {},
             }
         },
         created: async function() {
-            this.crypto = await this.getById(this.id);
+            this.game = await this.getById(this.id);
 
             this.ws.on(this.id, (e) => {
-                this.crypto = e;
+                this.game = e;
             })
         }
     })

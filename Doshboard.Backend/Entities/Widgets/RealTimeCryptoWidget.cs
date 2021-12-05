@@ -8,15 +8,11 @@ namespace Doshboard.Backend.Entities.Widgets
     {
         public const string Name = "realtime_crypto";
 
-        public RealTimeCryptoWidget() : base(Name, 1, 2)
-        {
-        }
-
         [WidgetParam]
         [BsonIgnore]
         public string Currency
         {
-            get => Params.ContainsKey("currency") ? (string)Params["currency"] : "BTC";
+            get => (string)Params["currency"];
             set => Params["currency"] = value;
         }
 
@@ -25,8 +21,14 @@ namespace Doshboard.Backend.Entities.Widgets
         [BsonIgnore]
         public string Convert
         {
-            get => Params.ContainsKey("convert") ? (string)Params["convert"] : "EUR";
+            get => (string)Params["convert"];
             set => Params["convert"] = value;
+        }
+
+        public RealTimeCryptoWidget() : base(Name, 1, 2)
+        {
+            Currency = "BTC";
+            Convert = "EUR";
         }
     }
 }

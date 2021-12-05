@@ -2,6 +2,7 @@
 using Doshboard.Backend.Entities.Widgets;
 using Doshboard.Backend.Interfaces;
 using Doshboard.Backend.Models.Widgets;
+using Doshboard.Backend.Utilities;
 using System.Text.Json.Serialization;
 
 namespace Doshboard.Backend.Services
@@ -71,7 +72,6 @@ namespace Doshboard.Backend.Services
     [ServiceName("Crypto")]
     public class CryptoService : IService
     {
-        private readonly HttpClient _client = new();
         private readonly MongoService _mongo;
         private readonly string _apiKey;
 
@@ -89,12 +89,12 @@ namespace Doshboard.Backend.Services
         public async Task<RealTimeCryptoData?> GetRealTimeCrypto(string id)
         {
             var widget = _mongo.GetWidget<RealTimeCryptoWidget>(id);
-            if (widget == null || widget.Type != RealTimeCryptoWidget.Name)
-                return default;
+            if (widget == null)
+                return null;
 
-            List<CryptoInfo>? listing = await _client.GetFromJsonAsync<List<CryptoInfo>>($"https://api.nomics.com/v1/currencies/ticker?key={_apiKey}&ids={widget.Currency}&convert={widget.Convert}");
+            List<CryptoInfo>? listing = await ClientAPI.GetAsync<List<CryptoInfo>>($"https://api.nomics.com/v1/currencies/ticker?key={_apiKey}&ids={widget.Currency}&convert={widget.Convert}");
             if (listing == null)
-                return default;
+                return null;
 
             return new RealTimeCryptoData(listing[0].Currency, listing[0].LogoUrl, listing[0].Price, listing[0].OneDay?.PriceChangePct ?? 0, listing[0].Rank);
         }
@@ -102,7 +102,7 @@ namespace Doshboard.Backend.Services
         public void ConfigureRealTimeCrypto(string id, string? currency, string? convert)
         {
             var widget = _mongo.GetWidget<RealTimeCryptoWidget>(id);
-            if (widget == null || widget.Type != RealTimeCryptoWidget.Name)
+            if (widget == null)
                 return;
 
             if (currency != null)

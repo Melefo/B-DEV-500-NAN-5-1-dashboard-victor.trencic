@@ -18,23 +18,19 @@ namespace Doshboard.Backend.Entities
 
         public Dictionary<string, object> Params { get; set; } = new();
 
+        [BsonIgnore]
+        public int Timer
+        {
+            get => (int)Params["timer"];
+            set => Params["timer"] = value;
+        }
+
         public Widget(string type, int height, int width)
         { 
             Type = type;
             Height = height;
             Width = width;
-        }
-
-        [JsonConstructor]
-        public Widget(string id, int x, int y, int height, int width, string type, Dictionary<string, object> @params)
-        {
-            Id = id;
-            X = x;
-            Y = y;
-            Height = height;
-            Width = width;
-            Type = type;
-            Params = @params;
+            Timer = 5;
         }
     }
 }
