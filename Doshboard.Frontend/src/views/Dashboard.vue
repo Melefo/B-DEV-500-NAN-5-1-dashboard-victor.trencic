@@ -20,6 +20,7 @@
     border-radius: 25px;
     backdrop-filter: blur(30px);
     box-shadow: 10px 5px 10px #00000010;
+    overflow: auto;
 }
 
 .vue-resizable-handle {
