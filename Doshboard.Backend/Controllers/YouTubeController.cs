@@ -1,5 +1,6 @@
 ﻿using Doshboard.Backend.Entities;
 using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Models;
 using Doshboard.Backend.Models.Widgets;
 using Doshboard.Backend.Services;
@@ -21,32 +22,61 @@ namespace Doshboard.Backend.Controllers
             _service = service;
 
         [HttpGet(VideoWidget.Name)]
-        public async Task<ActionResult<VideoData>> GetCityTemperature([BindRequired]string id)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<VideoData>> GetVideo([BindRequired] string id)
         {
-            VideoData? response = await _service.GetVideoData(id, User.Identity!.Name!);
-
-            if (response == null)
-                return BadRequest();
-            return response;
+            try
+            {
+                return await _service.GetVideoData(id, User.Identity!.Name!);
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new { error = ex.Message });
+            }
+            catch (UserException ex)
+            {
+                return Unauthorized(new { error = ex.Message });
+            }
+            catch (MongoException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPatch(VideoWidget.Name)]
-        public ActionResult ConfigureCityTemperature([BindRequired]string id, [BindRequired]string videoId)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        public ActionResult ConfigureVideo([FromBody]VideoModel model)
         {
             if (!ModelState.IsValid)
-                return BadRequest();
-            _service.ConfigureVideo(id, videoId);
-            return NoContent();
+                return BadRequest(model);
+            try
+            {
+                _service.ConfigureVideo(model.Id, model.VideoId);
+            }
+            catch (MongoException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Accepted();
         }
 
         [HttpGet("uservideos")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<Dictionary<string, string>>> GetUserVideos()
         {
-            var res = await _service.GetUserVideos(User.Identity!.Name!);
-
-            if (res == null)
-                return BadRequest();
-            return res;
+            try
+            {
+                return await _service.GetUserVideos(User.Identity!.Name!);
+            }
+            catch (UserException ex)
+            {
+                return Unauthorized(new { error = ex.Message });
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Models.Widgets;
 using Doshboard.Backend.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -18,22 +19,40 @@ namespace Doshboard.Backend.Controllers
             => _service = service;
 
         [HttpGet(FeedWidget.Name)]
-        public async Task<ActionResult<FeedData>> GetFeed([BindRequired] string id)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<FeedData> GetFeed([BindRequired] string id)
         {
-            FeedData? response = await _service.GetFeed(id);
-
-            if (response == null)
-                return BadRequest();
-            return response;
+            try
+            {
+                return _service.GetFeed(id);
+            }
+            catch (MongoException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new { error = ex.Message });
+            }
         }
 
         [HttpPatch(FeedWidget.Name)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         public ActionResult ConfigureFeed([FromBody] FeedModel model)
         {
             if (!ModelState.IsValid)
-                return BadRequest();
-            _service.ConfigureFeed(model.Id, model.Url, model.Items);
-            return NoContent();
+                return BadRequest(model);
+            try
+            {
+                _service.ConfigureFeed(model.Id, model.Url, model.Items);
+            }
+            catch (MongoException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+            return Accepted();
         }
     }
 }

@@ -1,16 +1,19 @@
 <template>
     <div id="crypto-widget" v-if=!config>
-        <img :src="crypto.logoUrl" />
-        <div>{{ crypto.currency }}</div>
-        <div>{{ crypto.priceChange }}%</div>
-        <div>{{ crypto.price }}</div>
-        <div>{{ crypto.rank }}</div>
-
+        <code v-if='error'>{{ this.error }}</code>
+        <div v-else-if="crypto">
+            <img :src="crypto.logoUrl" />
+            <div>{{ crypto.currency }}</div>
+            <div>{{ crypto.priceChange }}%</div>
+            <div>{{ crypto.price }}</div>
+            <div>{{ crypto.rank }}</div>
+        </div>
     </div>
     <div id="crypto-widget" v-else>
+        <code v-if='error'>{{ this.error }}</code>
         <button type="button" @click="clickDelete">X</button>
-        <input type="text" placeholder="Currency" v-model="params.currency" @change="send" />
-        <input type="text" placeholder="Convert" v-model="params.convert" @change="send" />
+        <input type="text" placeholder="Currency" required v-model="params.currency" @change="send" />
+        <input type="text" placeholder="Convert" required v-model="params.convert" @change="send" />
         <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
 </template>
@@ -33,10 +36,25 @@
                 this.$emit('deleted');
             },
             async send() {
-                await this.update({ id: this.id, currency: this.params.currency, convert: this.params.convert})
-                this.crypto = await this.getById(this.id);
+                if (this.params.currency == '')
+                    this.params.currency = null;
+                if (this.params.convert == '')
+                    this.params.convert = null;
+                const { error } = await this.update({ id: this.id, currency: this.params.currency, convert: this.params.convert})
+                this.error = error
+                if (this.error)
+                    return;
+                const { success, json } = await this.getById(this.id);
+                if (success)
+                    this.crypto = json;
+                else
+                    this.error = json;
             },
             async timer() {
+                if (this.params.timer < 1) {
+                    this.params.timer = 1;
+                    return;
+                }
                 await this.ws.invoke("UpdateTimer", this.id, parseInt(this.params.timer));
             }
         },
@@ -48,11 +66,16 @@
         },
         data: function () {
             return {
-                crypto: {},
+                crypto: null,
+                error: null,
             }
         },
         created: async function() {
-            this.crypto = await this.getById(this.id);
+            const { success, json } = await this.getById(this.id);
+            if (success)
+                this.crypto = json;
+            else
+                this.error = json;
 
             this.ws.on(this.id, (e) => {
                 this.crypto = e;
