@@ -7,17 +7,16 @@ namespace Doshboard.Backend.Entities.Widgets
     [WidgetInfo(Name, "Display Competition")]
     public class FootWidget : Widget
     {
-        public const string Name = "foot_competitions";
+        public const string Name = "foot_competition";
 
-        public FootWidget() : base(Name, 2, 2)
-        {
-        }
+        public FootWidget() : base(Name, 2, 2) 
+            => CompetitionId = "2015";
 
         [WidgetParam]
         [BsonIgnore]
         public string CompetitionId
         {   
-            get => Params.ContainsKey("id") ? (string)Params["id"] : "2015"; //2015 == Ligue 1
+            get => (string)Params["id"]; //2015 == Ligue 1
             set => Params["id"] = value;
         }
     }
