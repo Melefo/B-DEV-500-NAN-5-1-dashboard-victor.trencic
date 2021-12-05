@@ -26,9 +26,10 @@
     import Vue from 'vue'
     import VueGridLayout from 'vue-grid-layout'
     import vuescroll from 'vuescroll'
-    import { mapActions, mapGetters } from 'vuex'
+    import { mapActions } from 'vuex'
     import CityTemp from '@/components/Widgets/CityTemp.vue'
     import RealTimeCrypto from '@/components/Widgets/RealTimeCrypto.vue'
+    import { HubConnectionBuilder } from '@microsoft/signalr'
 
     export default Vue.extend({
         name: 'Dashboard',
@@ -37,13 +38,16 @@
             GridItem: VueGridLayout.GridItem,
             vuescroll, CityTemp, RealTimeCrypto
         },
-        computed: {
-            ...mapGetters("user", ["token"])
-        },
         data: function () {
+            const token = this.$store.getters["user/token"];
             return {
                 layout: [] as any[],
-                ws: null as null | WebSocket
+                ws: new HubConnectionBuilder()
+                    .withUrl("/api/widget/hub", {
+                        accessTokenFactory: () => {
+                            return token;
+                        }
+                    }).build()
             }
         },
         methods: {
@@ -56,6 +60,11 @@
                 this.update({id: i, x: newX, y: newY}),
                 console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
             },
+            messaged() {
+                this.layout.forEach(element => {
+                    element.params.test = 10
+                });
+            }
         },
         created: async function() {
             const data = await this.get();
@@ -70,14 +79,17 @@
                     params: item.params
                 }
             })
-            this.ws = new WebSocket("ws:/" + window.location.host + "/api/widget/ws", ["widgets", this.token]);
 
-            this.ws.onmessage = function() {
-                this.send('');
-            }
+            this.layout.forEach(element => {
+                this.ws.on(element.i, (e) => {
+                    console.log(e);
+                });
+            });
+
+            await this.ws.start();
         },
         destroyed: async function() {
-            this.ws?.close();
+            this.ws.stop();
         },
         
     })

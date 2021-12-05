@@ -18,6 +18,13 @@ namespace Doshboard.Backend.Entities
 
         public Dictionary<string, object> Params { get; set; } = new();
 
+        [BsonIgnore]
+        public int Timer
+        {
+            get => Params.ContainsKey("timer") ? (int)Params["timer"] : 5;
+            set => Params["timer"] = value;
+        }
+
         public Widget(string type, int height, int width)
         { 
             Type = type;
