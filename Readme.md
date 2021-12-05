@@ -5,10 +5,12 @@
 | Services | Widgets |
 |----------|---------|
 | Crypto | <table><tbody><tr><th>Name</th><th>Description</th><th>Params</th></tr><tr><td>Realtime Crypto</td><td>Display realtime cryptocurrency informations</td><td>Currency code<br>Another currency code to convert into</td></tr></tbody></table> |
-| RSS | <table><tbody><tr><td>Rss Feed</td><td>Display N last items from a RSS feed</td><td>RSS Feed URL<br>Number of items to display</td></tr></tbody></table>|
-| Steam | <table><tbody><tr><td>Game</td><td>Display informations about a game</td><td>Game name</td></tr></tbody></table>|
-| Weather | <table><tbody><tr><td>City Temperature</td><td>Display current temperature for a city</td><td>City name<br>Unit of temperature</td></tr></tbody></table>|
-| YouTube<br>⚠ You must associate your Google account via OAuth to use this service | <table><tbody><tr><td>Video</td><td>Display realtime video informations</td><td>Video id</td></tr></tbody></table>|
+| RSS | <table><tbody><tr><th>Name</th><th>Description</th><th>Params</th></tr><tr><td>Rss Feed</td><td>Display N last items from a RSS feed</td><td>RSS Feed URL<br>Number of items to display</td></tr></tbody></table>|
+| Steam | <table><tbody><tr><th>Name</th><th>Description</th><th>Params</th></tr><tr><td>Game</td><td>Display informations about a game</td><td>Game name</td></tr></tbody></table>|
+| Weather | <table><tbody><tr><th>Name</th><th>Description</th><th>Params</th></tr><tr><td>City Temperature</td><td>Display current temperature for a city</td><td>City name<br>Unit of temperature</td></tr></tbody></table>|
+| YouTube | <table><tbody><tr><th>Name</th><th>Description</th><th>Params</th></tr><tr><td>Video</td><td>Display realtime video informations</td><td>Video id</td></tr></tbody></table>|
+
+⚠ You must associate your Google account via OAuth to use the YouTube service 
 
 ## How to connect
 
