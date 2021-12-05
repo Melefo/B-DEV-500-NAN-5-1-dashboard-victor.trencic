@@ -82,6 +82,10 @@ namespace Doshboard.Backend.Services
             _db.SaveUserWidgets(user);
         }
 
+        /// <summary>
+        /// Update Widget from new Widget Data
+        /// </summary>
+        /// <param name="widgetData"></param>
         public void UpdateWidget(Widget widgetData) 
             => _db.SaveWidget(widgetData);
     }

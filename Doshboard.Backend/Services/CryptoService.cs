@@ -70,6 +70,9 @@ namespace Doshboard.Backend.Services
         public Interval? Ytd { get; set; }
     }
 
+    /// <summary>
+    /// Crypto Service
+    /// </summary>
     [ServiceName("Crypto")]
     public class CryptoService : IService
     {
@@ -81,12 +84,24 @@ namespace Doshboard.Backend.Services
             typeof(RealTimeCryptoWidget)
         };
 
+        /// <summary>
+        /// Crypto Service Constructor
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="mongo"></param>
         public CryptoService(IConfiguration config, MongoService mongo)
         {
             _apiKey = config["Crypto:ApiKey"];
             _mongo = mongo;
         }
 
+        /// <summary>
+        /// Get Crypto By Config Throught User ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="MongoException"></exception>
+        /// <exception cref="ApiException"></exception>
         public async Task<RealTimeCryptoData> GetRealTimeCrypto(string id)
         {
             var widget = _mongo.GetWidget<RealTimeCryptoWidget>(id);

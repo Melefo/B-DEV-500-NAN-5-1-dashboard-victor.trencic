@@ -196,7 +196,9 @@ namespace Doshboard.Backend.Services
         public Response Response { get; set; }
     }
 
-
+    /// <summary>
+    /// Steam Service
+    /// </summary>
     [ServiceName("Steam")]
     public class SteamService : IService
     {
@@ -216,15 +218,35 @@ namespace Doshboard.Backend.Services
             _mongo = mongo;
         }
 
+        /// <summary>
+        /// Get MetaData from ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private async Task<MetadataJson?> GetMetadataJson(int id)
             => await ClientAPI.GetAsync<MetadataJson>($"https://api.steampowered.com/ICommunityService/GetApps/v1/?key={_apiKey}&appids[0]={id}");
 
+        /// <summary>
+        /// Get Player Data from ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private async Task<PlayerJson?> GetPlayerJson(int id)
             => await ClientAPI.GetAsync<PlayerJson>($"https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?key={_apiKey}&appid={id}");
 
+        /// <summary>
+        /// Get Game Review from ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private async Task<ReviewJson?> GetReviewJson(int id)
             => await ClientAPI.GetAsync<ReviewJson>($"https://store.steampowered.com/appreviews/{id}?json=1&language=all");
 
+        /// <summary>
+        /// Get Game Price from ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private async Task<PriceJson?> GetPriceJson(int id)
         {
             var priceJson = await ClientAPI.GetAsync<JsonElement>($"https://store.steampowered.com/api/appdetails?appids={id}");
@@ -233,6 +255,14 @@ namespace Doshboard.Backend.Services
             return priceJson.GetProperty(id.ToString()).Deserialize<PriceJson>();
         }
 
+        /// <summary>
+        /// Get Data from Widget ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="MongoException"></exception>
+        /// <exception cref="ApiException"></exception>
+        /// <exception cref="WidgetException"></exception>
         public async Task<GameData> GetGameData(string id)
         {
             var widget = _mongo.GetWidget<GameWidget>(id);
@@ -270,6 +300,15 @@ namespace Doshboard.Backend.Services
             return new GameData(name, icon, price, review, players);
         }
 
+        /// <summary>
+        /// Change widget configuration in db
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        /// <exception cref="MongoException"></exception>
+        /// <exception cref="ApiException"></exception>
+        /// <exception cref="WidgetException"></exception>
         public async Task ConfigureGame(string id, string? name)
         {
             var widget = _mongo.GetWidget<GameWidget>(id);

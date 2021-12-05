@@ -99,6 +99,12 @@ namespace Doshboard.Backend.Services
                 video.Items[0].Statistics.ViewCount.GetValueOrDefault(), video.Items[0].Statistics.CommentCount.GetValueOrDefault());
         }
 
+        /// <summary>
+        /// Configure 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="videoId"></param>
+        /// <exception cref="MongoException"></exception>
         public void ConfigureVideo(string id, string? videoId)
         {
             var widget = _mongo.GetWidget<VideoWidget>(id);
@@ -110,6 +116,12 @@ namespace Doshboard.Backend.Services
             _mongo.SaveWidget(widget);
         }
 
+        /// <summary>
+        /// Get Video by User ID
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="UserException"></exception>
         public async Task<Dictionary<string, string>> GetUserVideos(string userId)
         {
             var user = _mongo.GetUser(userId);

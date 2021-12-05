@@ -347,8 +347,9 @@ namespace Doshboard.Backend.Services
         public DateTime LastUpdated { get; set; }
     }
 
-
-
+    /// <summary>
+    /// Foot Service
+    /// </summary>
     [ServiceName("Foot")]
     public class FootService : IService
     {
@@ -360,12 +361,22 @@ namespace Doshboard.Backend.Services
             typeof(FootWidget)
         };
 
+        /// <summary>
+        /// Foot Service Constructor
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="mongo"></param>
         public FootService(IConfiguration config, MongoService mongo)
         {
             _apiKey = config["Foot:ApiKey"];
             _mongo = mongo;
         }
 
+        /// <summary>
+        /// Get all competitions
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         public async Task<List<CompetitionData>> GetCompetitions()
         {
             CompetitionsJson? response = await ClientAPI.GetAsync<CompetitionsJson>($"http://api.football-data.org/v2/competitions/", new("X-Auth-Token", _apiKey));
@@ -376,6 +387,12 @@ namespace Doshboard.Backend.Services
             return result;
         }
 
+        /// <summary>
+        /// Get competition by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         public async Task<CompetitionData> GetCompetitionById(string id)
         {
             CompetitionFull? response = await ClientAPI.GetAsync<CompetitionFull>($"http://api.football-data.org/v2/competitions/{id}", new("X-Auth-Token", _apiKey));
@@ -385,6 +402,13 @@ namespace Doshboard.Backend.Services
             return new CompetitionData(response.Id, response.Area.Name, response.Name, response.CurrentSeason?.CurrentMatchday);
         }
 
+        /// <summary>
+        /// get all teams by competition throught widget config
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="MongoException"></exception>
+        /// <exception cref="ApiException"></exception>
         public async Task<FootJson> GetTeams(string userId)
         {
             var widget = _mongo.GetWidget<FootWidget>(userId);
@@ -408,6 +432,12 @@ namespace Doshboard.Backend.Services
             return response;
         }
 
+        /// <summary>
+        /// Get teamby id
+        /// </summary>
+        /// <param name="teamsId"></param>
+        /// <returns></returns>
+        /// <exception cref="ApiException"></exception>
         public async Task<FootTeamJson> GetTeam(string teamsId)
         {
             FootTeamJson? response = await ClientAPI.GetAsync<FootTeamJson>($"http://api.football-data.org/v2/teams/{teamsId}", new("X-Auth-Token", _apiKey));
@@ -417,6 +447,12 @@ namespace Doshboard.Backend.Services
             return response;
         }
 
+        /// <summary>
+        /// Change widget configuration in db
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="competitionId"></param>
+        /// <exception cref="MongoException"></exception>
         public void ConfigureFootCompetition(string userId, string? competitionId)
         {
             var widget = _mongo.GetWidget<FootWidget>(userId);
