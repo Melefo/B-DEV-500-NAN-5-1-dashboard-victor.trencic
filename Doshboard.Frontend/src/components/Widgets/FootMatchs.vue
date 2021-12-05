@@ -12,8 +12,8 @@
     <div id="competition-widget" v-else>
         <code v-if='error'>{{ this.error }}</code>
         <button type="button" @click="clickDelete">X</button>
-        <select v-model="params.competition" @change='send'>
-            <option :value="key" v-for="(value, key) in competitions" :key="key">{{ value }}</option>
+        <select v-model="params.id" @change='send'>
+            <option :value="value.id.toString()" v-for="value in competitions" :key="value.id">{{ value.name }}</option>
         </select>
         <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
@@ -39,9 +39,9 @@
                 this.$emit('deleted');
             },
             async send() {
-                if (this.params.competition == '')
-                    this.params.competition = null;
-                const { error } = await this.update({ id: this.id, competition: this.params.competition })
+                if (this.params.id == '')
+                    this.params.id = null;
+                const { error } = await this.update({ id: this.id, competition: this.params.id })
                 this.error = error;
                 if (this.error)
                     return;
