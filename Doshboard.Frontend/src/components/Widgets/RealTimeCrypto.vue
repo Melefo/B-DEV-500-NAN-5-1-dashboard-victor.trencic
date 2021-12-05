@@ -1,12 +1,16 @@
 <template>
     <div id="crypto-widget" v-if=!config>
         <code v-if='error'>{{ this.error }}</code>
-        <div v-else-if="crypto">
+        <div v-else-if="crypto" id="data">
             <img :src="crypto.logoUrl" />
-            <div>{{ crypto.currency }}</div>
-            <div>{{ crypto.priceChange }}%</div>
-            <div>{{ crypto.price }}</div>
-            <div>{{ crypto.rank }}</div>
+            <div>
+                <div>{{ crypto.currency }}</div>
+                <div>{{ crypto.priceChange }}%</div>
+            </div>
+            <div>
+                <div>{{ crypto.price }} {{ params.convert }}</div>
+                <div>#{{ crypto.rank }}</div>
+            </div>
         </div>
     </div>
     <div id="crypto-widget" v-else>
@@ -19,7 +23,28 @@
 </template>
 
 <style scoped>
+#crypto-widget {
+    height: 100%;
+}
 
+#data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+    height: 100%;
+}
+
+#data > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+img {
+    width: 10%;
+}
 </style>
 
 <script lang="ts">
