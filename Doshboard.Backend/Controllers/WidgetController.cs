@@ -10,6 +10,9 @@ using System.Text;
 
 namespace Doshboard.Backend.Controllers
 {
+    /// <summary>
+    /// Widget Controller route
+    /// </summary>
     [Authorize]
     [Route("[controller]")]
     [ApiController]
@@ -19,7 +22,10 @@ namespace Doshboard.Backend.Controllers
 
         public WidgetController(WidgetService service)
             => _service = service;
-
+        /// <summary>
+        /// Get Widget of an User
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<Widget>> GetUserWidgets()
@@ -31,7 +37,11 @@ namespace Doshboard.Backend.Controllers
 
             return widgets;
         }
-
+        /// <summary>
+        /// Add a widget for an user by it's type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -50,7 +60,11 @@ namespace Doshboard.Backend.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
-
+        /// <summary>
+        /// Delete a widget for an user by it's ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         public ActionResult DeleteWidget(string id)
@@ -58,7 +72,13 @@ namespace Doshboard.Backend.Controllers
             _service.DeleteUserWidget(User.Identity!.Name!, id);
             return Accepted();
         }
-
+        /// <summary>
+        /// Update a widget position (x,y) for an user by it's ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         [HttpPatch("update")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         public ActionResult UpdateWidget(string id, int x, int y)

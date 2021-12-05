@@ -11,6 +11,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Doshboard.Backend.Controllers
 {
+    /// <summary>
+    /// Youtube controller route
+    /// </summary>
     [Authorize]
     [Route("services/[controller]")]
     [ApiController]
@@ -21,6 +24,11 @@ namespace Doshboard.Backend.Controllers
         public YouTubeController(YouTubeService service) =>
             _service = service;
 
+        /// <summary>
+        /// Get video from id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet(VideoWidget.Name)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -46,6 +54,11 @@ namespace Doshboard.Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Configure Widget
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPatch(VideoWidget.Name)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
@@ -64,6 +77,10 @@ namespace Doshboard.Backend.Controllers
             return Accepted();
         }
 
+        /// <summary>
+        /// Get all video related to an user
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("uservideos")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]

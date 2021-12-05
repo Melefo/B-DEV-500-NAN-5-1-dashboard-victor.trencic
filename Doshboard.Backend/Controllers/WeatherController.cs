@@ -11,6 +11,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Doshboard.Backend.Controllers
 {
+    /// <summary>
+    /// Weather controller route
+    /// </summary>
     [Authorize]
     [Route("services/[controller]")]
     [ApiController]
@@ -21,6 +24,11 @@ namespace Doshboard.Backend.Controllers
         public WeatherController(WeatherService service) =>
             _service = service;
 
+        /// <summary>
+        /// Get City Temp from widget config with user id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet(CityTempWidget.Name)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
@@ -42,6 +50,11 @@ namespace Doshboard.Backend.Controllers
             }
         }
 
+        /// <summary>
+        /// Configure Widget
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPatch(CityTempWidget.Name)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status202Accepted)]

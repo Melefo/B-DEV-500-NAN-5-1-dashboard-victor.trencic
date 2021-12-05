@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Doshboard.Backend.Controllers
 {
+    /// <summary>
+    /// WidgetHub controller
+    /// </summary>
     [Authorize]
     public class WidgetHub : Hub
     {
@@ -21,6 +24,16 @@ namespace Doshboard.Backend.Controllers
         private readonly CryptoService _crypto;
         private readonly YouTubeService _ytb;
 
+        /// <summary>
+        /// WidgetHub Constructor
+        /// </summary>
+        /// <param name="mongo"></param>
+        /// <param name="hubContext"></param>
+        /// <param name="weather"></param>
+        /// <param name="rss"></param>
+        /// <param name="steam"></param>
+        /// <param name="crypto"></param>
+        /// <param name="ytb"></param>
         public WidgetHub(MongoService mongo, IHubContext<WidgetHub> hubContext, WeatherService weather, RssService rss, SteamService steam, CryptoService crypto, YouTubeService ytb)
         {
             _mongo = mongo;
@@ -32,13 +45,21 @@ namespace Doshboard.Backend.Controllers
             _ytb = ytb;
         }
 
+        /// <summary>
+        /// ?
+        /// </summary>
+        /// <returns></returns>
         public override Task OnConnectedAsync()
         {
             _clientJobs.Add(Context.ConnectionId, new());
             RegisterJobs(Context.ConnectionId, Context.User!.Identity!.Name!);
             return base.OnConnectedAsync();
         }
-
+        /// <summary>
+        /// ?
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <returns></returns>
         public override Task OnDisconnectedAsync(Exception? exception)
         {
             foreach (var job in _clientJobs[Context.ConnectionId])
@@ -47,6 +68,13 @@ namespace Doshboard.Backend.Controllers
             return base.OnDisconnectedAsync(exception);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="widget"></param>
+        /// <param name="id"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         private async Task Job(Widget widget, string id, string userId)
         {
             try
@@ -93,7 +121,11 @@ namespace Doshboard.Backend.Controllers
 
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userId"></param>
         private void RegisterJobs(string id, string userId)
         {
             var widgets = _mongo.GetUserWidgets(userId).Widgets.Select(x => _mongo.GetWidget(x));
@@ -108,7 +140,11 @@ namespace Doshboard.Backend.Controllers
                 _clientJobs[id].Add(job);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="minutes"></param>
         public void UpdateTimer(string id, int minutes)
         {
             var widget = _mongo.GetWidget(id);
@@ -121,7 +157,10 @@ namespace Doshboard.Backend.Controllers
 
             _mongo.SaveWidget(widget);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteTimer(string id) 
             => JobManager.RemoveJob($"{Context.ConnectionId}#{id}");
     }
