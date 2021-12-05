@@ -9,15 +9,11 @@ namespace Doshboard.Backend.Entities.Widgets
     {
         public const string Name = "city_temperature";
 
-        public CityTempWidget() : base(Name, 2, 2)
-        {
-        }
-
         [WidgetParam]
         [BsonIgnore]
         public string City
         {
-            get => Params.ContainsKey("city") ? (string)Params["city"] : "paris";
+            get => (string)Params["city"];
             set => Params["city"] = value;
         }
 
@@ -25,8 +21,14 @@ namespace Doshboard.Backend.Entities.Widgets
         [BsonIgnore]
         public UnitType Unit
         {
-            get => Params.ContainsKey("unit") ? (UnitType)Params["unit"] : UnitType.Metric;
+            get => (UnitType)Params["unit"];
             set => Params["unit"] = value;
+        }
+
+        public CityTempWidget() : base(Name, 2, 2)
+        {
+            City = "Paris";
+            Unit = UnitType.Metric;
         }
     }
 }

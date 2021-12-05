@@ -61,7 +61,7 @@ namespace Doshboard.Backend.Services
             var ytb = CreateYouTube(user.Google);
 
             var widget = _mongo.GetWidget<VideoWidget>(id);
-            if (widget == null || widget.Type != VideoWidget.Name)
+            if (widget == null)
                 return null;
 
             var videoRequest = ytb.Videos.List("statistics, snippet");
@@ -79,7 +79,7 @@ namespace Doshboard.Backend.Services
         public void ConfigureVideo(string id, string videoId)
         {
             var widget = _mongo.GetWidget<VideoWidget>(id);
-            if (widget == null || widget.Type != VideoWidget.Name)
+            if (widget == null)
                 return;
 
             widget.VideoId = videoId;

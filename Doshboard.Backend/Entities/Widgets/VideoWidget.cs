@@ -8,16 +8,15 @@ namespace Doshboard.Backend.Entities.Widgets
     {
         public const string Name = "video";
 
-        public VideoWidget() : base(Name, 2, 2)
-        {
-        }
-
         [WidgetParam]
         [BsonIgnore]
         public string VideoId
         {
-            get => Params.ContainsKey("videoId") ? (string)Params["videoId"] : "jNQXAC9IVRw";
+            get => (string)Params["videoId"];
             set => Params["videoId"] = value;
         }
+
+        public VideoWidget() : base(Name, 2, 2)
+            => VideoId = "jNQXAC9IVRw";
     }
 }

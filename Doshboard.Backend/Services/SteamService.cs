@@ -235,7 +235,7 @@ namespace Doshboard.Backend.Services
         public async Task<GameData?> GetGameData(string id)
         {
             var widget = _mongo.GetWidget<GameWidget>(id);
-            if (widget == null || widget.Type != GameWidget.Name)
+            if (widget == null)
                 return null;
 
             _games ??= await ClientAPI.GetAsync<GameList>($"https://api.steampowered.com/ISteamApps/GetAppList/v2/?key={_apiKey}");
@@ -272,7 +272,7 @@ namespace Doshboard.Backend.Services
         public async Task ConfigureGame(string id, string name)
         {
             var widget = _mongo.GetWidget<GameWidget>(id);
-            if (widget == null || widget.Type != GameWidget.Name)
+            if (widget == null)
                 return;
 
             _games ??= await ClientAPI.GetAsync<GameList>($"https://api.steampowered.com/ISteamApps/GetAppList/v2/?key={_apiKey}");

@@ -21,7 +21,7 @@ namespace Doshboard.Backend.Entities
         [BsonIgnore]
         public int Timer
         {
-            get => Params.ContainsKey("timer") ? (int)Params["timer"] : 5;
+            get => (int)Params["timer"];
             set => Params["timer"] = value;
         }
 
@@ -30,18 +30,7 @@ namespace Doshboard.Backend.Entities
             Type = type;
             Height = height;
             Width = width;
-        }
-
-        [JsonConstructor]
-        public Widget(string id, int x, int y, int height, int width, string type, Dictionary<string, object> @params)
-        {
-            Id = id;
-            X = x;
-            Y = y;
-            Height = height;
-            Width = width;
-            Type = type;
-            Params = @params;
+            Timer = 5;
         }
     }
 }

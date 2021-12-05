@@ -23,7 +23,7 @@ namespace Doshboard.Backend.Services
         public async Task<FeedData?> GetFeed(string id)
         {
             var widget = _mongo.GetWidget<FeedWidget>(id);
-            if (widget == null || widget.Type != FeedWidget.Name)
+            if (widget == null)
                 return null;
 
             using var reader = XmlReader.Create(widget.Url);
@@ -45,7 +45,7 @@ namespace Doshboard.Backend.Services
         public void ConfigureFeed(string id, string? url, int? items)
         {
             var widget = _mongo.GetWidget<FeedWidget>(id);
-            if (widget == null || widget.Type != FeedWidget.Name)
+            if (widget == null)
                 return;
 
             if (url != null)

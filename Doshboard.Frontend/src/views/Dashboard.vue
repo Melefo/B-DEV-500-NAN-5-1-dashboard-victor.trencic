@@ -2,11 +2,11 @@
     <vuescroll>
         <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[20, 20]" :use-css-transforms="true">
             <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @moved="movedEvent">
-                <CityTemp v-if="item.type == 'city_temperature'" :id=item.i :params=item.params :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
-                <RealTimeCrypto v-if="item.type == 'realtime_crypto'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
-                <Game v-if="item.type == 'game_info'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
-                <Video v-if="item.type == 'video'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
-                <Feed v-if="item.type == 'rss_feed'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
+                <CityTemp v-if="item.type == 'city_temperature'" :id=item.i :params=item.params :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
+                <RealTimeCrypto v-if="item.type == 'realtime_crypto'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
+                <Game v-if="item.type == 'game_info'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
+                <Video v-if="item.type == 'video'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
+                <Feed v-if="item.type == 'rss_feed'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
             </grid-item>
         </grid-layout>
     </vuescroll>
@@ -53,7 +53,7 @@
                         accessTokenFactory: () => {
                             return token;
                         }
-                    }).build()
+                    }).withAutomaticReconnect().build()
             }
         },
         methods: {
@@ -84,12 +84,6 @@
                     params: item.params
                 }
             })
-
-            this.layout.forEach(element => {
-                this.ws.on(element.i, (e) => {
-                    console.log(e);
-                });
-            });
 
             await this.ws.start();
         },

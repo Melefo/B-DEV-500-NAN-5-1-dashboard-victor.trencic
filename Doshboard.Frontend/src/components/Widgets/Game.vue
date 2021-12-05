@@ -9,6 +9,7 @@
     <div id="game-widget" v-else>
         <button type="button" @click="clickDelete">X</button>
         <input type="text" placeholder="Game name" v-model="params.name" @change="send" />
+        <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
 </template>
 
@@ -24,19 +25,24 @@
         name: 'Game',
         methods: {
             ...mapActions("steam", ["getById", "update"]),
-            clickDelete(e) {
+            async clickDelete(e) {
                 e.preventDefault();
+                await this.ws.invoke("DeleteTimer", this.id);
                 this.$emit('deleted');
             },
             async send() {
                 await this.update({ id: this.id, name: this.params.name})
                 this.game = await this.getById(this.id);
+            },
+            async timer() {
+                await this.ws.invoke("UpdateTimer", this.id, parseInt(this.params.timer));
             }
         },
         props : {
             id: String,
             config: Boolean,
-            params: Object
+            params: Object,
+            ws: Object
         },
         data: function () {
             return {
@@ -45,6 +51,10 @@
         },
         created: async function() {
             this.game = await this.getById(this.id);
+
+            this.ws.on(this.id, (e) => {
+                this.game = e;
+            })
         }
     })
 </script>
