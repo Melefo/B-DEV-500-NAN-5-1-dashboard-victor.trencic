@@ -4,6 +4,9 @@
             <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @moved="movedEvent">
                 <CityTemp v-if="item.type == 'city_temperature'" :id=item.i :params=item.params :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
                 <RealTimeCrypto v-if="item.type == 'realtime_crypto'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
+                <Game v-if="item.type == 'game_info'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
+                <Video v-if="item.type == 'video'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
+                <Feed v-if="item.type == 'rss_feed'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" />
             </grid-item>
         </grid-layout>
     </vuescroll>
@@ -29,13 +32,16 @@
     import { mapActions } from 'vuex'
     import CityTemp from '@/components/Widgets/CityTemp.vue'
     import RealTimeCrypto from '@/components/Widgets/RealTimeCrypto.vue'
+    import Game from '@/components/Widgets/Game.vue'
+    import Video from '@/components/Widgets/Video.vue'
+    import Feed from '@/components/Widgets/Feed.vue'
 
     export default Vue.extend({
         name: 'Dashboard',
         components: {
             GridLayout: VueGridLayout.GridLayout,
             GridItem: VueGridLayout.GridItem,
-            vuescroll, CityTemp, RealTimeCrypto
+            vuescroll, CityTemp, RealTimeCrypto, Game, Video, Feed
         },
         data: function () {
             return {
@@ -49,8 +55,7 @@
                 this.layout = this.layout.filter(item => item.i !== id);
             },
             movedEvent(i, newX, newY){
-                this.update({id: i, x: newX, y: newY}),
-                console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
+                this.update({id: i, x: newX, y: newY});
             },
         },
         created: async function() {

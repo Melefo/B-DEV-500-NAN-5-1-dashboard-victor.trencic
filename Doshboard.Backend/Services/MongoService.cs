@@ -70,6 +70,9 @@ namespace Doshboard.Backend
         public User GetUserByIdentifier(string identifier) =>
             _usersCollection.Find(x => x.Username == identifier || x.Email == identifier).SingleOrDefault();
 
+        public User GetUserByGoogle(string id) =>
+            _usersCollection.Find(x => x.Google != null && x.Google.UserId == id).SingleOrDefault();
+
         /// <summary>
         /// Create and insert user inside database
         /// </summary>
@@ -139,7 +142,7 @@ namespace Doshboard.Backend
             return result.IsAcknowledged && result.DeletedCount == 1;
         }
 
-        public bool UserSave(User user)
+        public bool SaveUser(User user)
         {
             var result = _usersCollection.ReplaceOne(x => x.Id == user.Id, user);
             return result.IsAcknowledged && result.ModifiedCount == 1;
