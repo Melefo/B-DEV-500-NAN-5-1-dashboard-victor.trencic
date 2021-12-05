@@ -101,6 +101,13 @@ namespace Doshboard.Backend.Services
             return new RealTimeCryptoData(listing[0].Currency, listing[0].LogoUrl, listing[0].Price, listing[0].OneDay?.PriceChangePct ?? 0, listing[0].Rank);
         }
 
+        /// <summary>
+        /// Change widget configuration in db
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="currency"></param>
+        /// <param name="convert"></param>
+        /// <exception cref="MongoException"></exception>
         public void ConfigureRealTimeCrypto(string id, string? currency, string? convert)
         {
             var widget = _mongo.GetWidget<RealTimeCryptoWidget>(id);

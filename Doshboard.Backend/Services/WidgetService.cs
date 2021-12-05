@@ -22,9 +22,22 @@ namespace Doshboard.Backend.Services
         public UserWidgets GetUserWidgets(string userId)
             => _db.GetUserWidgets(userId);
 
+        /// <summary>
+        /// Get widget by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Widget GetWidget(string id)
             => _db.GetWidget(id);
-
+        
+        /// <summary>
+        /// Add widget to User by his type
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        /// <exception cref="UserException"></exception>
         public Widget NewUserWidget(string userId, string type)
         {
             var user = _db.GetUserWidgets(userId);
@@ -53,6 +66,11 @@ namespace Doshboard.Backend.Services
             return widget;
         }
 
+        /// <summary>
+        /// Delete widget to User by his ID
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="widgetId"></param>
         public void DeleteUserWidget(string userId, string widgetId)
         {
             var user = _db.GetUserWidgets(userId);

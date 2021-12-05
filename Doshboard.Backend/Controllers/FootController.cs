@@ -1,10 +1,13 @@
-﻿using Doshboard.Backend.Models.Widgets;
+﻿using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Exceptions;
+using Doshboard.Backend.Models.Widgets;
 using Doshboard.Backend.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Doshboard.Backend.Controllers
 {
+    [Authorize]
     [Route("services/[controller]")]
     [ApiController]
     public class FootController : ControllerBase
@@ -14,44 +17,63 @@ namespace Doshboard.Backend.Controllers
         public FootController(FootService service) =>
             _service = service;
 
-        [HttpGet("competition")]
+        [HttpGet("competitions")]
         public async Task<ActionResult<List<CompetitionData>>> GetCompetitions()
         {
-            List<CompetitionData>? response = await _service.GetCompetitions();
-
-            if (response == null)
-                return BadRequest();
-            return response;
+            try
+            {
+                return await _service.GetCompetitions();
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new { error = ex.Message });
+            }
         }
 
-        [HttpGet("competition/{id:int}")]
-        public async Task<ActionResult<CompetitionData>> GetCompetitionById(string id)
+        [HttpGet(FootWidget.Name)]
+        public async Task<ActionResult<FootJson>> GetTeamsByCompetition(string id)
         {
-            CompetitionData? response = await _service.GetCompetitionById(id);
-
-            if (response == null)
-                return BadRequest();
-            return response;
+            try
+            {
+                return await _service.GetTeams(id);
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new { error = ex.Message });
+            }
+            catch (MongoException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
-        [HttpGet("match")]
-        public async Task<ActionResult<FootJson>> GetTeamsByCompetition(string competitionId)
+        [HttpPatch(FootWidget.Name)]
+        public ActionResult ConfigureTeamsByCompetition([FromBody] FootModel model)
         {
-            FootJson? response = await _service.GetTeams(competitionId);
-
-            if (response == null)
-                return BadRequest();
-            return response;
+            if (!ModelState.IsValid)
+                return BadRequest(model);
+            try
+            {
+                _service.ConfigureFootCompetition(model.Id, model.Competition);
+            }
+            catch (MongoException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+            return Accepted();
         }
 
         [HttpGet("team/{id:int}")]
-        public async Task<ActionResult<FootTeamJson>> GetTeamById(string id)
+        public async Task<ActionResult<FootTeamJson>> TeamsByCompetition(string id)
         {
-            FootTeamJson? response = await _service.GetTeam(id);
-
-            if (response == null)
-                return BadRequest();
-            return response;
+            try
+            {
+                return await _service.GetTeam(id);
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new { error = ex.Message });
+            }
         }
     }
 }
