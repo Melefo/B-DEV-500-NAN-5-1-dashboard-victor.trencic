@@ -17,7 +17,7 @@
             <option value="1">Fahrenheit</option>
             <option value="2">Kelvin</option>
         </select>
-        <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
+        Refresh rate<input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
 </template>
 

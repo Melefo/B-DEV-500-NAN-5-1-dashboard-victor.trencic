@@ -14,7 +14,7 @@
         <button type="button" @click="clickDelete">X</button>
         <input type="text" placeholder="Currency" required v-model="params.currency" @change="send" />
         <input type="text" placeholder="Convert" required v-model="params.convert" @change="send" />
-        <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
+        Refresh rate<input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
 </template>
 
