@@ -1,5 +1,6 @@
 ﻿using Doshboard.Backend.Attributes;
 using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Interfaces;
 using Doshboard.Backend.Models.Widgets;
 using Doshboard.Backend.Utilities;
@@ -86,15 +87,15 @@ namespace Doshboard.Backend.Services
             _mongo = mongo;
         }
 
-        public async Task<RealTimeCryptoData?> GetRealTimeCrypto(string id)
+        public async Task<RealTimeCryptoData> GetRealTimeCrypto(string id)
         {
             var widget = _mongo.GetWidget<RealTimeCryptoWidget>(id);
             if (widget == null)
-                return null;
+                throw new MongoException("Widget not found");
 
             List<CryptoInfo>? listing = await ClientAPI.GetAsync<List<CryptoInfo>>($"https://api.nomics.com/v1/currencies/ticker?key={_apiKey}&ids={widget.Currency}&convert={widget.Convert}");
             if (listing == null)
-                return null;
+                throw new ApiException("Failed to call API");
 
             return new RealTimeCryptoData(listing[0].Currency, listing[0].LogoUrl, listing[0].Price, listing[0].OneDay?.PriceChangePct ?? 0, listing[0].Rank);
         }
@@ -103,7 +104,7 @@ namespace Doshboard.Backend.Services
         {
             var widget = _mongo.GetWidget<RealTimeCryptoWidget>(id);
             if (widget == null)
-                return;
+                throw new MongoException("Widget not found");
 
             if (currency != null)
                 widget.Currency = currency;

@@ -1,5 +1,6 @@
 ﻿using Doshboard.Backend.Entities;
 using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Exceptions;
 
 namespace Doshboard.Backend.Services
 {
@@ -24,7 +25,7 @@ namespace Doshboard.Backend.Services
         public Widget GetWidget(string id)
             => _db.GetWidget(id);
 
-        public Widget? NewUserWidget(string userId, string type)
+        public Widget NewUserWidget(string userId, string type)
         {
             var user = _db.GetUserWidgets(userId);
             Widget widget = type switch
@@ -41,7 +42,7 @@ namespace Doshboard.Backend.Services
             {
                 var account = _db.GetUser(userId);
                 if (account.Google == null)
-                    return null;
+                    throw new UserException("You must have your Google Account associated to use this widget");
             }
 
             user.Widgets.Add(widget.Id);
@@ -62,9 +63,7 @@ namespace Doshboard.Backend.Services
             _db.SaveUserWidgets(user);
         }
 
-        public void UpdateWidget(Widget widgetData)
-        {
-            _db.SaveWidget(widgetData);
-        }
+        public void UpdateWidget(Widget widgetData) 
+            => _db.SaveWidget(widgetData);
     }
 }

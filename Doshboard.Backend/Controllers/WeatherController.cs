@@ -1,5 +1,6 @@
 ﻿using Doshboard.Backend.Entities;
 using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Models;
 using Doshboard.Backend.Models.Widgets;
 using Doshboard.Backend.Services;
@@ -21,22 +22,42 @@ namespace Doshboard.Backend.Controllers
             _service = service;
 
         [HttpGet(CityTempWidget.Name)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<CityTempData>> GetCityTemperature([BindRequired]string id)
         {
-            CityTempData? response = await _service.GetCityTemp(id);
+            try
+            {
+                return await _service.GetCityTemp(id);
+            }
+            catch (MongoException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new { error = ex.Message });
 
-            if (response == null)
-                return BadRequest();
-            return response;
+            }
         }
 
         [HttpPatch(CityTempWidget.Name)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         public ActionResult ConfigureCityTemperature([FromBody] CityTempModel model)
         {
             if (!ModelState.IsValid)
-                return BadRequest();
-            _service.ConfigureCityTemp(model.Id, model.City, model.Unit);
-            return NoContent();
+                return BadRequest(model);
+            try
+            {
+                _service.ConfigureCityTemp(model.Id, model.City, model.Unit);
+            }
+            catch (MongoException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+            return Accepted();
         }
     }
 }
