@@ -77,13 +77,14 @@ namespace Doshboard.Backend.Services
                 video.Items[0].Statistics.ViewCount.GetValueOrDefault(), video.Items[0].Statistics.CommentCount.GetValueOrDefault());
         }
 
-        public void ConfigureVideo(string id, string videoId)
+        public void ConfigureVideo(string id, string? videoId)
         {
             var widget = _mongo.GetWidget<VideoWidget>(id);
             if (widget == null)
                 throw new MongoException("Widget not found");
 
-            widget.VideoId = videoId;
+            if (videoId != null)
+                widget.VideoId = videoId;
             _mongo.SaveWidget(widget);
         }
 

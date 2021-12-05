@@ -8,7 +8,10 @@ export const weather = {
                 method: "GET",
                 headers: authHeader()
             });
-            return await res.json();
+            const json = await res.json();
+            if (!res.ok)
+                return { success: false, json: json.error }
+            return { success: true, json }
         },
         async update({ commit }, json) {
             const res = await fetch("/api/services/weather/city_temperature", {
@@ -16,6 +19,13 @@ export const weather = {
                 headers: Object.assign(authHeader(), {"Content-Type": "application/json"}),
                 body: JSON.stringify(json)
             });
+            let errors = null;
+            if (!res.ok)
+            {
+                const { error } = await res.json();
+                errors = error;
+            }
+            return { error: errors };
         },
     },
 }

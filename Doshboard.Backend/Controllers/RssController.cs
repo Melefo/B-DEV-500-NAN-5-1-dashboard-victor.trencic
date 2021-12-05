@@ -31,6 +31,10 @@ namespace Doshboard.Backend.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
+            catch (ApiException ex)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new { error = ex.Message });
+            }
         }
 
         [HttpPatch(FeedWidget.Name)]

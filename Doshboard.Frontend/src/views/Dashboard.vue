@@ -64,11 +64,6 @@
             },
             movedEvent(i, newX, newY){
                 this.update({id: i, x: newX, y: newY});
-            },
-            messaged() {
-                this.layout.forEach(element => {
-                    element.params.test = 10
-                });
             }
         },
         created: async function() {

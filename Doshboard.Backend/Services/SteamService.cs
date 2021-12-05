@@ -270,7 +270,7 @@ namespace Doshboard.Backend.Services
             return new GameData(name, icon, price, review, players);
         }
 
-        public async Task ConfigureGame(string id, string name)
+        public async Task ConfigureGame(string id, string? name)
         {
             var widget = _mongo.GetWidget<GameWidget>(id);
             if (widget == null)
@@ -280,6 +280,8 @@ namespace Doshboard.Backend.Services
             if (_games == null)
                 throw new ApiException("Failed to call API");
 
+            if (name == null)
+                return;
             var game = _games.Applist.Apps.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
             if (game == null)
                 throw new WidgetException("No game with this name found");

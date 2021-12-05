@@ -21,6 +21,8 @@ export const widget = {
                 method: "POST",
                 headers: authHeader()
             });
+            const { error } = await res.json();
+            return error
         },
         async delete({ commit }, id) {
             const res = await fetch("/api/widget?" + new URLSearchParams({ id: id }), {

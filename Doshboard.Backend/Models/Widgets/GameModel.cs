@@ -6,7 +6,6 @@ namespace Doshboard.Backend.Models.Widgets
     {
         [Required]
         public string Id { get; set; }
-        [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }

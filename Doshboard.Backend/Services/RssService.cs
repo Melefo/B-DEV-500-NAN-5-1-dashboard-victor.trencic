@@ -27,20 +27,27 @@ namespace Doshboard.Backend.Services
             if (widget == null)
                 throw new MongoException("Widget not found");
 
-            using var reader = XmlReader.Create(widget.Url);
-            SyndicationFeed feed = SyndicationFeed.Load(reader);
-            reader.Close();
-
-            var res = new FeedData(feed.Title.Text);
-
-            foreach (var item in feed.Items)
+            try
             {
-                if (--widget.Items < 0)
-                    break;
-                res.Items.Add(new(item.Title.Text, item.Summary.Text));
-            }
+                using var reader = XmlReader.Create(widget.Url);
+                SyndicationFeed feed = SyndicationFeed.Load(reader);
+                reader.Close();
 
-            return res;
+                var res = new FeedData(feed.Title.Text);
+
+                foreach (var item in feed.Items)
+                {
+                    if (--widget.Items < 0)
+                        break;
+                    res.Items.Add(new(item.Title.Text, item.Summary.Text));
+                }
+
+                return res;
+            }
+            catch (HttpRequestException)
+            {
+                throw new ApiException("Invalid feed URL");
+            }
         }
 
         public void ConfigureFeed(string id, string? url, int? items)

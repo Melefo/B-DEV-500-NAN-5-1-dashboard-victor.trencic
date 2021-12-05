@@ -96,7 +96,8 @@ namespace Doshboard.Backend.Services
             List<CryptoInfo>? listing = await ClientAPI.GetAsync<List<CryptoInfo>>($"https://api.nomics.com/v1/currencies/ticker?key={_apiKey}&ids={widget.Currency}&convert={widget.Convert}");
             if (listing == null)
                 throw new ApiException("Failed to call API");
-
+            if (listing.Count == 0)
+                throw new ApiException("Invalid currency");
             return new RealTimeCryptoData(listing[0].Currency, listing[0].LogoUrl, listing[0].Price, listing[0].OneDay?.PriceChangePct ?? 0, listing[0].Rank);
         }
 

@@ -26,7 +26,7 @@ namespace Doshboard.Backend.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<VideoData>> GetCityTemperature([BindRequired] string id)
+        public async Task<ActionResult<VideoData>> GetVideo([BindRequired] string id)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace Doshboard.Backend.Controllers
         [HttpPatch(VideoWidget.Name)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
-        public ActionResult ConfigureCityTemperature([FromBody]VideoModel model)
+        public ActionResult ConfigureVideo([FromBody]VideoModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(model);

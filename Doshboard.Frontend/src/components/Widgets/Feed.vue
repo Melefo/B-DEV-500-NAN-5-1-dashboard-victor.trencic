@@ -1,12 +1,16 @@
 <template>
     <div v-if=!config>
-        <h2>{{ feed.name }}</h2>
-        <div v-for="item in feed.items" :key=item.title>
-            <h3>{{ item.title }}</h3>
-            <div v-html=item.content></div>
+        <code v-if='error'>{{ this.error }}</code>
+        <div v-else-if="feed">
+            <h2>{{ feed.name }}</h2>
+            <div v-for="item in feed.items" :key=item.title>
+                <h3>{{ item.title }}</h3>
+                <div v-html=item.content></div>
+            </div>
         </div>
     </div>
     <div v-else>
+        <code v-if='error'>{{ this.error }}</code>
         <button type="button" @click="clickDelete">X</button>
         <input type="text" placeholder="Feed URL" v-model="params.url" @change="send" />
         <input type="number" placeholder="Limit of items" v-model="params.items" @change="send" />
@@ -32,10 +36,25 @@ export default Vue.extend({
             this.$emit('deleted');
         },
         async send() {
-            await this.update({ id: this.id, url: this.params.url, items: parseInt(this.params.items)})
-            this.feed = await this.getById(this.id);
+            if (this.params.items < 1) {
+                this.params.items = 1;
+                return;
+            }
+            const { error } = await this.update({ id: this.id, url: this.params.url, items: parseInt(this.params.items)})
+            this.error = error
+            if (this.error)
+                return;
+            const { success, json } = await this.getById(this.id);
+            if (success)
+                this.feed = json;
+            else
+                this.error = json;
         },
         async timer() {
+            if (this.params.timer < 1) {
+                this.params.timer = 1;
+                return;
+            }
             await this.ws.invoke("UpdateTimer", this.id, parseInt(this.params.timer));
         }
     },
@@ -47,12 +66,16 @@ export default Vue.extend({
     },
     data: function () {
         return {
-            feed: {},
+            feed: null,
+            error: null
         }
     },
     created: async function() {
-        this.feed = await this.getById(this.id);
-
+        const { success, json } = await this.getById(this.id);
+        if (success)
+            this.feed = json;
+        else
+            this.error = json;
         this.ws.on(this.id, (e) => {
             this.feed = e;
         })

@@ -152,7 +152,7 @@ namespace Doshboard.Backend.Services
             if (found == null)
                 throw new MongoException("User not found");
             if (!PasswordHash.VerifyPassword(password, found.Password))
-                throw new UserException("Wreong password");
+                throw new UserException("Wrong password");
 
             user = found;
             JwtSecurityTokenHandler tokenHandler = new();

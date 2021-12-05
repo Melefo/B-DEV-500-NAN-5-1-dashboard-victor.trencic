@@ -1,8 +1,11 @@
 <template>
     <div id="frame">
+        <code v-if="error">{{ error }}</code>
         <form id="login" @submit.prevent="send">
-            <input name="identifier" v-model="username" required placeholder="Username / Email" />
-            <input name="password" v-model="password" required placeholder="Password" /> 
+            <code v-if="errors && errors.Username">{{ errors.Username }}</code>
+            <input name="identifier" type="text" minlength="2" maxlength="256" v-model="username" required placeholder="Username / Email" />
+            <code v-if="errors && errors.Password">{{ errors.Password }}</code>
+            <input name="password" type="password" minlength="4" maxlength="256" v-model="password" required placeholder="Password" /> 
             <input type="submit" value="Login" />
         </form>
         <button @click="handleClickSignIn">Google</button>
@@ -34,6 +37,8 @@ export default {
     return {
       username: "",
       password: "",
+      error: null,
+      errors: null,
     }
   },
   methods: {
@@ -41,13 +46,26 @@ export default {
     async send(e) {
       e.preventDefault();
 
-      await this.login({username: this.username, password: this.password});
-      this.$router.push("/");
+      const { error, errors } = await this.login({username: this.username, password: this.password});
+      this.error = error
+      this.errors = errors
+      if (!this.error && !this.errors) {
+        this.$router.push("/");
+      }
     },
     async handleClickSignIn() {
-      const code = await this.$gAuth.getAuthCode()
-      await this.googleLogin(code);
-      this.$router.push("/");
+      try {
+        const code = await this.$gAuth.getAuthCode();
+        const { error, errors } = await this.googleLogin(code);
+        this.error = error;
+        this.errors = errors;
+        if (!this.error && !this.errors) {
+          this.$router.push("/");
+        }
+      }
+      catch {
+        this.error = "Error with Google OAuth"; 
+      }
     }
   }
 }
