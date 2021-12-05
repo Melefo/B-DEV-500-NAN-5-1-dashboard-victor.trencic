@@ -18,7 +18,7 @@
         <select v-model="params.id" @change='send'>
             <option :value="value.id.toString()" v-for="value in competitions" :key="value.id">{{ value.name }}</option>
         </select>
-        <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
+        Refresh rate<input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
 </template>
 

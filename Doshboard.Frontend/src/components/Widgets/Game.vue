@@ -17,7 +17,7 @@
         <code v-if='error'>{{ this.error }}</code>
         <input type="submit" @click="clickDelete" value="X" />
         <input type="text" placeholder="Game name" v-model="params.name" @change="send" />
-        <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
+        Refresh rate<input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
 </template>
 

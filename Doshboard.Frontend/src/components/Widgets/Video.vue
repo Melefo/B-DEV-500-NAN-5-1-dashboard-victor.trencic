@@ -21,7 +21,7 @@
         <select v-model="params.videoId" @change='send'>
             <option :value="key" v-for="(value, key) in videos" :key="key">{{ value }}</option>
         </select>
-        <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
+        Refresh rate<input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>
 </template>
 
