@@ -8,7 +8,6 @@
                 <router-link to="/widgets"><i class="uis uis-apps"></i></router-link>
                 <router-link v-if=isAdmin to="/admin"><i class="fa fa-key"></i></router-link>
                 <a href="/" @click.prevent="clickLogout"><i class="uis uis-signout"></i></a>
-                <img id="avatar" src="https://imgsrv2.voi.id/ZX5NI_OyT7ebOGfkfnBBKLg4sVTFvxcAoHQSyJPTEk0/auto/1200/675/sm/1/bG9jYWw6Ly8vcHVibGlzaGVycy80NjU1MC8yMDIxMDQyMzE1MjMtbWFpbi5jcm9wcGVkXzE2MTkxNjYyMDIuanBn.jpg" />
             </div>
             <div id="right">
                 <slot :config=config></slot>
@@ -29,16 +28,22 @@
     display: flex;
     width: 100%;
     overflow: hidden;
-}
-
-#left > * {
-    margin: 40% 0 40% 15%;
+    height: 100%;
 }
 
 #left {
     display: flex;
     flex-direction: column;
     width: 6%;
+    justify-content: space-evenly;
+}
+
+#left a {
+    color: black;
+}
+
+#left a:hover {
+    color: black;
 }
 
 #right {
@@ -47,6 +52,11 @@
 
 i {
     font-size: 2.5em !important;
+    transition: color 0.1s;
+}
+
+a:hover i {
+    color: #359DBE;
 }
 
 #avatar {
