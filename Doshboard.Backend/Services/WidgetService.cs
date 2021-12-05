@@ -30,6 +30,7 @@ namespace Doshboard.Backend.Services
             Widget widget = type switch
             {
                 CityTempWidget.Name => new CityTempWidget(),
+                FootWidget.Name => new FootWidget(),
                 RealTimeCryptoWidget.Name => new RealTimeCryptoWidget(),
                 GameWidget.Name => new GameWidget(),
                 VideoWidget.Name => new VideoWidget(),
