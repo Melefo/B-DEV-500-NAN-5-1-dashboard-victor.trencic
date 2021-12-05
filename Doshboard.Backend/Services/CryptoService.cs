@@ -70,30 +70,46 @@ namespace Doshboard.Backend.Services
         public Interval? Ytd { get; set; }
     }
 
+    /// <summary>
+    /// Crypto Service
+    /// </summary>
     [ServiceName("Crypto")]
     public class CryptoService : IService
     {
         private readonly MongoService _mongo;
         private readonly string _apiKey;
+        private readonly HttpClient _client = new();
 
         public static Type[] Widgets => new[]
         {
             typeof(RealTimeCryptoWidget)
         };
 
+        /// <summary>
+        /// Crypto Service Constructor
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="mongo"></param>
         public CryptoService(IConfiguration config, MongoService mongo)
         {
             _apiKey = config["Crypto:ApiKey"];
             _mongo = mongo;
         }
 
+        /// <summary>
+        /// Get Crypto By Config Throught User ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="MongoException"></exception>
+        /// <exception cref="ApiException"></exception>
         public async Task<RealTimeCryptoData> GetRealTimeCrypto(string id)
         {
             var widget = _mongo.GetWidget<RealTimeCryptoWidget>(id);
             if (widget == null)
                 throw new MongoException("Widget not found");
 
-            List<CryptoInfo>? listing = await ClientAPI.GetAsync<List<CryptoInfo>>($"https://api.nomics.com/v1/currencies/ticker?key={_apiKey}&ids={widget.Currency}&convert={widget.Convert}");
+            List<CryptoInfo>? listing = await _client.GetAsync<List<CryptoInfo>>($"https://api.nomics.com/v1/currencies/ticker?key={_apiKey}&ids={widget.Currency}&convert={widget.Convert}");
             if (listing == null)
                 throw new ApiException("Failed to call API");
             if (listing.Count == 0)
@@ -101,6 +117,13 @@ namespace Doshboard.Backend.Services
             return new RealTimeCryptoData(listing[0].Currency, listing[0].LogoUrl, listing[0].Price, listing[0].OneDay?.PriceChangePct ?? 0, listing[0].Rank);
         }
 
+        /// <summary>
+        /// Change widget configuration in db
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="currency"></param>
+        /// <param name="convert"></param>
+        /// <exception cref="MongoException"></exception>
         public void ConfigureRealTimeCrypto(string id, string? currency, string? convert)
         {
             var widget = _mongo.GetWidget<RealTimeCryptoWidget>(id);

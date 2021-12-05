@@ -12,6 +12,9 @@ using static Google.Apis.YouTube.v3.YouTubeService;
 
 namespace Doshboard.Backend.Services
 {
+    /// <summary>
+    /// Youtube Service
+    /// </summary>
     [ServiceName("YouTube")]
     public class YouTubeService : IService
     {
@@ -25,6 +28,11 @@ namespace Doshboard.Backend.Services
             typeof(VideoWidget)
         };
 
+        /// <summary>
+        /// Youtube Service Constructor
+        /// </summary>
+        /// <param name="mongo"></param>
+        /// <param name="config"></param>
         public YouTubeService(MongoService mongo, IConfiguration config)
         {
             _mongo = mongo;
@@ -33,6 +41,11 @@ namespace Doshboard.Backend.Services
             _googleKey = config["Google:ApiKey"];
         }
 
+        /// <summary>
+        /// Create a Youtube Widget from a Google account
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
         private Google.Apis.YouTube.v3.YouTubeService CreateYouTube(GoogleAccount account)
         {
             return new(new BaseClientService.Initializer()
@@ -53,6 +66,15 @@ namespace Doshboard.Backend.Services
             });
         }
 
+        /// <summary>
+        /// Get Data from Video with User and Video ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="UserException"></exception>
+        /// <exception cref="MongoException"></exception>
+        /// <exception cref="ApiException"></exception>
         public async Task<VideoData> GetVideoData(string id, string userId)
         {
             var user = _mongo.GetUser(userId);
@@ -77,6 +99,12 @@ namespace Doshboard.Backend.Services
                 video.Items[0].Statistics.ViewCount.GetValueOrDefault(), video.Items[0].Statistics.CommentCount.GetValueOrDefault());
         }
 
+        /// <summary>
+        /// Configure 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="videoId"></param>
+        /// <exception cref="MongoException"></exception>
         public void ConfigureVideo(string id, string? videoId)
         {
             var widget = _mongo.GetWidget<VideoWidget>(id);
@@ -88,6 +116,12 @@ namespace Doshboard.Backend.Services
             _mongo.SaveWidget(widget);
         }
 
+        /// <summary>
+        /// Get Video by User ID
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="UserException"></exception>
         public async Task<Dictionary<string, string>> GetUserVideos(string userId)
         {
             var user = _mongo.GetUser(userId);

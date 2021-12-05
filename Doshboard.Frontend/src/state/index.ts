@@ -9,6 +9,7 @@ import { crypto } from '@/state/crypto'
 import { steam } from '@/state/steam'
 import { youtube } from '@/state/youtube'
 import { rss } from '@/state/rss'
+import { foot } from '@/state/foot'
 
 Vue.use(Vuex)
 
@@ -26,7 +27,8 @@ export const store = new Vuex.Store({
         crypto,
         steam,
         youtube,
-        rss
+        rss,
+        foot
     }
 })
 

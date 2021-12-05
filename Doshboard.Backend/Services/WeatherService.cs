@@ -75,35 +75,59 @@ namespace Doshboard.Backend.Services
         Imperial
     }
 
+    /// <summary>
+    /// Weather Service
+    /// </summary>
     [ServiceName("Weather")]
     public class WeatherService : IService
     {
         private readonly MongoService _mongo;
         private readonly string _apiKey;
+        private readonly HttpClient _client = new();
+
         public static Type[] Widgets => new[]
         {
             typeof(CityTempWidget)
         };
 
+        /// <summary>
+        /// Weather Service Constructor
+        /// </summary>
+        /// <param name="config"></param>
+        /// <param name="mongo"></param>
         public WeatherService(IConfiguration config, MongoService mongo)
         {
             _apiKey = config["Weather:ApiKey"];
             _mongo = mongo;
         }
 
+        /// <summary>
+        /// Get Widget from ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="MongoException"></exception>
+        /// <exception cref="ApiException"></exception>
         public async Task<CityTempData> GetCityTemp(string id)
         {
             var widget = _mongo.GetWidget<CityTempWidget>(id);
             if (widget == null)
                 throw new MongoException("Widget not found");
 
-            WeatherJson? response = await ClientAPI.GetAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&units={widget.Unit}");
+            WeatherJson? response = await _client.GetAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&units={widget.Unit}");
             if (response == null)
                 throw new ApiException("Failed to call API");
 
             return new CityTempData($"https://openweathermap.org/img/wn/{response.Weather[0].Icon}@4x.png", response.Main.Humidity, response.Main.Temp, response.Name);
         }
 
+        /// <summary>
+        /// Change widget configuration in db
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newCity"></param>
+        /// <param name="newUnit"></param>
+        /// <exception cref="MongoException"></exception>
         public void ConfigureCityTemp(string id, string? newCity, UnitType? newUnit)
         {
             var widget = _mongo.GetWidget<CityTempWidget>(id);
