@@ -1,4 +1,5 @@
 ﻿using Doshboard.Backend.Entities;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Services;
 using FluentScheduler;
 using Microsoft.AspNetCore.Authorization;
@@ -20,6 +21,7 @@ namespace Doshboard.Backend.Controllers
             => _service = service;
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<Widget>> GetUserWidgets()
         {
             List<Widget> widgets = new();
@@ -31,15 +33,26 @@ namespace Doshboard.Backend.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult AddWidget(string type)
         {
-            var widget = _service.NewUserWidget(User.Identity!.Name!, type);
-            if (widget == null)
-                return BadRequest();
-            return Created("", widget);
+            try
+            {
+                return Created("", _service.NewUserWidget(User.Identity!.Name!, type));
+            }
+            catch (NotImplementedException)
+            {
+                return BadRequest(new { error = "Invalid widget" });
+            }
+            catch (UserException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
         [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         public ActionResult DeleteWidget(string id)
         {
             _service.DeleteUserWidget(User.Identity!.Name!, id);
@@ -47,13 +60,14 @@ namespace Doshboard.Backend.Controllers
         }
 
         [HttpPatch("update")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         public ActionResult UpdateWidget(string id, int x, int y)
         {
             Widget widget = _service.GetWidget(id);
             widget.X = x;
             widget.Y = y;
             _service.UpdateWidget(widget);
-            return Ok();
+            return Accepted();
         }
     }
 }

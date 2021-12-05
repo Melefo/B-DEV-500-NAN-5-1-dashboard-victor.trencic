@@ -1,4 +1,5 @@
 ﻿using Doshboard.Backend.Entities;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Models;
 using Doshboard.Backend.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -25,7 +26,8 @@ namespace Doshboard.Backend.Controllers
         /// </summary>
         /// <returns>List of User</returns>
         [HttpGet]
-        public List<User> GetUsers() =>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<List<User>> GetUsers() =>
             _service.GetUsers();
 
         /// <summary>
@@ -35,14 +37,23 @@ namespace Doshboard.Backend.Controllers
         /// <returns>return newly created if succesfully registered</returns>
         [AllowAnonymous]
         [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<User> Create([FromBody] RegisterForm form)
         {
             if (!ModelState.IsValid)
-                return BadRequest();
+                return BadRequest(form);
             var user = new User(form.Username, form.Email, form.FirstName, form.LastName, form.Password);
             if (_service.GetUsers().Count == 0)
                 user.Role = "Admin";
-            _service.Create(user);
+            try
+            {
+                _service.Create(user);
+            }
+            catch (UserException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
             return Created("", user);
         }
         
@@ -52,6 +63,7 @@ namespace Doshboard.Backend.Controllers
         /// <param name="id">User id</param>
         /// <returns>Request Accepted</returns>
         [HttpDelete("delete")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         public ActionResult Delete([BindRequired] string id)
         {
             _service.Delete(id);
@@ -65,34 +77,55 @@ namespace Doshboard.Backend.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult Login([FromBody] LoginForm form)
         {
             if (!ModelState.IsValid)
-                return BadRequest();
-
-            var token = _service.Authenticate(form.Username, form.Password, out var user);
-
-            if (token == null)
-                return Unauthorized();
-            return Ok(new { token, user });
+                return BadRequest(form);
+            try
+            {
+                var token = _service.Authenticate(form.Username, form.Password, out var user);
+                return Ok(new { token, user });
+            }
+            catch (MongoException ex)
+            {
+                return Unauthorized(new { error = ex.Message });
+            }
+            catch (UserException ex)
+            {
+                return Unauthorized(new { error = ex.Message });
+            }
         }
 
         [HttpPatch("promote")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         public ActionResult PromoteUser(string id)
         {
             _service.Promote(id);
-            return Ok();
+            return Accepted();
         }
 
         [AllowAnonymous]
         [HttpPost("login/google")]
-        public async Task<ActionResult> Google([BindRequired]string code)
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> Google([BindRequired] string code)
         {
-            (var token, var user) = await _service.GoogleAuthenticate(code);
+            try
+            {
+                (var token, var user) = await _service.GoogleAuthenticate(code);
 
-            if (token == null)
-                return Unauthorized();
-            return Ok(new { token, user });
+                return Ok(new { token, user });
+            }
+            catch (ApiException ex)
+            {
+                return Unauthorized(new { error = ex.Message });
+            }
+            catch (UserException ex)
+            {
+                return Unauthorized(new { error = ex.Message });
+            }
         }
     }
 }

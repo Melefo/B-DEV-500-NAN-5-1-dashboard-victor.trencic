@@ -20,27 +20,37 @@ export const user = {
                 },
                 body: JSON.stringify(json)
               });
-            const { token } = await res.json();
+            if (res.status == 500)
+                return { error: "Backend unavailable" }
+            const { token, error, errors } = await res.json();
             commit('login', token);
+            return { error, errors };
         },
         async googleLogin({ commit }, code) {
             const res = await fetch("/api/user/login/google?" + new URLSearchParams({code: code}), {
                 method: "POST"
               });
-            const { token } = await res.json();
+            if (res.status == 500)
+                return { error: "Backend unavailable" }
+            const { token, error, errors } = await res.json();
             commit('login', token);
+            return { error, errors };
         },
         async logout({ commit }) {
             commit('login', null);
         },
-        register({ commit }, json) {
-            fetch("/api/user/register", {
+        async register({ commit }, json) {
+            const res = await fetch("/api/user/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                   },
                   body: JSON.stringify(json)
             })
+            if (res.status == 500)
+                return { error: "Backend unavailable" }
+            const { error, errors } = await res.json();
+            return {error, errors };
         },
         del({ commit }, id) {
             fetch("/api/user/delete?" + new URLSearchParams({ id: id }), {

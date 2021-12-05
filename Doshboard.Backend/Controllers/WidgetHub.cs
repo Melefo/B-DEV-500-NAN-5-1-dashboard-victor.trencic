@@ -1,5 +1,6 @@
 ﻿using Doshboard.Backend.Entities;
 using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Services;
 using FluentScheduler;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +34,7 @@ namespace Doshboard.Backend.Controllers
 
         public override Task OnConnectedAsync()
         {
+            _clientJobs.Add(Context.ConnectionId, new());
             RegisterJobs(Context.ConnectionId, Context.User!.Identity!.Name!);
             return base.OnConnectedAsync();
         }
@@ -47,34 +49,48 @@ namespace Doshboard.Backend.Controllers
 
         private async Task Job(Widget widget, string id, string userId)
         {
-            switch (widget)
+            try
             {
-                case CityTempWidget:
-                    var temp = await _weather.GetCityTemp(widget.Id);
-                    if (temp != null)
+                switch (widget)
+                {
+                    case CityTempWidget:
+                        var temp = await _weather.GetCityTemp(widget.Id);
                         await _hubContext.Clients.Client(id).SendAsync(widget.Id, temp);
-                    break;
-                case FeedWidget:
-                    var feed = await _rss.GetFeed(widget.Id);
-                    if (feed != null)
+                        break;
+                    case FeedWidget:
+                        var feed = _rss.GetFeed(widget.Id);
                         await _hubContext.Clients.Client(id).SendAsync(widget.Id, feed);
-                    break;
-                case GameWidget:
-                    var game = await _steam.GetGameData(widget.Id);
-                    if (game != null)
+                        break;
+                    case GameWidget:
+                        var game = await _steam.GetGameData(widget.Id);
                         await _hubContext.Clients.Client(id).SendAsync(widget.Id, game);
-                    break;
-                case RealTimeCryptoWidget:
-                    var crypto = await _crypto.GetRealTimeCrypto(widget.Id);
-                    if (crypto != null)
+                        break;
+                    case RealTimeCryptoWidget:
+                        var crypto = await _crypto.GetRealTimeCrypto(widget.Id);
                         await _hubContext.Clients.Client(id).SendAsync(widget.Id, crypto);
-                    break;
-                case VideoWidget:
-                    var video = await _ytb.GetVideoData(widget.Id, userId);
-                    var videos = await _ytb.GetUserVideos(userId);
-                    if (video != null && videos != null)
+                        break;
+                    case VideoWidget:
+                        var video = await _ytb.GetVideoData(widget.Id, userId);
+                        var videos = await _ytb.GetUserVideos(userId);
                         await _hubContext.Clients.Client(id).SendAsync(widget.Id, video, videos);
-                    break;
+                        break;
+                }
+            }
+            catch (MongoException)
+            {
+
+            }
+            catch (ApiException)
+            {
+
+            }
+            catch (WidgetException)
+            {
+
+            }
+            catch (UserException)
+            {
+
             }
         }
 
@@ -82,7 +98,6 @@ namespace Doshboard.Backend.Controllers
         {
             var widgets = _mongo.GetUserWidgets(userId).Widgets.Select(x => _mongo.GetWidget(x));
 
-            _clientJobs.Add(id, new());
             foreach (var widget in widgets)
             {
                 if (widget == null)
@@ -107,7 +122,7 @@ namespace Doshboard.Backend.Controllers
             _mongo.SaveWidget(widget);
         }
 
-        public async Task DeleteTimer(string id) 
+        public void DeleteTimer(string id) 
             => JobManager.RemoveJob($"{Context.ConnectionId}#{id}");
     }
 }

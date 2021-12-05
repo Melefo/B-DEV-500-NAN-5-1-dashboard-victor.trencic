@@ -1,6 +1,7 @@
 ﻿using Doshboard.Backend.Attributes;
 using Doshboard.Backend.Entities;
 using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Interfaces;
 using Doshboard.Backend.Models.Widgets;
 using Google.Apis.Auth.OAuth2;
@@ -52,45 +53,46 @@ namespace Doshboard.Backend.Services
             });
         }
 
-        public async Task<VideoData?> GetVideoData(string id, string userId)
+        public async Task<VideoData> GetVideoData(string id, string userId)
         {
             var user = _mongo.GetUser(userId);
             if (user.Google == null)
-                return null;
+                throw new UserException("You must have your Google Account associated to use this widget");
 
             var ytb = CreateYouTube(user.Google);
 
             var widget = _mongo.GetWidget<VideoWidget>(id);
             if (widget == null)
-                return null;
+                throw new MongoException("Widget not found");
 
             var videoRequest = ytb.Videos.List("statistics, snippet");
             videoRequest.Id = widget.VideoId;
 
             var video = await videoRequest.ExecuteAsync();
             if (video.Items.Count != 1)
-                return null;
+                throw new ApiException("No video found");
 
             return new(video.Items[0].Snippet.Title, video.Items[0].Snippet.Thumbnails.Maxres?.Url ?? video.Items[0].Snippet.Thumbnails.High.Url,
                 video.Items[0].Statistics.LikeCount.GetValueOrDefault(), video.Items[0].Statistics.DislikeCount.GetValueOrDefault(),
                 video.Items[0].Statistics.ViewCount.GetValueOrDefault(), video.Items[0].Statistics.CommentCount.GetValueOrDefault());
         }
 
-        public void ConfigureVideo(string id, string videoId)
+        public void ConfigureVideo(string id, string? videoId)
         {
             var widget = _mongo.GetWidget<VideoWidget>(id);
             if (widget == null)
-                return;
+                throw new MongoException("Widget not found");
 
-            widget.VideoId = videoId;
+            if (videoId != null)
+                widget.VideoId = videoId;
             _mongo.SaveWidget(widget);
         }
 
-        public async Task<Dictionary<string, string>?> GetUserVideos(string userId)
+        public async Task<Dictionary<string, string>> GetUserVideos(string userId)
         {
             var user = _mongo.GetUser(userId);
             if (user.Google == null)
-                return null;
+                throw new UserException("You must have your Google Account associated to use this widget");
 
             var ytb = CreateYouTube(user.Google);
             Dictionary<string, string> videos = new();
