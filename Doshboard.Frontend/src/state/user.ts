@@ -20,6 +20,8 @@ export const user = {
                 },
                 body: JSON.stringify(json)
               });
+            if (res.status == 500)
+                return { error: "Backend unavailable" }
             const { token, error, errors } = await res.json();
             commit('login', token);
             return { error, errors };
@@ -28,6 +30,8 @@ export const user = {
             const res = await fetch("/api/user/login/google?" + new URLSearchParams({code: code}), {
                 method: "POST"
               });
+            if (res.status == 500)
+                return { error: "Backend unavailable" }
             const { token, error, errors } = await res.json();
             commit('login', token);
             return { error, errors };
@@ -43,6 +47,8 @@ export const user = {
                   },
                   body: JSON.stringify(json)
             })
+            if (res.status == 500)
+                return { error: "Backend unavailable" }
             const { error, errors } = await res.json();
             return {error, errors };
         },

@@ -43,7 +43,9 @@ export default Vue.extend({
         }
     },
     created: async function() {
-        this.services = await this.get()
+        const { error, data } = await this.get()
+        this.error = error;
+        this.services = data;
     }
 })
 </script>

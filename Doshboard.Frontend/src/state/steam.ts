@@ -8,6 +8,8 @@ export const steam = {
                 method: "GET",
                 headers: authHeader()
             });
+            if (res.status == 500)
+                return { success: false, json: "Backend unavailable" }
             const json = await res.json();
             if (!res.ok)
                 return { success: false, json: json.error }
@@ -19,6 +21,8 @@ export const steam = {
                 headers: Object.assign(authHeader(), {"Content-Type": "application/json"}),
                 body: JSON.stringify(json)
             });
+            if (res.status == 500)
+                return { error: "Backend unavailable" }
             let errors = null;
             if (!res.ok)
             {
