@@ -43,5 +43,15 @@ namespace Doshboard.Backend.Controllers
                 return BadRequest();
             return response;
         }
+
+        [HttpGet("Team/{id:int}")]
+        public async Task<ActionResult<FootTeamJson>> GetTeamById(int id)
+        {
+            FootTeamJson? response = await _service.GetTeam(id);
+
+            if (response == null)
+                return BadRequest();
+            return response;
+        }
     }
 }

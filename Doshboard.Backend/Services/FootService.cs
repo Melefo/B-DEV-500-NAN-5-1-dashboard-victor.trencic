@@ -269,6 +269,83 @@ namespace Doshboard.Backend.Services
 
     // end of Competitions
 
+
+    // Root myDeserializedClass = JsonSerializer.Deserialize<Root>(myJsonResponse);
+
+    public class Squad
+    {
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("position")]
+        public string Position { get; set; }
+
+        [JsonPropertyName("dateOfBirth")]
+        public DateTime DateOfBirth { get; set; }
+
+        [JsonPropertyName("countryOfBirth")]
+        public string CountryOfBirth { get; set; }
+
+        [JsonPropertyName("nationality")]
+        public string Nationality { get; set; }
+
+        [JsonPropertyName("role")]
+        public string Role { get; set; }
+    }
+
+    public class FootTeamJson
+    {
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        [JsonPropertyName("area")]
+        public Area Area { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("shortName")]
+        public string ShortName { get; set; }
+
+        [JsonPropertyName("tla")]
+        public string Tla { get; set; }
+
+        [JsonPropertyName("crestUrl")]
+        public string? CrestUrl { get; set; }
+
+        [JsonPropertyName("address")]
+        public string Address { get; set; }
+
+        [JsonPropertyName("phone")]
+        public string Phone { get; set; }
+
+        [JsonPropertyName("website")]
+        public string Website { get; set; }
+
+        [JsonPropertyName("email")]
+        public string Email { get; set; }
+
+        [JsonPropertyName("founded")]
+        public int Founded { get; set; }
+
+        [JsonPropertyName("clubColors")]
+        public string ClubColors { get; set; }
+
+        [JsonPropertyName("venue")]
+        public string Venue { get; set; }
+
+        [JsonPropertyName("squad")]
+        public List<Squad> Squad { get; set; }
+
+        [JsonPropertyName("lastUpdated")]
+        public DateTime LastUpdated { get; set; }
+    }
+
+
+
     [ServiceName("Foot")]
     public class FootService
     {
@@ -322,5 +399,13 @@ namespace Doshboard.Backend.Services
 
             return response;
         }
+
+        public async Task<FootTeamJson?> GetTeam(int teamsId)
+        {
+            FootTeamJson? response = await _client.GetFromJsonAsync<FootTeamJson>($"http://api.football-data.org/v2/teams/{ teamsId }");
+
+            return response;
+        }
+
     }
 }
