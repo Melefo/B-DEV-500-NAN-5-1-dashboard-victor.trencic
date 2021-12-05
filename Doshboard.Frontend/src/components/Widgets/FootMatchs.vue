@@ -2,11 +2,14 @@
     <div id="competition-widget" v-if=!config>
         <code v-if='error'>{{ this.error }}</code>
         <div v-else-if="footMatchs">
-            <div v-for="value in footMatchs" :key="value.id" class="match">
-                <div>{{ value.homeTeam.name }}</div>
-                <b>{{ value.score.fullTime.homeTeam }} - {{ value.score.fullTime.awayTeam }}</b>
-                <div>{{ value.awayTeam.name }}</div>
-            </div>
+            <h3>{{ footMatchs.competition.name }}</h3>
+            <table>
+                <tr v-for="value in footMatchs.matches" :key="value.id">
+                    <td>{{ value.homeTeam.name }}</td>
+                    <td><b>{{ value.score.fullTime.homeTeam }} - {{ value.score.fullTime.awayTeam }}</b></td>
+                    <td>{{ value.awayTeam.name }}</td>
+                </tr>
+            </table>
         </div>
     </div>
     <div id="competition-widget" v-else>
@@ -22,6 +25,11 @@
 <style scoped>
 .match {
     display: flex;
+}
+
+table {
+    width: 100%;
+    border-spacing: 0 0.5em;
 }
 </style>
 
@@ -83,7 +91,7 @@
             {
                 const { success: successMatchs, json: jsonMatchs } = await this.getMatchByCompetitions(this.id);
                 if (successMatchs)
-                    this.footMatchs = jsonMatchs.matches;
+                    this.footMatchs = jsonMatchs;
                 else
                     this.error = jsonMatchs;
             }
