@@ -16,7 +16,7 @@ export const widget = {
             });
             if (res.status == 500)
                 return { success: false, error: "Backend unavailable" }
-            return { success: false, data: await res.json() }
+            return { success: true, data: await res.json() }
         },
         async new({ commit }, type) {
             const res = await fetch("/api/widget?" + new URLSearchParams({ type: type }), {
