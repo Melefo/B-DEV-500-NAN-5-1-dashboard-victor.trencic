@@ -1,6 +1,7 @@
 <template>
     <vuescroll>
-        <grid-layout :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[20, 20]" :use-css-transforms="true">
+        <div v-if="error">{{ this.error }}</div>
+        <grid-layout v-else :layout.sync="layout" :col-num="6" :row-height="80" :is-draggable="true" :is-resizable="false" :is-mirrored="false" :vertical-compact="true" :margin="[20, 20]" :use-css-transforms="true">
             <grid-item v-for="item in layout" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i" @moved="movedEvent">
                 <CityTemp v-if="item.type == 'city_temperature'" :id=item.i :params=item.params :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
                 <RealTimeCrypto v-if="item.type == 'realtime_crypto'" :id=item.i :params="item.params" :config="$attrs.config || false" @deleted="deleteItem(item.i)" :ws="ws" />
@@ -55,7 +56,8 @@
                         accessTokenFactory: () => {
                             return token;
                         }
-                    }).withAutomaticReconnect().build()
+                    }).withAutomaticReconnect().build(),
+                error: null
             }
         },
         methods: {
@@ -66,15 +68,14 @@
             },
             movedEvent(i, newX, newY){
                 this.update({id: i, x: newX, y: newY});
-            },
-            messaged() {
-                this.layout.forEach(element => {
-                    element.params.test = 10
-                });
             }
         },
         created: async function() {
-            const data = await this.get();
+            const { success, data, error } = await this.get();
+            if (!success) {
+                this.error = error;
+                return;
+            }
             this.layout = data.map((item) => {
                 return {
                     x: item.x,

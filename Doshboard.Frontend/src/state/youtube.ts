@@ -8,20 +8,40 @@ export const youtube = {
                 method: "GET",
                 headers: authHeader()
             });
-            return await res.json();
+            if (res.status == 500)
+                return { success: false, json: "Backend unavailable" }
+            const json = await res.json();
+            if (!res.ok)
+                return { success: false, json: json.error }
+            return { success: true, json }
         },
         async getUserVideos({ commit }) {
             const res = await fetch("/api/services/youtube/uservideos", {
                 method: "GET",
                 headers: authHeader()
             });
-            return await res.json();
+            if (res.status == 500)
+                return { success: false, json: "Backend unavailable" }
+            const json = await res.json();
+            if (!res.ok)
+                return { success: false, json: json.error }
+            return { success: true, json }
         },
-        async update({ commit }, { id, videoId }) {
-            const res = await fetch("/api/services/youtube/video?" + new URLSearchParams({ id: id, videoId: videoId }), {
+        async update({ commit }, json) {
+            const res = await fetch("/api/services/youtube/video", {
                 method: "PATCH",
-                headers: authHeader(),
+                headers: Object.assign(authHeader(), {"Content-Type": "application/json"}),
+                body: JSON.stringify(json)
             });
+            if (res.status == 500)
+                return { error: "Backend unavailable" }
+            let errors = null;
+            if (!res.ok)
+            {
+                const { error } = await res.json();
+                errors = error;
+            }
+            return { error: errors };
         },
     },
 }

@@ -15,11 +15,12 @@ namespace Doshboard.Backend.Controllers
         /// </summary>
         /// <returns>About model in json</returns>
         [HttpGet]
-        public About Get()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<About> Get()
         {
             string clientIp = Request.HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty;
 
-            return new(clientIp);
+            return new About(clientIp);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Doshboard.Backend.Attributes;
 using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Interfaces;
 using Doshboard.Backend.Models.Widgets;
 using Doshboard.Backend.Utilities;
@@ -90,15 +91,15 @@ namespace Doshboard.Backend.Services
             _mongo = mongo;
         }
 
-        public async Task<CityTempData?> GetCityTemp(string id)
+        public async Task<CityTempData> GetCityTemp(string id)
         {
             var widget = _mongo.GetWidget<CityTempWidget>(id);
             if (widget == null)
-                return null;
+                throw new MongoException("Widget not found");
 
             WeatherJson? response = await ClientAPI.GetAsync<WeatherJson>($"https://api.openweathermap.org/data/2.5/weather?q={widget.City}&appid={_apiKey}&units={widget.Unit}");
             if (response == null)
-                return null;
+                throw new ApiException("Failed to call API");
 
             return new CityTempData($"https://openweathermap.org/img/wn/{response.Weather[0].Icon}@4x.png", response.Main.Humidity, response.Main.Temp, response.Name);
         }
@@ -107,7 +108,7 @@ namespace Doshboard.Backend.Services
         {
             var widget = _mongo.GetWidget<CityTempWidget>(id);
             if (widget == null)
-                return;
+                throw new MongoException("Widget not found");
 
             if (newCity != null)
                 widget.City = newCity;

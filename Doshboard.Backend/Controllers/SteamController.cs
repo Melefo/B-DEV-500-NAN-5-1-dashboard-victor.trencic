@@ -1,4 +1,5 @@
 ﻿using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Models.Widgets;
 using Doshboard.Backend.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -18,23 +19,60 @@ namespace Doshboard.Backend.Controllers
             => _service = service;
 
         [HttpGet(GameWidget.Name)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<GameData>> GetGame([BindRequired]string id)
         {
-            GameData? response = await _service.GetGameData(id);
+            try
+            {
+                return await _service.GetGameData(id);
+            }
+            catch (MongoException ex)
+            {
+                return BadRequest(new { error = ex.Message });
 
-            if (response == null)
-                return BadRequest();
-            return response;
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new { error = ex.Message });
+
+            }
+            catch (WidgetException ex)
+            {
+                return NotFound(new { error = ex.Message });
+            }
         }
 
 
         [HttpPatch(GameWidget.Name)]
-        public ActionResult ConfigureGame([BindRequired]string id, [BindRequired]string name)
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        public async Task<ActionResult> ConfigureGame([FromBody]GameModel model)
         {
             if (!ModelState.IsValid)
-                return BadRequest();
-            _service.ConfigureGame(id, name);
-            return NoContent();
+                return BadRequest(model);
+            try
+            {
+                await _service.ConfigureGame(model.Id, model.Name);
+            }
+            catch (MongoException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new { error = ex.Message });
+
+            }
+            catch (WidgetException ex)
+            {
+                return NotFound(new { error = ex.Message });
+            }
+            return Accepted();
         }
     }
 }

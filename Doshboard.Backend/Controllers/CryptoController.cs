@@ -1,4 +1,5 @@
 ﻿using Doshboard.Backend.Entities.Widgets;
+using Doshboard.Backend.Exceptions;
 using Doshboard.Backend.Models.Widgets;
 using Doshboard.Backend.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -18,22 +19,42 @@ namespace Doshboard.Backend.Controllers
             => _service = service;
 
         [HttpGet(RealTimeCryptoWidget.Name)]
-        public async Task<ActionResult<RealTimeCryptoData>> GetRealTimeCrypto([BindRequired]string id)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<RealTimeCryptoData>> GetRealTimeCrypto([BindRequired] string id)
         {
-            RealTimeCryptoData? response = await _service.GetRealTimeCrypto(id);
-
-            if (response == null)
-                return BadRequest();
-            return response;
+            try
+            {
+                return await _service.GetRealTimeCrypto(id);
+            }
+            catch (ApiException ex)
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new { error = ex.Message });
+            }
+            catch (MongoException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
         [HttpPatch(RealTimeCryptoWidget.Name)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         public ActionResult ConfigureRealTimeCrypto([FromBody] RealTimeCryptoModel model)
         {
             if (!ModelState.IsValid)
-                return BadRequest();
-            _service.ConfigureRealTimeCrypto(model.Id, model.Currency, model.Convert);
-            return NoContent();
+                return BadRequest(model);
+            try
+            {
+                _service.ConfigureRealTimeCrypto(model.Id, model.Currency, model.Convert);
+            }
+            catch (MongoException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+            return Accepted();
         }
     }
 }
