@@ -15,7 +15,7 @@
     </div>
     <div id="game-widget" v-else>
         <code v-if='error'>{{ this.error }}</code>
-        <button type="button" @click="clickDelete">X</button>
+        <input type="submit" @click="clickDelete" value="X" />
         <input type="text" placeholder="Game name" v-model="params.name" @change="send" />
         <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
     </div>

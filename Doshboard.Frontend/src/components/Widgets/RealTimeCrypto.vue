@@ -15,7 +15,7 @@
     </div>
     <div id="crypto-widget" v-else>
         <code v-if='error'>{{ this.error }}</code>
-        <button type="button" @click="clickDelete">X</button>
+        <input type="submit" @click="clickDelete" value="X" />
         <input type="text" placeholder="Currency" required v-model="params.currency" @change="send" />
         <input type="text" placeholder="Convert" required v-model="params.convert" @change="send" />
         <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />

@@ -14,7 +14,7 @@
     </div>
     <div id="competition-widget" v-else>
         <code v-if='error'>{{ this.error }}</code>
-        <button type="button" @click="clickDelete">X</button>
+        <input type="submit" @click="clickDelete" value="X" />
         <select v-model="params.id" @change='send'>
             <option :value="value.id.toString()" v-for="value in competitions" :key="value.id">{{ value.name }}</option>
         </select>

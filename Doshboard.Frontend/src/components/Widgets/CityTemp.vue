@@ -14,7 +14,7 @@
     </div>
     <div id="temp-widget" v-else>
         <code v-if='error'>{{ this.error }}</code>
-        <button type="button" @click="clickDelete">X</button>
+        <input type="submit" @click="clickDelete" value="X" />
         <input type="text" placeholder="City" v-model="params.city" @change="send" />
         <select v-model="params.unit" @change="send">
             <option value="0">Celsius</option>

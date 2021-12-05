@@ -17,7 +17,7 @@
     </div>
     <div id="video-widget" v-else>
         <code v-if='error'>{{ this.error }}</code>
-        <button type="button" @click="clickDelete">X</button>
+        <input type="submit" @click="clickDelete" value="X" />
         <select v-model="params.videoId" @change='send'>
             <option :value="key" v-for="(value, key) in videos" :key="key">{{ value }}</option>
         </select>

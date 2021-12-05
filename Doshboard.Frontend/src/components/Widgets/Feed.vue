@@ -11,7 +11,7 @@
     </div>
     <div v-else>
         <code v-if='error'>{{ this.error }}</code>
-        <button type="button" @click="clickDelete">X</button>
+        <input type="submit" @click="clickDelete" value="X" />
         <input type="text" placeholder="Feed URL" v-model="params.url" @change="send" />
         <input type="number" placeholder="Limit of items" v-model="params.items" @change="send" />
         <input type="number" placeholder="Timer" v-model="params.timer" @change="timer" />
