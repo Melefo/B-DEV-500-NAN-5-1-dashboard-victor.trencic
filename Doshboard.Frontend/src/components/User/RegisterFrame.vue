@@ -1,5 +1,6 @@
 <template>
     <div id="frame">
+      <h1>New to Doshboard?</h1>
       <code v-if="error">{{ this.error }}</code>
         <form id="register" @submit.prevent="send">
             <div>
@@ -29,12 +30,7 @@
 </template>
 
 <style>
-#frame {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 50px;
-    backdrop-filter: blur(30px);
-    box-shadow: 10px 5px 10px #00000010;
-}
+
 </style>
 
 <script>

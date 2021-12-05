@@ -42,6 +42,16 @@
       box-shadow: 0 2px 1px #88888866;
       color: grey;
       background: white;
+      margin: 5px 25px;
+    }
+
+    input[type=submit]:hover {
+      background: #fcfcfc;
+      cursor: pointer;
+    }
+
+    input[type=submit]:active {
+      background: #f1f1f1;
     }
 
     input::placeholder {
