@@ -9,7 +9,7 @@
         </div>
         <div v-else>
             <h1>Hello, {{ fullname }}</h1>
-            <p>It's a great for a workout !</p>
+            <p>It's a great day for a workout !</p>
         </div>
         <div>
             <DateTime />
