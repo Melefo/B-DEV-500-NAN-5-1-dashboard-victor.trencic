@@ -1,0 +1,1628 @@
+{
+  "homepages": [],
+  "source_base_path": "D:/a/B-DEV-500-NAN-5-1-dashboard-victor.trencic/B-DEV-500-NAN-5-1-dashboard-victor.trencic/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Attributes.ServiceNameAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Attributes.ServiceNameAttribute.html",
+          "hash": "cmSacq6nwPVBMRix3QCzvbj+/5xI0PFKKPLm21A57Ow="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Attributes.WidgetInfoAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Attributes.WidgetInfoAttribute.html",
+          "hash": "KHPf5wr/kzjnVJVeKXZXTV88wW3Pn6nTJFr78Htj8sw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Attributes.WidgetParamAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Attributes.WidgetParamAttribute.html",
+          "hash": "zsINOKxf3E0KTQCKCrD4vQCyHgbUNOph+pl27HIKe6M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Attributes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Attributes.html",
+          "hash": "K4EctEzlwNSkp/uzBMc09zxgPR+zFAeMYiByqAHiOso="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Controllers.AboutController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Controllers.AboutController.html",
+          "hash": "T4WyUm5Kt34jERvCb/tZIjbtgfPc4Zy7LSD630fVbD0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Controllers.CryptoController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Controllers.CryptoController.html",
+          "hash": "RpmcqpFP8kZneexxp3LMlPfXzHBkcuvTusTv4KlpzN0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Controllers.FootController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Controllers.FootController.html",
+          "hash": "F5UzsZwKUdl3K/v6tid2sfc4uT8jY7wonp9Rc0JBRXU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Controllers.RssController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Controllers.RssController.html",
+          "hash": "T0ROEUtbHe61EzCenPVLZoFGxVZSYwP0c2M0lb/2szk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Controllers.SteamController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Controllers.SteamController.html",
+          "hash": "qdt8Aopj9TO5/QuvXxfFfE8INi1h4WRrIzScz/ez/As="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Controllers.UserController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Controllers.UserController.html",
+          "hash": "AJBCrX2FHWArFyDOSnVHwwMOzr/8MJgEtkBpdzfH4CU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Controllers.WeatherController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Controllers.WeatherController.html",
+          "hash": "4vynd5RTj7lsznKwZNXb6HXzWBMkB1C3hffOmF0eG5E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Controllers.WidgetController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Controllers.WidgetController.html",
+          "hash": "jx9wRsboTCZuzO9F0Vz0pcl3lDpIIoy71wr4m8YVbEs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Controllers.WidgetHub.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Controllers.WidgetHub.html",
+          "hash": "ZnurTI/5r/bNiifvMtvxxYadRdROarerGDDc/v71z/o="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Controllers.YouTubeController.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Controllers.YouTubeController.html",
+          "hash": "JlkkiUxuKbIDT9SlJfLoeyP47OzmgI/3e2x54IZtgK4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Controllers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Controllers.html",
+          "hash": "8YDkUPGTt7JDFNyFikHnDgIpKw0su1NRCsJWLRp94XM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Entities.GoogleAccount.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Entities.GoogleAccount.html",
+          "hash": "1dkizZPZJ62NhuEqU8/cYNoBk4PCmbJ//7HQ/8GFZ2g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Entities.User.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Entities.User.html",
+          "hash": "5tHrka0FrsafxvVKvh3OxQpbIMiJtofu11fh3WkXGXw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Entities.UserWidgets.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Entities.UserWidgets.html",
+          "hash": "TwtP1TkihIs5ceyxGt1hI5cxEg0S8REER1kt34N8oCw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Entities.Widget.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Entities.Widget.html",
+          "hash": "l/51SpG02WtUxSvmABdx+DcdytL7/eWvxgRZzK0v2xg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Entities.Widgets.CityTempWidget.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Entities.Widgets.CityTempWidget.html",
+          "hash": "SkDpOLUsoqAVsmaYogOCVwtW3H2KJDAyuGH8HrsDVc4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Entities.Widgets.FeedWidget.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Entities.Widgets.FeedWidget.html",
+          "hash": "f5/P55E4xC7am3HVTbx2YdY5bF9lqTr01skGY+uRgI4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Entities.Widgets.FootWidget.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Entities.Widgets.FootWidget.html",
+          "hash": "cLWmb+DXxowqWz1sWIImNaSDJpUI3L5ktE8HQSBGnb4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Entities.Widgets.GameWidget.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Entities.Widgets.GameWidget.html",
+          "hash": "UFUlvhhan7jeT67MYU2s7JVSHZ/5nwfSmvHj2QSX2/k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Entities.Widgets.RealTimeCryptoWidget.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Entities.Widgets.RealTimeCryptoWidget.html",
+          "hash": "65w/2HK8ahfkEYlRE5r2B0pGmSVgV7WppEXfnfnG6bw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Entities.Widgets.VideoWidget.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Entities.Widgets.VideoWidget.html",
+          "hash": "8S8WYOM2GfkyaIbm/0ZT5vWzoa/UvQWNqBLKaEJawXg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Entities.Widgets.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Entities.Widgets.html",
+          "hash": "JmZlLYBvvNnpfdrOh5d50vcsWCZhFGut2Gq/T8RZ5KM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Entities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Entities.html",
+          "hash": "5nxLFWK9fn0wEcQYbGZ5Mo5JHyvv00ZkLvV4DS/C11E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Exceptions.ApiException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Exceptions.ApiException.html",
+          "hash": "TY3vftLSe+R0oXvdIte+TKyrxS2FB9JtaTGvgigh22A="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Exceptions.MongoException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Exceptions.MongoException.html",
+          "hash": "BIBJ+xGWZ+ejo2nIJwlSMGVWf+r2if/B7XLzoX40MB8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Exceptions.UserException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Exceptions.UserException.html",
+          "hash": "uOd2dCiRltwjP3AdLCusfA+r8Rdz5JXpVcUk85zOmJ4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Exceptions.WidgetException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Exceptions.WidgetException.html",
+          "hash": "DrRYOwFPN4HxMx/Nb19C/8d7uiKM1qxJbeLPFpBJ+gw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Exceptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Exceptions.html",
+          "hash": "Dt6I272DMuMViv6NTegjNaFGNfIH/b12buX5Wj1dzIs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Interfaces.IService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Interfaces.IService.html",
+          "hash": "FaEf7TPdI03zZKmxsQNeiFAxzkQ5OSE8uNrUzECuflY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Interfaces.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Interfaces.html",
+          "hash": "t4Oo9rWc+rb/kpDxOrWAWiB3lmApRRGVLyfSS5nMv54="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.About.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.About.html",
+          "hash": "fOcufAe0urpKe+4wJJm35AHsEyW03/AXGMv1XnVE5Dc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Client.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Client.html",
+          "hash": "qOAiUJ6C68bwJxHx2voHGSS4sS+1FYyqA8/NQFkznVk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.LoginForm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.LoginForm.html",
+          "hash": "fmhWirfWsQp0Wekcc0eiLitHAf4mcEmcmYTcWYX0Eos="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Param.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Param.html",
+          "hash": "PfehSLYedCqGlJ0pQZumIE940+4K16b5UFgUHqqF2JU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.ParamType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.ParamType.html",
+          "hash": "7WntfRTYYU6XxQLPl37/Iu+8EWZy8PNh9De9VXAHl0Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.RegisterForm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.RegisterForm.html",
+          "hash": "TLynltFl4vJQ58JYQKVi3SVVCoFHpx7/JVVWsOctcNE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Server.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Server.html",
+          "hash": "lyBH+MsbiB6HNrF9SO8d8/aIilYX9EXXYuEgaW6erkE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Service.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Service.html",
+          "hash": "dfN5jvKZvInezffWBEVXxsf3YMKksORyL+c5HsHeMVU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.WidgetInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.WidgetInfo.html",
+          "hash": "L1/y2yR8JFOSEVPNXyl7eKyy9wYRSfplDZB2bT0XYsA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.Assist.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.Assist.html",
+          "hash": "QlhmsL0aRRkq2wqbA3wWUhHK471r7YoiWYCM2STGIGg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.CityTempData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.CityTempData.html",
+          "hash": "uuQfzYV+WcgK6dOgSW9EB2NpObdd3b7qdvoLcOF9jWY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.CityTempModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.CityTempModel.html",
+          "hash": "zxnnlQd7oIQEKBZwyvymus8YkwKrwz4ISG+wY1brr44="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.CompetitionData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.CompetitionData.html",
+          "hash": "nzBOkm+sOn6E9zvvPB8Ab36rOWJOrEnh4zSknksOmNM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.FeedData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.FeedData.html",
+          "hash": "54v9Zjy6bUmWymKMkh/zYzbFiDHzewjnGbg/lFHwluo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.FeedItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.FeedItem.html",
+          "hash": "RM8b8g5aJLibwhwa1SWcDTN/v+oeTgSafNfSZnFrDEI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.FeedModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.FeedModel.html",
+          "hash": "rpzKocHTd9XzajlgDsEwpwCKeXkDomz+UFmYfR6S5FI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.FootData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.FootData.html",
+          "hash": "ZpVRvryuek9qremBXJpMyYOooHl/p49TVTAW9NCUgOM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.FootModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.FootModel.html",
+          "hash": "powgqZdWICaDM5ntpAclm0Dc6ck8DV4C5y3qNSrQ3qc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.GameData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.GameData.html",
+          "hash": "A20gisgcvcX3XEhnQHKbWKZGez5gvaH7L5wEaINQEQk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.GameModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.GameModel.html",
+          "hash": "GwArU18LOD2FFTYcIGPP7T+QuGPfXAiPysj2+zayMqU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.Goal.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.Goal.html",
+          "hash": "8C1Jca806Klxe4uBUqPs/N3ePCDidvJJE5TpSWnoENg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.Match.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.Match.html",
+          "hash": "H8HY6tzxT0vOkoyFoNHs/Ctmifq8NMHC1OTH9C8ar3Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.Player.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.Player.html",
+          "hash": "uGcaTICa9reY/OM6Fs4LuIDEjy12CNHZ3YpXtSIKS2A="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.RealTimeCryptoData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.RealTimeCryptoData.html",
+          "hash": "EJccQrd0hRCVOkZIPR2ONO4jYH60HZx2ON0bG9d8zZM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.RealTimeCryptoModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.RealTimeCryptoModel.html",
+          "hash": "kzMJ/UtZk94UzjgMW7d/cFrb++fmyNOhwLhdBpvduNU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.Score.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.Score.html",
+          "hash": "I+vANa1aWFNoA96iOioT+g1BFKc+VgjrvyIMF/VeeUo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.Scorer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.Scorer.html",
+          "hash": "AH/xbvZx9tW6ZfNA4A9M7qXkriGgYYnpIZS6qUxj8q8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.Team.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.Team.html",
+          "hash": "fiyo9YdCB+4ddHAiupD9kBkpiCN1urw9mMxoYgD5WkQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.VideoData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.VideoData.html",
+          "hash": "z7cmQC3MNQ/OWRd9B/xUTKeYGtBA/UAIQzOYB7L7AE8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.VideoModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.VideoModel.html",
+          "hash": "yTY73hQcrCOqbeGRyPAtk+3NtsAhGRwVBwEHLKXi3ic="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.Widgets.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.Widgets.html",
+          "hash": "ExjSc7yUwmHpqAKHx55OeskLUHNPtys5eQLnNK38Zgo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Models.html",
+          "hash": "cKLveZKk79BkuEN1sYhJ2TiKFCOKrjMSByyHMzdJiog="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.MongoService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.MongoService.html",
+          "hash": "aTCHyjVdOvZxhrc8mXyd1wg323bOquJW5UHl1SI16mg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Program.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Program.html",
+          "hash": "H0//jS2bGHvly4Zkdkr/uiLXv7aj+i+PUdXcvSJE1OA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.App.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.App.html",
+          "hash": "9tz8Ons/4milsfq+/6ZBFsx59OGshzUKYx/hCJesGL8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Applist.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Applist.html",
+          "hash": "2gB/Y7BTz9uTrWVKW2NUCcd97tmdlniTwChLVWzQsyc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Area.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Area.html",
+          "hash": "xxNBSB24Bu//xwtpwCmGcGyleUJJlFgYcLFvt2rD9mA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.AwayTeam.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.AwayTeam.html",
+          "hash": "/p1BdsZII9+91siAfu6YvzLFH+IPYaLAAS5Z/SXKFy0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Clouds.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Clouds.html",
+          "hash": "g+Hi2ohSc4r9MNfpyPUAoFngjCMmKeKQ2qej44qDqa4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Competition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Competition.html",
+          "hash": "0nuN4MvRLObwoLzHKkgLs+eGlgOwQzIdC3qaB4nonAE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.CompetitionFull.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.CompetitionFull.html",
+          "hash": "Drs/gr+IqHAAgmOPeCIM4yV7wL1a08JdoOhV0vrO0/U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.CompetitionsJson.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.CompetitionsJson.html",
+          "hash": "V3VjK6+dKmo3iApVROWaTD14yua/Puj6kd5aI+9pq/s="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Coord.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Coord.html",
+          "hash": "/L3nbuou6yCEg2zb0nfwbxpFAC83Zj46VDk4UpN4pAg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.CryptoInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.CryptoInfo.html",
+          "hash": "Xbk4fvrgbqioWE7DijT60BMGMi9yTQfbJHfEEfTBCpc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.CryptoService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.CryptoService.html",
+          "hash": "wtAVAosH9whQP/mfaDUe0KOKcKNs9/i8oItfCFk8i+s="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.CurrentSeason.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.CurrentSeason.html",
+          "hash": "2Ya1KB//oRxn9pHhhWMJS0Zvn1DX4cvov9f/X3SWZWk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Data.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Data.html",
+          "hash": "akogEJFsoa4PgYZsQYXJCCOWbK/afY2Uj7c21sxUcc4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.ExtraTime.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.ExtraTime.html",
+          "hash": "DE5yUHwfdYSIN2b+9cQQGI6Ly7i+cXfYy8WRVMFXndg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Filters.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Filters.html",
+          "hash": "qZbxleyvdnmTQXpHWvqgMdEMNX2c//w3Vp8D1hiMIQY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.FootJson.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.FootJson.html",
+          "hash": "UHF304El0jB0cUuWeHW6lmUxQhgE4LZpH0oZiiy1xyw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.FootService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.FootService.html",
+          "hash": "0ttXZvRkZBRwmcW9ppMVXkZhBryypu3IsVWhnTezFOk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.FootTeamJson.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.FootTeamJson.html",
+          "hash": "w9ehmnDT8ywAFlMFnmxC74omDFSSE+XlMnWpAf62qVU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.FullTime.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.FullTime.html",
+          "hash": "PulQGl669sSi6xP7YQgTgrYx+MQHK0Q3e0fJSQdJIm0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.GameList.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.GameList.html",
+          "hash": "5dCCjvDHrNWnPZT60ZN7L5plgc648oDytwdj08gGOgU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.HalfTime.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.HalfTime.html",
+          "hash": "21j5wq6sma7lmzbRyXhxuxyVrkzTybZjwOItqh9Yrpo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.HomeTeam.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.HomeTeam.html",
+          "hash": "BEziiGPw0zgN+OgPqdbPQ2pul72PrIYAJID7YeFvLT4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Interval.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Interval.html",
+          "hash": "kJw6xTeKRBbCzist3Aa/+QXs+/1LKvms7IQvv6XFvGw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Main.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Main.html",
+          "hash": "oX467SB3uAwg7TSQU5MN1t35a5i0UlmwIa5pwUdreCM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Match.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Match.html",
+          "hash": "YBC2w9DzGtdfWCdJpu3xj2EiAYIwFG7QtLw5VL4ynKs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.MetadataApp.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.MetadataApp.html",
+          "hash": "AH6czuCE3M4VIvNGk3bikOripo3Zif2ZTJnUXKf6OU0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.MetadataJson.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.MetadataJson.html",
+          "hash": "pjwGcNPPWcAZd6pFwWHCslorwTkCckFjfM8h7F/8A44="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.MetadataResponse.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.MetadataResponse.html",
+          "hash": "2AQTmnhf1cSpqe1xuBDuBUnIabvLbSJvE9A3u7QOQqw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Odds.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Odds.html",
+          "hash": "eBA0c5Jw0kVpaONp5+eUrNBtQPTdNy6DiykMQOqO83k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Penalties.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Penalties.html",
+          "hash": "DZhCRJwxt/Hjc9LzA/VZs18ntqXUlPCBY3VtuFFVTtg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.PlayerJson.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.PlayerJson.html",
+          "hash": "kjbvf0+iNCCk6I2ru0CwQQfWNbZLZJ0iJHkJtjozsCE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.PriceJson.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.PriceJson.html",
+          "hash": "Qud/bFZJUOIxdrOMTEpdRZRdc9vt8dVbdZoSC+CiGXw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.PriceOverview.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.PriceOverview.html",
+          "hash": "yj6DdEq0GEUjBrQrU1356MYIY3L/I4A/TBlFXfamg7k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.QuerySummary.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.QuerySummary.html",
+          "hash": "tNRFzcw8bAQJTzphnNKcNZdeS1wB3Ri9T3fb2vIx8ys="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Referee.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Referee.html",
+          "hash": "2nZSa56joLxU4Iqv1YCQHOyAEki2qb2BG0oPpIujEh4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Response.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Response.html",
+          "hash": "h1jc8u7BwwLflOyKxwYPMxAMQ5Zbpmq4MLrVIFGclO4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.ReviewJson.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.ReviewJson.html",
+          "hash": "zTYEeQb0eZL/Bq7YYQcnxEHojpssdxrWgUmQ97MbRFE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.RssService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.RssService.html",
+          "hash": "qRUL0SOK2HNikCZxIX3F8PSLIfLebo2Fjq5xhJgop0M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Score.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Score.html",
+          "hash": "/oMmytIbWSCRQR9Dz/DPxazmPnCbOdP76duNj0sWXd4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Season.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Season.html",
+          "hash": "2Cxi40xAQgK1CNsf5WjJwe7I2U0arHMhO9HCraA6YwE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Squad.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Squad.html",
+          "hash": "uniyeCXzz6bawmH61gL9JNivQcMvwe0IWbLQjgiLKR0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.SteamService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.SteamService.html",
+          "hash": "5A1pfIuqqKpCzNJl2MTyiLv9zflIbxkThN/n/9pqKrM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Sys.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Sys.html",
+          "hash": "NzhDX96uUuS4yohl2JuocrqRUeMcFr0eVo4itwBoCak="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.UnitType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.UnitType.html",
+          "hash": "gpknPKw82uCAnNJYiz6mvYVD+4n+/m+Aa3gQ6HwNShM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.UserService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.UserService.html",
+          "hash": "IUNd4iMtjFE0sDBIeMC6bno55VTdXiM2FXBXbFMxRlM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Weather.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Weather.html",
+          "hash": "tCLRhsk1B3zAuSeYGmFtxaOPmjt736DXNjoHVBOteBo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.WeatherJson.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.WeatherJson.html",
+          "hash": "vjwAytXGYtDE6vJbdHMMDyLEoHMKEVXYWQYtCIFs1gk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.WeatherService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.WeatherService.html",
+          "hash": "/z65ivBQ7/aAjW4SIgNjfX1FTfDgjcOiv1Gje6q3ajA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.WidgetService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.WidgetService.html",
+          "hash": "rTs/E507Km+s2CwxAGb14q8b5N5Z4hmXXsCwbD9IHj4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.Wind.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.Wind.html",
+          "hash": "kIPnnLSTM4G3zKZln61v90bMPQ3YPwumqJAhseuv1dY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.YouTubeService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.YouTubeService.html",
+          "hash": "wgNAOLlcozKi6SykGmXJPgcuJg2M/aWkFGsJBYItaFM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Services.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Services.html",
+          "hash": "ci7mLWhMkd/B1if1XDV6JzD7p9VMTUoyggILVjV2MIM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Startup.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Startup.html",
+          "hash": "tItG/JeoWnuALRm/N7XqJF0j6hM/O+faMRLeaCig7FM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Utilities.ClientAPI.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Utilities.ClientAPI.html",
+          "hash": "udEu59vHRAMk76royPw9DTfj8ChxtWA6TMMnaLurDF0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Utilities.PasswordHash.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Utilities.PasswordHash.html",
+          "hash": "H+8Vxl93kztA81uSn+4MWF5uZ+mDDCopdPZS95qYN3Q="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.Utilities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.Utilities.html",
+          "hash": "vu3hRNE+y/COIjqlm4BSOG9KTa+WuTeqUAuvSfVTAow="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Doshboard.Backend.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Doshboard.Backend.html",
+          "hash": "X3hReANjAimh8UdPqMTRMopzlbhOIvXZ7i+bh1ipncA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "ZZQrPJdoa7ayOHiX8i99xa3cWuT8anlJRTuVui/lNm4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "7ujmXMekSp2ICGwGGT3sigPg9ywk4yvhcoePjYoUc5s="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "oV5hrbvAEm+hBSzNNb403WyYGfCFHiqGd96dPFDXz98="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "BlPxk5mtl2kgfcZUgkEguqiSAR/EUyUTT4EdebwkQvs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "hgvg4dhMepFnh0lkKcENZ0EwdLuWYW4CC9AmLjq87BU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "WSuRrYiGwKKMbtdG9z8W9fXmLoCyTnGg9AxbPKLXm2Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 3,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 125,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
