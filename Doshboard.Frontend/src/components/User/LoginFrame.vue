@@ -59,8 +59,9 @@ export default {
         this.$router.push("/");
       }
     },
-    async handleClickSignIn() {
+    async handleClickSignIn(e) {
       try {
+        e.preventDefault();
         const code = await this.$gAuth.getAuthCode();
         const { error, errors } = await this.googleLogin(code);
         this.error = error;
